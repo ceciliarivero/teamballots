@@ -1,0 +1,46 @@
+<section>
+
+  {{ this.partial("ballot/ballot_summary", ballot: ballot) }}
+
+  <p>
+    <a href="/ballot/{{ ballot.id }}/voters">Voters ({{ ballot.voters.size }})</a>
+    |
+    % if ballot.status? == "active"
+      <a href="/ballot/{{ ballot.id}}/voters/add">Add voters</a>
+    % else
+      <i>Add voters</i>
+    % end
+    |
+    <a href="/ballot/{{ ballot.id}}/choices">Choices ({{ ballot.choices.size }})</a>
+    |
+    % if ballot.status? == "active"
+      <a href="/ballot/{{ ballot.id}}/choices/add">Add choices</a>
+    % else
+      <i>Add choices</i>
+    % end
+    |
+    % if ballot.status? == "active"
+      <a href="/ballot/{{ ballot.id }}/edit">Edit</a>
+    % else
+      <i>Edit</i>
+    % end
+    | <a href="/ballot/{{ ballot.id }}/remove">Remove ballot</a>
+  </p>
+  <p>Description: {{ this.h(ballot.description) }}</p>
+
+  % if ballot.comments.size > 0
+    <ul>
+      ballot.comments.each do |comment|
+      <li>Comment: {{ comment.message }} | By: {{ comment.user.name }} | Date: {{ comment.commented_at }}</li>
+    </ul>
+  % else
+      No comments yet.
+  % end
+
+  <br>
+
+  <p>Choices:</p>
+
+  {{ this.partial("ballot/choices_list", ballot: ballot) }}
+
+</section>

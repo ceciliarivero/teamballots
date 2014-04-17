@@ -1,0 +1,33 @@
+<section>
+  % ballot = params.fetch(:ballot, false)
+
+  % if ballot
+    % if ballot.errors[:title].include?(:not_present)
+      <p class="alert error">Title is required</p>
+    % end
+    % if ballot.errors[:description].include?(:not_present)
+      <p class="alert error">Description is required</p>
+    % end
+    % if ballot.errors[:end_choices_date].include?(:not_present) || ballot.errors[:end_date].include?(:not_present)
+      <p class="alert error">Both dates are required</p>
+    % end
+  % end
+
+  <h2>Create a new ballot</h2>
+
+  <form action="/ballot/new" method="POST">
+    <input type="text" name="ballot[title]" value="{{ this.h(ballot.title) }}" placeholder="Title"><br>
+
+    <textarea name="ballot[description]" placeholder="Description">{{ this.h(ballot.description) }}</textarea><br>
+
+    Deadline for adding choices: <input type="datetime-local" name="ballot[end_choices_date]" value="{{ ballot.end_choices_date }}"><br>
+
+    Ballot closing date: <input type="datetime-local" name="ballot[end_date]" value="{{ ballot.end_date }}"><br>
+
+    <span>
+      <a href="/dashboard">cancel</a>&nbsp;&nbsp;
+
+      <button type="submit">Create Ballot</button>
+    </span>
+  </form>
+</section>

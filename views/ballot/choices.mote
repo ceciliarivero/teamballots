@@ -1,0 +1,12 @@
+<section>
+  <h2>Ballot: {{ ballot.title }}</h2>
+
+  <h2>Choices</h2>
+
+  {{ this.partial("ballot/choices_list", ballot: ballot) }}
+
+  <a href="/ballot/{{ ballot.id }}/choices/add">Add choice</a><br>
+
+  <br>
+  <a href="/ballot/{{ ballot.id }}">Back to ballot</a>
+</section>

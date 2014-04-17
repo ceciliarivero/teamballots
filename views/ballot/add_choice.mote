@@ -1,0 +1,30 @@
+<section>
+  % choice = params.fetch(:choice, false)
+
+  % if choice
+    % if choice.errors[:title].include?(:not_present)
+      <p class="alert error">Title is required</p>
+    % end
+  % end
+
+  <h2>Ballot: {{ ballot.title }}</h2>
+
+  <h2>Choices</h2>
+
+  {{ this.partial("ballot/choices_list", ballot: ballot) }}
+
+  <h2>Add choice</h2>
+
+  <form action="/ballot/{{ ballot.id }}/choices/add" method="POST">
+    <input type="text" name="choice[title]" value="{{ this.h(choice.title) }}" placeholder="Title"><br>
+
+    <span>
+      <a href="/ballot/{{ ballot.id }}">cancel</a>&nbsp;&nbsp;
+
+      <button type="submit">Add choice</button>
+    </span>
+  </form>
+
+  <br>
+  <a href="/ballot/{{ ballot.id }}">Back to ballot</a>
+</section>

@@ -1,0 +1,14 @@
+Title: <a href="/ballot/{{ ballot.id }}">{{ this.h(ballot.title) }}</a> | Created by: {{ ballot.created_by }} | Posted at: {{ ballot.posted_at }} | Deadline to edit ballot: {{ ballot.end_choices_at }} | Ballot ends: {{ ballot.closes_at }} | Status:
+% if ballot.status? == "active"
+  Active
+% elsif ballot.status? == "voting_only"
+  Voting only (choices cannot be added anymore)
+% else
+  Closed
+% end
+ |
+% if ballot.end_date.to_i > Time.new.to_i
+ <a href="">Vote</a>
+% else
+ <a href="">See results</a>
+% end

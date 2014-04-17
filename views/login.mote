@@ -1,0 +1,23 @@
+<section>
+  <div>
+    <h2>User Login</h2>
+
+    <form action="/login" method="POST">
+      <input type="text" name="user[email]" placeholder="Username or E-mail" value="{{ this.h(user) }}"><br>
+
+      <input type="password" name="user[password]" placeholder="Password"><br>
+
+      <ul>
+        <li>
+          <input id="remember" type="checkbox" name="user[remember]" value="1">
+          <label for="remember">Remember me</label>
+        </li>
+        <li>
+          <a href="/forgot-password">Forgot password?</a>
+        </li>
+      </ul>
+
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</section>

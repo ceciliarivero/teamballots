@@ -1,0 +1,55 @@
+<section>
+  % signup = params.fetch(:signup, false)
+
+  % if signup
+    % if signup.errors[:name] == [:not_present]
+      <p class="error">Name is required</p>
+    % end
+    % if signup.errors[:email] == [:not_email]
+      <p class="error">E-mail not valid</p>
+    % end
+    % if signup.errors[:email] == [:not_unique]
+      <p class="error">This e-mail is already registered</p>
+    % end
+    % if signup.errors[:username] == [:not_unique]
+      <p class="error">This username is already taken</p>
+    % end
+    % if signup.errors[:password] == [:too_small]
+      <p class="error">The password length must be at least 6 characters</p>
+    % end
+    % if signup.errors[:password] == [:not_confirmed] || signup.errors[:password] == [:too_small, :not_confirmed]
+      <p class="error">Passwords don't match</p>
+    % end
+  % end
+
+  % gravatar_url = "https://www.gravatar.com/avatar/b7fc2ede6c7c125628f983f4f6d3336a"
+
+  % if !user.empty?
+    % gravatar_url = user['gravatar']
+  % end
+
+  <h2>Create your account</h2>
+
+  <img id="gravatar-img" src="{{ gravatar_url }}">
+
+  <form action="/signup" method="POST">
+
+    <input id="gravatar-url" type="hidden" name="user[gravatar]" value="{{ gravatar_url }}">
+
+    <input type="text" name="user[name]" placeholder="Name" value="{{ this.h(user['name']) }}"><br/>
+
+    <input type="text" name="user[username]" placeholder="Username" value="{{ this.h(user['username']) }}"><br/>
+
+    <input id="email" type="email" name="user[email]" placeholder="E-email" value="{{ this.h(user['email']) }}"><br/>
+
+    <input type="password" name="user[password]" placeholder="Password"><br/>
+
+    <input type="password" name="user[password_confirmation]" placeholder="Password confirmation"><br/>
+
+    <button type="submit">Sign up!</button><br>
+
+    <a href="/login">Already have an account? Log in here!</a>
+  </form>
+</section>
+
+<script src="/js/gravatar.js"></script>

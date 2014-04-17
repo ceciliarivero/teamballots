@@ -1,0 +1,30 @@
+<section>
+  % voter = params.fetch(:voter, false)
+
+  % if voter
+    % if voter.errors[:email].include?(:not_present)
+      <p class="alert error">Email is required</p>
+    % end
+  % end
+
+  <h2>Ballot: {{ ballot.title }}</h2>
+
+  <h2>Voters</h2>
+
+  {{ this.partial("ballot/voters_list", ballot: ballot) }}
+
+  <h2>Add voter</h2>
+
+  <form action="/ballot/{{ ballot.id }}/voters/add" method="POST">
+    <input type="text" name="voter[email]" value="{{ this.h(voter.email) }}" placeholder="Voter email"><br>
+
+    <span>
+      <a href="/ballot/{{ ballot.id }}">cancel</a>&nbsp;&nbsp;
+
+      <button type="submit">Add voter</button>
+    </span>
+  </form>
+
+  <br>
+  <a href="/ballot/{{ ballot.id }}">Back to ballot</a>
+</section>

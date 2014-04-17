@@ -1,0 +1,23 @@
+% user = this.current_user
+% ballots = user.ballots
+
+<section>
+  <p>Current ballots: {{ ballots.size }}</p>
+
+  <a href="/ballot/new">Create new ballot</a>
+
+  % if ballots.empty?
+    <p>
+      No current ballots.
+    </p>
+  % else
+    <h2>Ballots</h2>
+    <ul>
+    % ballots.each do |ballot|
+      <li>
+        {{ this.partial("ballot/ballot_summary", ballot: ballot) }}
+      </li>
+    % end
+    </ul>
+  % end
+</section>

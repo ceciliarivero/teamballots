@@ -1,0 +1,11 @@
+% choices = ballot.choices
+
+% if !choices.empty?
+  <ul>
+    % choices.each do |choice|
+    <li>{{ choice.title }} | Added by: {{ choice.added_by }} | Added at: {{ choice.added_at }} | <a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove">Remove choice</a></li>
+    % end
+  </ul>
+% else
+    No choices added yet.
+% end

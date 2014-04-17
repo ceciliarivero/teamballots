@@ -1,0 +1,7 @@
+% voters = ballot.voters
+
+<ul>
+  % voters.each do |voter|
+    <li>Name: {{ voter.name }} | Username: {{ voter.username }} | <a href="/ballot/{{ ballot.id }}/voters/{{ voter.id }}/remove">Remove</a></li>
+  % end
+</ul>

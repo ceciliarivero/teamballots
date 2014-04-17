@@ -1,0 +1,43 @@
+% user = this.current_user
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Team Ballots | {{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/style.css" rel="stylesheet" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+  </head>
+  <body>
+    <header>
+      <ul id="main-navigation">
+        <li><a href="/">Home</a></li>
+
+        % if user
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="/edit"><img src="{{ user.gravatar }}" />{{ this.h(user.name ) }}</a></li>
+          <li><a href="/logout">Logout</a></li>
+        % else
+          <li><a href="/signup">Signup</a></li>
+          <li><a href="/login">Login</a></li>
+        % end
+
+      </ul>
+    </header>
+
+    <section>
+      <p>
+        {{ this.partial("notices", session: this.session) }}
+      </p>
+
+      {{ content }}
+
+    </section>
+
+    <footer>
+      <p>2014 | Team Ballots</p>
+    </footer>
+  </body>
+</html>
