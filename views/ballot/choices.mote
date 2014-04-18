@@ -5,7 +5,10 @@
 
   {{ this.partial("ballot/choices_list", ballot: ballot) }}
 
-  <a href="/ballot/{{ ballot.id }}/choices/add">Add choice</a><br>
+  % if ballot.status? == "active"
+    <br><br>
+    <a href="/ballot/{{ ballot.id }}/choices/add">Add choice</a><br>
+  % end
 
   <br>
   <a href="/ballot/{{ ballot.id }}">Back to ballot</a>

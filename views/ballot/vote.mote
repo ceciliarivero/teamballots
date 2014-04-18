@@ -1,0 +1,40 @@
+% choices = ballot.choices
+
+<section>
+
+  <h2>Ballot: {{ ballot.title }}</h2>
+
+  <h2>Choices</h2>
+
+  % if !choices.empty?
+    <form action="/ballot/{{ ballot.id}}/vote" method="POST">
+      <ul>
+        % choices.each do |choice|
+          <li>
+            {{ choice.title }}
+            <select name="vote[{{ choice.id }}]">
+              % 10.step(-10, -1).each do |rating|
+                % if rating == 0
+                  <option value="{{ rating }}" selected>{{ rating }}</option>
+                % else
+                  <option value="{{ rating }}">{{ rating }}</option>
+                % end
+              % end
+            </select>
+          </li>
+        % end
+      </ul>
+
+      <span>
+        <a href="/ballot/{{ ballot.id }}">cancel</a>&nbsp;&nbsp;
+
+        <button type="submit">Vote</button>
+      </span>
+    </form>
+  % else
+    No choices added yet.<br>
+  % end
+
+  <br>
+  <a href="/ballot/{{ ballot.id }}">Back to ballot</a>
+</section>

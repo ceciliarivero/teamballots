@@ -20,20 +20,31 @@ class Users < Cuba
           params.delete("password_confirmation")
 
           on user.email != edit.email && User.with(:email, edit.email) do
-
             session[:error] = "This e-mail is already registered"
             render("user/edit", title: "Edit profile",
               edit: edit, user: user)
           end
 
           on user.username != edit.username && User.with(:username, edit.username) do
-
             session[:error] = "This username is already taken"
             render("user/edit", title: "Edit profile",
               edit: edit, user: user)
           end
 
           on default do
+            if user.name != params["name"]
+              ballots = Ballot.find(created_by: user.name)
+              choices = Choice.find(added_by: user.name)
+
+              ballots.each do |ballot|
+                ballot.update(created_by: params["name"])
+              end
+
+              choices.each do |choice|
+                choice.update(added_by: params["name"])
+              end
+            end
+
             user.update(params)
 
             # if !params["password"].nil?
@@ -122,8 +133,7 @@ class Users < Cuba
 
         render("ballot/new",
           title: "Create new ballot", ballot: new_ballot,
-          end_choices_date: nil,
-          end_date: nil)
+          end_choices_date: nil, end_date: nil)
       end
 
       on default do
@@ -135,7 +145,7 @@ class Users < Cuba
       ballot = user.ballots[id]
 
       on ballot do
-        if Time.new.to_i < ballot.end_choices_date.to_i && Time.new.to_i < ballot.end_date.to_i
+        if ballot.status? == "active"
           on post do
             on req.post?, param("ballot") do |params|
               if params["end_choices_date"] != ""
@@ -173,8 +183,7 @@ class Users < Cuba
               ballot.end_date = Time.at(ballot.end_date.to_i).strftime("%Y-%m-%eT%H:%M")
 
               render("ballot/edit",
-                title: "Edit ballot", ballot: ballot,
-                edit: NewBallot.new({}))
+                title: "Edit ballot", ballot: ballot, edit: NewBallot.new({}))
             end
           end
 
@@ -219,7 +228,7 @@ class Users < Cuba
       ballot = user.ballots[id]
 
       on ballot do
-        if Time.new.to_i < ballot.end_choices_date.to_i && Time.new.to_i < ballot.end_date.to_i
+        if ballot.status? == "active"
           on post, param("choice") do |params|
             params["date"] = Time.new.to_i
 
@@ -238,18 +247,16 @@ class Users < Cuba
 
             on default do
               render("ballot/add_choice",
-                title: "Add choice", ballot: ballot,
-                choice: choice)
+                title: "Add choice", ballot: ballot, choice: choice)
             end
           end
 
           on get, root do
             render("ballot/add_choice",
-              title: "Add choice", ballot: ballot,
-              choice: NewChoice.new({}))
+              title: "Add choice", ballot: ballot, choice: NewChoice.new({}))
           end
         else
-          session[:error] = "Ballot cannot be edited. We're in Voting Only period now."
+          session[:error] = "Choices cannot be added anymore. We're in Voting Only period now."
           res.redirect "/ballot/#{id}"
         end
       end
@@ -263,7 +270,7 @@ class Users < Cuba
       ballot = user.ballots[ballot_id]
 
       on ballot do
-        if Time.new.to_i < ballot.end_choices_date.to_i && Time.new.to_i < ballot.end_date.to_i
+        if ballot.status? == "active"
           choice = ballot.choices[choice_id]
 
           on get do
@@ -283,7 +290,7 @@ class Users < Cuba
           end
 
         else
-          session[:error] = "Ballot cannot be edited. We're in Voting Only period now."
+          session[:error] = "Choices cannot be removed. We're in Voting Only period now."
           res.redirect "/ballot/#{ballot_id}"
         end
       end
@@ -299,8 +306,7 @@ class Users < Cuba
       on ballot do
         on get, root do
           render("ballot/choices",
-            title: "Choices", ballot: ballot,
-            choice: NewChoice.new({}))
+            title: "Choices", ballot: ballot, choice: NewChoice.new({}))
         end
       end
 
@@ -318,6 +324,11 @@ class Users < Cuba
         on get do
           on voter != user do
             session[:error] = "You can't remove other users, just yourself."
+            res.redirect "/ballot/#{ballot_id}/voters"
+          end
+
+          on voter == user && ballot.voters.size == 1  do
+            session[:error] = "You can't remove yourself if you're the only one voter."
             res.redirect "/ballot/#{ballot_id}/voters"
           end
 
@@ -342,7 +353,7 @@ class Users < Cuba
       ballot = user.ballots[id]
 
       on ballot do
-        if Time.new.to_i < ballot.end_choices_date.to_i && Time.new.to_i < ballot.end_date.to_i
+        if ballot.status? == "active"
           on post, param("voter") do |params|
             voter = NewVoter.new(params)
 
@@ -352,15 +363,13 @@ class Users < Cuba
               on new_voter && new_voter.email == user.email do
                 session[:error] = "You are already a voter! :-)"
                 render("ballot/add_voter",
-                  title: "Add voter", ballot: ballot,
-                  voter: voter)
+                  title: "Add voter", ballot: ballot, voter: voter)
               end
 
               on new_voter && ballot.voters.include?(new_voter) do
                 session[:error] = "Voter already added"
                 render("ballot/add_voter",
-                  title: "Add voter", ballot: ballot,
-                  voter: voter)
+                  title: "Add voter", ballot: ballot, voter: voter)
               end
 
               on new_voter do
@@ -374,25 +383,22 @@ class Users < Cuba
               on default do
                 session[:error] = "E-mail is not registered"
                 render("ballot/add_voter",
-                  title: "Add voter", ballot: ballot,
-                  voter: voter)
+                  title: "Add voter", ballot: ballot, voter: voter)
               end
             end
 
             on default do
               render("ballot/add_voter",
-                title: "Add voter", ballot: ballot,
-                voter: voter)
+                title: "Add voter", ballot: ballot, voter: voter)
             end
           end
 
           on get, root do
             render("ballot/add_voter",
-              title: "Add voter", ballot: ballot,
-              voter: NewVoter.new({}))
+              title: "Add voter", ballot: ballot, voter: NewVoter.new({}))
           end
         else
-          session[:error] = "Ballot cannot be edited. We're in Voting Only period now."
+          session[:error] = "Voters cannot be added. We're in Voting Only period now."
           res.redirect "/ballot/#{id}"
         end
       end
@@ -408,8 +414,58 @@ class Users < Cuba
       on ballot do
         on get, root do
           render("ballot/voters",
-            title: "Voters", ballot: ballot,
-            voter: NewVoter.new({}))
+            title: "Voters", ballot: ballot, voter: NewVoter.new({}))
+        end
+      end
+
+      on default do
+        not_found!
+      end
+    end
+
+    on "ballot/:id/vote" do |id|
+      ballot = user.ballots[id]
+
+      on ballot do
+        if ballot.status? != "closed"
+          on post, param("vote") do |votes|
+            valid_votes = []
+
+            votes.each do |rating|
+              params = {}
+              params["rating"] = rating[1]
+
+              vote = NewVote.new(params)
+
+              if vote.valid?
+                params["date"] = Time.new.to_i
+                params["choice_id"] = rating[0]
+                params["user_id"] = user.id
+
+                new_vote = Vote.create(params)
+
+                valid_votes << new_vote
+              end
+            end
+
+            on valid_votes.size == votes.size do
+              session[:success] = "You have successfully voted!"
+              res.redirect "/ballot/#{id}"
+            end
+
+            on default do
+              session[:error] = "Vote wasn't valid. Please try again."
+              res.redirect "/ballot/#{id}"
+            end
+          end
+
+          on get, root do
+            render("ballot/vote",
+              title: "Vote", ballot: ballot, voter: NewVote.new({}))
+          end
+        else
+          session[:error] = "Ballot is closed."
+          res.redirect "/ballot/#{id}"
         end
       end
 
@@ -431,6 +487,10 @@ class Users < Cuba
       on default do
         not_found!
       end
+    end
+
+    on default do
+      not_found!
     end
   end
 end

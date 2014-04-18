@@ -9,6 +9,7 @@ class Ballot < Ohm::Model
   attribute :created_by
   attribute :status
 
+  index :created_by
   index :status?
 
   def status?
@@ -20,15 +21,6 @@ class Ballot < Ohm::Model
       return "closed"
     end
   end
-  # index :active?
-
-  # def self.active
-  #   find(active?: true)
-  # end
-
-  # def active?
-  #   return status == "active"
-  # end
 
   def posted_at
     return Time.at(start_date.to_i).strftime("%e/%m/%Y - %l:%M %p")

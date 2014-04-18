@@ -1,4 +1,4 @@
-cuba -v 3.1.0
+cuba -v 3.1.1
 cuba-contrib -v 3.1.0
 ohm -v 2.0.0
 ohm-contrib -v 2.0.0

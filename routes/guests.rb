@@ -7,9 +7,11 @@ class Guests < Cuba
     on "signup" do
       on post, param("user") do |params|
 
-        user = UserCreator.create(params)
+        signup = Signup.new(params)
 
-        on user do
+        on signup.valid? do
+          user = signup.create
+
           authenticate(user)
 
           session[:success] = "You have successfully signed up!"
@@ -46,7 +48,6 @@ class Guests < Cuba
           res.redirect "/dashboard"
         else
           session[:error] = "Invalid email/password combination"
-
           render("login", title: "Login", user: user)
         end
       end

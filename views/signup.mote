@@ -11,6 +11,9 @@
     % if signup.errors[:email] == [:not_unique]
       <p class="error">This e-mail is already registered</p>
     % end
+    % if signup.errors[:username] == [:not_present]
+      <p class="error">Username is required</p>
+    % end
     % if signup.errors[:username] == [:not_unique]
       <p class="error">This username is already taken</p>
     % end
@@ -46,10 +49,10 @@
 
     <input type="password" name="user[password_confirmation]" placeholder="Password confirmation"><br/>
 
-    <button type="submit">Sign up!</button><br>
+    <button type="submit">Sign up!</button>
+  </form><br>
 
-    <a href="/login">Already have an account? Log in here!</a>
-  </form>
+  <a href="/login">Already have an account? Log in here!</a>
 </section>
 
 <script src="/js/gravatar.js"></script>

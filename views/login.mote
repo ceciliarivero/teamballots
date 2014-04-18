@@ -18,6 +18,8 @@
       </ul>
 
       <button type="submit">Login</button>
-    </form>
+    </form><br>
+
+  <a href="/signup">Create your account</a>
   </div>
 </section>

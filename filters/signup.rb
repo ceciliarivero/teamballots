@@ -14,4 +14,10 @@ class Signup < Scrivener
     assert password.length > 5, [:password, :too_small]
     assert password == password_confirmation, [:password, :not_confirmed]
   end
+
+  def create
+    attrs = attributes
+    attrs.delete(:password_confirmation)
+    User.create(attrs)
+  end
 end

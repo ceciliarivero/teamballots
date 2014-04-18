@@ -1,3 +1,5 @@
+% user = this.current_user
+
 <section>
 
   {{ this.partial("ballot/ballot_summary", ballot: ballot) }}
@@ -6,23 +8,11 @@
     <a href="/ballot/{{ ballot.id }}/voters">Voters ({{ ballot.voters.size }})</a>
     |
     % if ballot.status? == "active"
-      <a href="/ballot/{{ ballot.id}}/voters/add">Add voters</a>
-    % else
-      <i>Add voters</i>
-    % end
-    |
-    <a href="/ballot/{{ ballot.id}}/choices">Choices ({{ ballot.choices.size }})</a>
-    |
-    % if ballot.status? == "active"
-      <a href="/ballot/{{ ballot.id}}/choices/add">Add choices</a>
-    % else
-      <i>Add choices</i>
-    % end
-    |
-    % if ballot.status? == "active"
+      <a href="/ballot/{{ ballot.id}}/voters/add">Add voters</a> | <a href="/ballot/{{ ballot.id}}/choices/add">Add choices</a>
+      |
       <a href="/ballot/{{ ballot.id }}/edit">Edit</a>
     % else
-      <i>Edit</i>
+      <i>Add voters</i> | <i>Add choices</i> | <i>Edit</i>
     % end
     | <a href="/ballot/{{ ballot.id }}/remove">Remove ballot</a>
   </p>
@@ -42,5 +32,17 @@
   <p>Choices:</p>
 
   {{ this.partial("ballot/choices_list", ballot: ballot) }}
+
+  <p>My votes:</p>
+
+   % ballot.choices.each do |choice|
+    % votes = choice.votes.find(user_id: user.id)
+
+    % if votes
+      % votes.each do |vote|
+        {{ Choice[vote.choice_id].title }}: {{ vote.rating }}<br>
+      % end
+    % end
+  % end
 
 </section>
