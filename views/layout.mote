@@ -7,10 +7,10 @@
     <title>Team Ballots | {{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/style.css" rel="stylesheet" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/base-min.css">
     <link rel="icon" type="image/png" href="/img/favicon.png">
   </head>
-  <body>
+  <body class="pure-skin-ballots">
     <header>
       <ul id="main-navigation">
         <li><a href="/">Home</a></li>
