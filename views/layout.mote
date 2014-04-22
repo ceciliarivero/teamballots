@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/base-min.css">
     <link rel="icon" type="image/png" href="/img/favicon.png">
   </head>
-  <body class="pure-skin-ballots">
+  <body>
     <header>
-      <ul id="main-navigation">
+      <ul>
         <li><a href="/">Home</a></li>
 
         % if user

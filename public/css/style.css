@@ -1,5 +1,7 @@
 body {
     background-color: #ffffff;
+    font-size: 0.9em;
+    padding: 0 40px;
 }
 
 /* from PURE buttons-core.css */

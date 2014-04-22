@@ -33,16 +33,33 @@
 
   {{ this.partial("ballot/choices_list", ballot: ballot) }}
 
-  <p>My votes:</p>
+  % votes = []
 
-   % ballot.choices.each do |choice|
-    % votes = choice.votes.find(user_id: user.id)
+  % choices = ballot.choices
 
-    % if votes
-      % votes.each do |vote|
-        {{ Choice[vote.choice_id].title }}: {{ vote.rating }}<br>
+  % if !choices.empty?
+
+    % ballot.choices.each do |choice|
+      % user_votes = choice.votes.find(user_id: user.id)
+
+      % if !user_votes.empty?
+        % user_votes.each do |vote|
+          % votes << vote
+        % end
       % end
+
     % end
+
+    <p>My votes:</p>
+
+    % if !votes.empty?
+      % votes.each do |vote|
+        {{ Choice[vote.choice_id].title }}: {{ vote.rating }} <a href="/ballot/{{ ballot.id }}/vote">Edit vote</a><br>
+      % end
+    % else
+      You haven't voted yet.
+    % end
+
   % end
 
 </section>

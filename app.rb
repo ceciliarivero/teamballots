@@ -22,7 +22,6 @@ Cuba.plugin Cuba::Mote
 Cuba.plugin Cuba::TextHelpers
 Cuba.plugin Shield::Helpers
 
-# Ohm.connect(url: REDIS_URL)
 Ohm.redis = Redic.new(REDIS_URL)
 Ost.connect(url: REDIS_URL)
 Malone.connect(url: MALONE_URL, tls: false, domain: "teamballots.com")
