@@ -35,6 +35,7 @@ class Users < Cuba
             if user.name != params["name"]
               ballots = Ballot.find(created_by: user.name)
               choices = Choice.find(added_by: user.name)
+              comments = Comment.find(added_by: user.name)
 
               ballots.each do |ballot|
                 ballot.update(created_by: params["name"])
@@ -42,6 +43,10 @@ class Users < Cuba
 
               choices.each do |choice|
                 choice.update(added_by: params["name"])
+              end
+
+              comments.each do |comment|
+                comment.update(added_by: params["name"])
               end
             end
 
@@ -423,34 +428,85 @@ class Users < Cuba
       end
     end
 
+    on "ballot/:id/add_comment" do |id|
+      ballot = user.ballots[id]
+
+      on ballot do
+        if ballot.status? != "closed"
+          on post, param("comment") do |params|
+            params["date"] = Time.new.to_i
+
+            comment = NewComment.new(params)
+
+            on comment.valid? do
+              params["user_id"] = user.id
+              params["ballot_id"] = ballot.id
+              params["added_by"] = user.name
+
+              Comment.create(params)
+
+              session[:success] = "You have successfully added a comment!"
+              res.redirect "/ballot/#{id}"
+            end
+
+            on default do
+              render("ballot/info",
+                title: "Add comment", ballot: ballot, comment: comment)
+            end
+          end
+
+          # on get, root do
+          #   render("ballot/add_comment",
+          #     title: "Add comment", ballot: ballot, comment: NewComment.new({}))
+          # end
+        else
+          session[:error] = "Comments cannot be added anymore. Ballot is closed."
+          res.redirect "/ballot/#{id}"
+        end
+      end
+
+      on default do
+        not_found!
+      end
+    end
+
     on "ballot/:id/vote" do |id|
       ballot = user.ballots[id]
 
       on ballot do
-        voted = ""
+        choices_voted = []
 
         ballot.choices.each do |choice|
-          voted_already = choice.votes.find(user_id: user.id)
+          choice_voted = choice.votes.find(user_id: user.id)
 
-          if !voted_already.empty?
-            voted = "voted_already"
-          else
-            voted = "able_to_vote"
+          if !choice_voted.empty?
+            choices_voted << choice.id
           end
         end
 
-        on voted == "able_to_vote" do
-          if ballot.status? != "closed"
-            on post, param("vote") do |votes|
-              valid_votes = []
 
-              votes.each do |rating|
-                params = {}
-                params["rating"] = rating[1]
+        if ballot.status? != "closed"
+          on post, param("vote") do |votes|
 
-                vote = NewVote.new(params)
+            valid_votes = []
 
-                if vote.valid?
+            votes.each do |rating|
+
+              params = {}
+              params["rating"] = rating[1].to_i # if it's converted into integer, when choosing "--" it validates because it takes it as "0"
+
+              vote = NewVote.new(params)
+
+              if vote.valid?
+                if choices_voted.include?(rating[0])
+                  choice = Choice[rating[0]]
+
+                  vote_to_update = Vote[choice.votes.find(user_id: user.id).ids[0]]
+
+                  updated = vote_to_update.update(params)
+
+                  valid_votes << updated
+                else
                   params["date"] = Time.new.to_i
                   params["choice_id"] = rating[0]
                   params["user_id"] = user.id
@@ -459,71 +515,30 @@ class Users < Cuba
 
                   valid_votes << new_vote
                 end
-              end
-
-              on valid_votes.size == votes.size do
-                session[:success] = "You have successfully voted!"
-                res.redirect "/ballot/#{id}"
-              end
-
-              on default do
+              else
                 session[:error] = "Vote wasn't valid. Please try again."
                 res.redirect "/ballot/#{id}"
               end
             end
 
-            on get, root do
-              render("ballot/vote/new",
-                title: "Vote", ballot: ballot, voter: NewVote.new({}))
+            on valid_votes.size == votes.size do
+              session[:success] = "You have successfully voted!"
+              res.redirect "/ballot/#{id}"
             end
-          else
-            session[:error] = "Ballot is closed."
-            res.redirect "/ballot/#{id}"
+
+            on default do
+              session[:error] = "Vote wasn't valid. Please try again."
+              res.redirect "/ballot/#{id}"
+            end
           end
-        end
 
-        on voted == "voted_already" do
-          if ballot.status? != "closed"
-            on post, param("vote") do |votes|
-              valid_votes = []
-
-              votes.each do |new_rating|
-                user_votes = Vote.find(user_id: user.id, choice_id: new_rating[0] )
-
-                user_votes.each do |vote|
-                  params = {}
-                  params["date"] = Time.new.to_i
-                  params["rating"] = new_rating[1]
-
-                  vote_updated = NewVote.new(params)
-
-                  if vote_updated.valid?
-                    updated = vote.update(params)
-
-                    valid_votes << updated
-                  end
-                end
-              end
-
-              on valid_votes.size == votes.size do
-                session[:success] = "You have successfully edited your vote!"
-                res.redirect "/ballot/#{id}"
-              end
-
-              on default do
-                session[:error] = "Vote wasn't valid. Please try again."
-                res.redirect "/ballot/#{id}"
-              end
-            end
-
-            on get, root do
-              render("ballot/vote/edit",
-                title: "Edit your vote", ballot: ballot)
-            end
-          else
-            session[:error] = "Ballot is closed."
-            res.redirect "/ballot/#{id}"
+          on get, root do
+            render("ballot/update_vote",
+              title: "Vote", ballot: ballot, voter: NewVote.new({}))
           end
+        else
+          session[:error] = "Ballot is closed."
+          res.redirect "/ballot/#{id}"
         end
       end
 

@@ -1,5 +1,7 @@
 % user = this.current_user
 
+% comment = params.fetch(:comment, false)
+
 <section>
 
   {{ this.partial("ballot/ballot_summary", ballot: ballot) }}
@@ -18,48 +20,40 @@
   </p>
   <p>Description: {{ this.h(ballot.description) }}</p>
 
-  % if ballot.comments.size > 0
-    <ul>
-      ballot.comments.each do |comment|
-      <li>Comment: {{ comment.message }} | By: {{ comment.user.name }} | Date: {{ comment.commented_at }}</li>
-    </ul>
-  % else
-      No comments yet.
-  % end
-
-  <br>
-
-  <p>Choices:</p>
-
   {{ this.partial("ballot/choices_list", ballot: ballot) }}
 
-  % votes = []
-
   % choices = ballot.choices
+
+  % choices_voted = []
+
+  % choices_not_voted = []
 
   % if !choices.empty?
 
     % ballot.choices.each do |choice|
-      % user_votes = choice.votes.find(user_id: user.id)
+      % user_vote = choice.votes.find(user_id: user.id)
 
-      % if !user_votes.empty?
-        % user_votes.each do |vote|
-          % votes << vote
-        % end
+      % if !user_vote.empty?
+        % choices_voted << choice
+      % else
+        % choices_not_voted << choice
       % end
-
     % end
 
     <p>My votes:</p>
 
-    % if !votes.empty?
-      % votes.each do |vote|
-        {{ Choice[vote.choice_id].title }}: {{ vote.rating }} <a href="/ballot/{{ ballot.id }}/vote">Edit vote</a><br>
-      % end
-    % else
-      You haven't voted yet.
-    % end
+    {{ this.partial("ballot/update_vote", ballot: ballot, choices_not_voted: choices_not_voted, choices_voted: choices_voted, user: user) }}
 
   % end
+
+  <br>
+
+  % if comment
+    % if comment.errors[:message].include?(:not_present)
+      <p class="alert error">Message is required</p>
+    % end
+  % end
+
+  {{ this.partial("ballot/comments", ballot: ballot) }}
 
 </section>

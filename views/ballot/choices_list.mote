@@ -1,5 +1,7 @@
 % choices = ballot.choices
 
+<p>Choices:</p>
+
 % if !choices.empty?
   <ul>
     % choices.each do |choice|

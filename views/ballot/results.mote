@@ -1,0 +1,37 @@
+% choices = ballot.choices
+
+% results = {}
+
+% choices.each do |choice|
+  % rating = 0.0
+
+  % voters = choice.votes.size.to_i
+
+  % choice.votes.each do |vote|
+    % choice_title = Choice[vote.choice_id].title
+    % results[choice_title] = rating
+
+    % if !results[choice_title].nil?
+      % rating = rating + vote.rating.to_i
+
+      % results[choice_title] = (rating / voters).round(2)
+    % else
+      % results[choice_title] = (vote.rating.to_i / voters).round(2)
+    % end
+  % end
+% end
+
+<h3>FINAL RESULTS</h3>
+
+<table border="1">
+  <th>Choice</th>
+  <th>Score</th>
+
+  % results = results.sort_by { |k, v| -v }
+
+  % results.each do |choice, score|
+  <tr>
+    <td>{{ choice }}</td><td>{{ score }}</td>
+  </tr>
+  % end
+</table>

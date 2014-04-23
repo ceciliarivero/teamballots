@@ -1,0 +1,19 @@
+% if ballot.status? != "closed"
+  {{ this.partial("ballot/add_comment", ballot: ballot, comment: NewComment.new({})) }}
+% end
+
+<p>Comments:</p>
+
+% if ballot.comments.size > 0
+  <ul>
+    % comments = ballot.comments.sort_by(:date, order: "ALPHA DESC")
+
+    % comments.each do |comment|
+    <li>{{ comment.message }}<br>
+    Added by: {{ comment.added_by }} | Date: {{ comment.commented_at }}</li><br>
+    % end
+
+  </ul>
+% else
+    No comments yet.
+% end

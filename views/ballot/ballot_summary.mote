@@ -6,32 +6,3 @@ Title: <a href="/ballot/{{ ballot.id }}">{{ this.h(ballot.title) }}</a> | Create
 % else
   Closed
 % end
- |
-
-% voted = ""
-
-% choices = ballot.choices
-
-% if !choices.empty?
-  % ballot.choices.each do |choice|
-    % user_votes = choice.votes.find(user_id: this.current_user.id)
-
-    % if !user_votes.empty?
-      % voted = "yes"
-    % else
-      % voted = "no"
-    % end
-
-  % end
-
-  % if voted == "no" && ballot.end_date.to_i > Time.new.to_i
-    <a href="/ballot/{{ ballot.id }}/vote">Vote</a>
-  % elsif voted == "yes" && ballot.end_date.to_i > Time.new.to_i
-    <a href="/ballot/{{ ballot.id }}/vote">Edit vote</a>
-  % else
-    <a href="">See results</a>
-  % end
-
-% else
-  Please add choices to be able to vote
-% end

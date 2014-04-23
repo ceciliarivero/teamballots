@@ -1,0 +1,7 @@
+<p>Add comment</p>
+
+<form action="/ballot/{{ ballot.id }}/add_comment" method="POST">
+  <textarea name="comment[message]" placeholder="Type your comment here">{{ this.h(comment.message) }}</textarea><br><br>
+
+  <button type="submit">Add comment</button>
+</form>
