@@ -14,6 +14,9 @@
     % if signup.errors[:username] == [:not_present]
       <p class="error">Username is required</p>
     % end
+    % if signup.errors[:username] == [:format]
+      <p class="error">Username can contain only letters (capitalized or not), "_", "." and "-" with no spaces</p>
+    % end
     % if signup.errors[:username] == [:not_unique]
       <p class="error">This username is already taken</p>
     % end

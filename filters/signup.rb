@@ -4,6 +4,7 @@ class Signup < Scrivener
   def validate
     if assert_present(:username)
       assert(User.fetch(username).nil?, [:username, :not_unique])
+      assert_format :username, /\A([a-zA-Z]|_|\.|-|\d)+\z/
     end
 
     if assert_email(:email)

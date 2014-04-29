@@ -4,7 +4,7 @@ class EditUser < Scrivener
 
   def validate
     assert_present :name
-    assert_present :username
+    assert_format :username, /\A([a-zA-Z]|_|\.|-|\d)+\z/
     assert_email :email
 
     unless password.nil?
