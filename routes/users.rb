@@ -94,16 +94,17 @@ class Users < Cuba
 
     on "ballot/new" do
       on post, param("ballot") do |params|
+
         params["start_date"] = Time.new.to_i
 
         if params["end_choices_date"] != ""
-          params["end_choices_date"] = Time.iso8601(((params["end_choices_date"] + ":00").sub("T"," ")).sub(/ /,'T')).to_i
+          params["end_choices_date"] = Time.iso8601((params["end_choices_date"] + ":00").sub(/ /,'T')).to_i
         else
           params["end_choices_date"] = nil
         end
 
         if params["end_date"] != ""
-          params["end_date"] = Time.iso8601(((params["end_date"] + ":00").sub("T"," ")).sub(/ /,'T')).to_i
+          params["end_date"] = Time.iso8601((params["end_date"] + ":00").sub(/ /,'T')).to_i
         else
           params["end_date"] = nil
         end
@@ -153,14 +154,15 @@ class Users < Cuba
         if ballot.status? == "active"
           on post do
             on req.post?, param("ballot") do |params|
+
               if params["end_choices_date"] != ""
-                params["end_choices_date"] = Time.iso8601(((params["end_choices_date"] + ":00").sub("T"," ")).sub(/ /,'T')).to_i
+                params["end_choices_date"] = Time.iso8601((params["end_choices_date"] + ":00").sub(/ /,'T')).to_i
               else
                 params["end_choices_date"] = nil
               end
 
               if params["end_date"] != ""
-                params["end_date"] = Time.iso8601(((params["end_date"] + ":00").sub("T"," ")).sub(/ /,'T')).to_i
+                params["end_date"] = Time.iso8601((params["end_date"] + ":00").sub(/ /,'T')).to_i
               else
                 params["end_date"] = nil
               end
@@ -175,8 +177,8 @@ class Users < Cuba
               end
 
               on default do
-                ballot.end_choices_date = Time.at(ballot.end_choices_date.to_i).strftime("%Y-%m-%eT%H:%M")
-                ballot.end_date = Time.at(ballot.end_date.to_i).strftime("%Y-%m-%eT%H:%M")
+                ballot.end_choices_date = Time.at(ballot.end_choices_date.to_i).strftime("%Y-%m-%d %H:%M")
+                ballot.end_date = Time.at(ballot.end_date.to_i).strftime("%Y-%m-%d %H:%M")
 
                 render("ballot/edit",
                   title: "Edit ballot", ballot: ballot, edit: edit)
@@ -184,8 +186,8 @@ class Users < Cuba
             end
 
             on default do
-              ballot.end_choices_date = Time.at(ballot.end_choices_date.to_i).strftime("%Y-%m-%eT%H:%M")
-              ballot.end_date = Time.at(ballot.end_date.to_i).strftime("%Y-%m-%eT%H:%M")
+              ballot.end_choices_date = Time.at(ballot.end_choices_date.to_i).strftime("%Y-%m-%d %H:%M")
+              ballot.end_date = Time.at(ballot.end_date.to_i).strftime("%Y-%m-%d %H:%M")
 
               render("ballot/edit",
                 title: "Edit ballot", ballot: ballot, edit: NewBallot.new({}))
@@ -193,8 +195,8 @@ class Users < Cuba
           end
 
           on get, root do
-            ballot.end_choices_date = Time.at(ballot.end_choices_date.to_i).strftime("%Y-%m-%eT%H:%M")
-            ballot.end_date = Time.at(ballot.end_date.to_i).strftime("%Y-%m-%eT%H:%M")
+            ballot.end_choices_date = Time.at(ballot.end_choices_date.to_i).strftime("%Y-%m-%d %H:%M")
+            ballot.end_date = Time.at(ballot.end_date.to_i).strftime("%Y-%m-%d %H:%M")
 
             render("ballot/edit",
               title: "Edit ballot", ballot: ballot)

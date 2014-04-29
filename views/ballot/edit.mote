@@ -20,9 +20,14 @@
 
     <textarea name="ballot[description]" placeholder="Description">{{ this.h(ballot.description) }}</textarea><br>
 
-    Deadline for adding choices: <input type="datetime-local" name="ballot[end_choices_date]" value="{{ ballot.end_choices_date }}"><br>
 
-    Ballot closing date: <input type="datetime-local" name="ballot[end_date]" value="{{ ballot.end_date }}"><br>
+    <label for="end_choices_date">Deadline for adding choices:</label>
+    <input type="Text" name="ballot[end_choices_date]" value="{{ ballot.end_choices_date }}" id="end_choices_date" maxlength="25" size="25"/>
+    <img src="/img/cal/cal.gif" onclick="javascript:NewCssCal ('end_choices_date','yyyyMMdd','arrow',true,'24','','future')" style="cursor:pointer"/><br>
+
+    <label for="end_date">Ballot closing date:</label>
+    <input type="Text" name="ballot[end_date]" value="{{ ballot.end_date }}" id="end_date" maxlength="25" size="25"/>
+    <img src="/img/cal/cal.gif" onclick="javascript:NewCssCal ('end_date','yyyyMMdd','arrow',true,'24','','future')" style="cursor:pointer"/><br>
 
     <span>
       <a href="/ballot/{{ ballot.id }}">cancel</a>&nbsp;&nbsp;
@@ -31,3 +36,5 @@
     </span>
   </form>
 </section>
+
+<script src="/js/datetimepicker_css.js"></script>
