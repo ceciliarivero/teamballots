@@ -33,7 +33,7 @@
     Not voters added to this group yet.
   % end
 
-  <h2>Add voter</h2>
+  <h2>Add voter to this group</h2>
 
   <form action="/group/{{ group.id }}/voters/add" method="POST">
 

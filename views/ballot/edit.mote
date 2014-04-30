@@ -21,7 +21,7 @@
     <textarea name="ballot[description]" placeholder="Description">{{ this.h(ballot.description) }}</textarea><br>
 
 
-    <label for="end_choices_date">Deadline for adding choices:</label>
+    <label for="end_choices_date">Deadline for modifying the ballot:</label>
     <input type="Text" name="ballot[end_choices_date]" value="{{ ballot.end_choices_date }}" id="end_choices_date" maxlength="25" size="25"/>
     <img src="/img/cal/cal.gif" onclick="javascript:NewCssCal ('end_choices_date','yyyyMMdd','arrow',true,'24','','future')" style="cursor:pointer"/><br>
 

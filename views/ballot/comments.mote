@@ -9,8 +9,8 @@
     % comments = ballot.comments.sort_by(:date, order: "ALPHA DESC")
 
     % comments.each do |comment|
-    <li>{{ comment.message }}<br>
-    Added by: {{ comment.added_by }} | Date: {{ comment.commented_at }}</li><br>
+    <li>{{ comment.message }}<br><br>
+    By: {{ comment.added_by }} | Date: {{ comment.commented_at }}</li><br>
     % end
 
   </ul>

@@ -16,17 +16,19 @@ class User < Ohm::Model
   end
 
   def before_delete
-    comments.each(&:delete)
-    groups.each(&:delete)
+    # The following loop needs to be changed, to not iterate through ALL the groups
+    Group.all.each do |group|
+      group.voters.delete(self)
+    end
 
     ballots.each do |ballot|
       ballot.voters.delete(self)
     end
 
+    groups.each(&:delete)
+
     super
   end
-
-  collection :comments, :Comment
 
   set :groups, :Group
   set :ballots, :Ballot
