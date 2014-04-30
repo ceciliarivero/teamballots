@@ -17,6 +17,7 @@ class User < Ohm::Model
 
   def before_delete
     comments.each(&:delete)
+    groups.each(&:delete)
 
     ballots.each do |ballot|
       ballot.voters.delete(self)
@@ -26,5 +27,7 @@ class User < Ohm::Model
   end
 
   collection :comments, :Comment
+
+  set :groups, :Group
   set :ballots, :Ballot
 end

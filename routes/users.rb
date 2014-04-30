@@ -383,6 +383,8 @@ class Users < Cuba
                 ballot.voters.add(new_voter)
                 new_voter.ballots.add(ballot)
 
+                # Ost[:added_voter].push(new_voter.id)
+
                 session[:success] = "Voter successfully added!"
                 res.redirect "/ballot/#{id}/voters"
               end
@@ -398,6 +400,21 @@ class Users < Cuba
               render("ballot/add_voter",
                 title: "Add voter", ballot: ballot, voter: voter)
             end
+          end
+
+          on post, param("voters") do |params|
+            group = Group[params["group"]]
+
+            voters = group.voters
+
+            voters.each do |voter|
+              ballot.voters.add(voter)
+              voter.ballots.add(ballot)
+              # Ost[:added_voter].push(voter.id)
+            end
+
+            session[:success] = "Voters group successfully added!"
+            res.redirect "/ballot/#{id}/voters"
           end
 
           on get, root do
@@ -456,11 +473,6 @@ class Users < Cuba
                 title: "Add comment", ballot: ballot, comment: comment)
             end
           end
-
-          # on get, root do
-          #   render("ballot/add_comment",
-          #     title: "Add comment", ballot: ballot, comment: NewComment.new({}))
-          # end
         else
           session[:error] = "Comments cannot be added anymore. Ballot is closed."
           res.redirect "/ballot/#{id}"
@@ -556,6 +568,124 @@ class Users < Cuba
         on get, root do
           render("ballot/info",
             title: ballot.title, ballot: ballot)
+        end
+      end
+
+      on default do
+        not_found!
+      end
+    end
+
+    on "group/new" do
+      on post, param("group") do |params|
+
+        new_group = NewGroup.new(params)
+
+        on new_group.valid? do
+          params["user_id"] = user.id
+
+          group = Group.create(params)
+
+          user.groups.add(group)
+
+          session[:success] = "You have successfully created a new group!"
+          res.redirect "/group/#{group.id}"
+        end
+
+        on default do
+          render("group/new",
+            title: "Create new group", group: new_group)
+        end
+      end
+
+      on get, root do
+        render("group/new",
+          title: "Create new group")
+      end
+
+      on default do
+        not_found!
+      end
+    end
+
+    on "group/:id/voters/add" do |id|
+      group = user.groups[id]
+
+      on group do
+        on post, param("voter") do |params|
+          voter = NewVoter.new(params)
+
+          on voter.valid? do
+            new_voter = User.with(:email, voter.email)
+
+            on new_voter && new_voter.email == user.email do
+              session[:error] = "You are already a voter! No need to include yourself in the group. :-)"
+              render("group/info",
+                title: "Group", group: group, new_voter: voter)
+            end
+
+            on new_voter && group.voters.include?(new_voter) do
+              session[:error] = "Voter already added"
+              render("group/info",
+                title: "Group", group: group, new_voter: voter)
+            end
+
+            on new_voter do
+              group.voters.add(new_voter)
+
+              session[:success] = "Voter successfully added!"
+              res.redirect "/group/#{id}"
+            end
+
+            on default do
+              session[:error] = "User registered with that e-mail not found"
+              render("group/info",
+                title: "Group", group: group, new_voter: voter)
+            end
+          end
+
+          on default do
+            render("group/info",
+              title: "Group", group: group, new_voter: voter)
+          end
+        end
+
+        on get, root do
+          render("group/info",
+            title: "Group", group: group, new_voter: NewVoter.new({}))
+        end
+      end
+
+      on default do
+        not_found!
+      end
+    end
+
+    on "group/:id/remove" do |id|
+      group = user.groups[id]
+
+      on group do
+        on get do
+          user.groups.delete(group)
+          group.delete
+
+          session[:success] = "Group successfully removed"
+          res.redirect "/dashboard"
+        end
+      end
+
+      on default do
+        not_found!
+      end
+    end
+
+    on "group/:id" do |id|
+      group = user.groups[id]
+
+      on group do
+        on get, root do
+          render("group/info",
+            title: "Group", group: group, new_voter: NewVoter.new({}))
         end
       end
 

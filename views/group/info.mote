@@ -1,0 +1,49 @@
+% user = this.current_user
+
+% group = params.fetch(:group, false)
+
+<section>
+  % new_voter = params.fetch(:new_voter, false)
+
+  % if new_voter
+    % if new_voter.errors[:email].include?(:not_present)
+      <p class="alert error">Email is required</p>
+    % end
+  % end
+
+  <h2>Group name: {{ this.h(group.name) }}</h2>
+
+  <p>
+    Voters ({{ group.voters.size }})
+    |
+    <a href="/group/{{ group.id }}/edit">Edit</a>
+    |
+    <a href="/group/{{ group.id }}/remove">Remove group</a>
+  </p>
+
+  % voters = group.voters
+
+  % if !voters.empty?
+
+    % voters.each do |voter|
+      <img id="gravatar-img" src="{{ voter.gravatar }}"> Name: {{ voter.name }} | Username: {{ voter.username }} | Email: {{ voter.email }}<br>
+    % end
+
+  % else
+    Not voters added to this group yet.
+  % end
+
+  <h2>Add voter</h2>
+
+  <form action="/group/{{ group.id }}/voters/add" method="POST">
+
+    <input type="text" name="voter[email]" value="{{ this.h(new_voter.email) }}" placeholder="Voter email"><br><br>
+
+    <span>
+      <a href="/dashboard">cancel</a>&nbsp;&nbsp;
+
+      <button type="submit">Add voter</button>
+    </span>
+  </form>
+
+</section>

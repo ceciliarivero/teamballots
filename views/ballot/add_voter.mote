@@ -1,3 +1,5 @@
+% user = this.current_user
+
 <section>
   % voter = params.fetch(:voter, false)
 
@@ -16,14 +18,30 @@
   <h2>Add voter</h2>
 
   <form action="/ballot/{{ ballot.id }}/voters/add" method="POST">
-    <input type="text" name="voter[email]" value="{{ this.h(voter.email) }}" placeholder="Voter email"><br>
 
-    <span>
-      <a href="/ballot/{{ ballot.id }}">cancel</a>&nbsp;&nbsp;
+    <input type="text" name="voter[email]" value="{{ this.h(voter.email) }}" placeholder="Voter email"><br><br>
 
-      <button type="submit">Add voter</button>
-    </span>
-  </form>
+    <button type="submit">Add voter</button>
+  </form><br><br>
+
+  % if !user.groups.empty?
+    <h2>Add voters from a group</h2>
+
+    <form action="/ballot/{{ ballot.id }}/voters/add" method="POST">
+
+      <select name="voters[group]">
+        <option>Select group</option>
+
+        % user.groups.each do |group|
+          <option value="{{ group.id }}">{{ group.name }}</option>
+        % end
+      </select><br><br>
+
+      <button type="submit">Add voters</button>
+    </form>
+  % else
+    <a href="/group/new">Create a Voters group</a><br>
+  % end
 
   <br>
   <a href="/ballot/{{ ballot.id }}">Back to ballot</a>

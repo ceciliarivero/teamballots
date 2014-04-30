@@ -20,4 +20,9 @@
     % end
     </ul>
   % end
+
+  <h2>My voters groups</h2>
+
+   {{ this.partial("group/groups_list") }}
+
 </section>

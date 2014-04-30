@@ -1,0 +1,21 @@
+<section>
+  % group = params.fetch(:group, false)
+
+  % if group
+    % if group.errors[:name].include?(:not_present)
+      <p class="alert error">Group name is required</p>
+    % end
+  % end
+
+  <h2>Create a new group</h2>
+
+  <form action="/group/new" method="POST">
+    <input type="text" name="group[name]" placeholder="Group name"><br><br>
+
+    <span>
+      <a href="/dashboard">cancel</a>&nbsp;&nbsp;
+
+      <button type="submit">Create Group</button>
+    </span>
+  </form>
+</section>

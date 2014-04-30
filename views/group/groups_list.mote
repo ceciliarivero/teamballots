@@ -1,0 +1,14 @@
+% user = this.current_user
+% groups = user.groups
+
+% if !groups.empty?
+  <ul>
+    % groups.each do |group|
+      <li>{{ group.name }} | <a href="/group/{{ group.id }}">Edit</a> | <a href="/group/{{ group.id }}/remove">Remove group</a></li>
+    % end
+  </ul>
+% else
+    No groups created yet.<br><br>
+% end
+
+<a href="/group/new">Create new group</a>
