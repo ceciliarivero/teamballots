@@ -40,15 +40,19 @@
       <button type="submit">Save</button>
   </form>
 % else
-  <ul>
-    % choices_voted.each do |choice|
-      % user_vote = choice.votes.find(user_id: user.id)
+  % if !choices_voted.empty?
+    <ul>
+      % choices_voted.each do |choice|
+        % user_vote = choice.votes.find(user_id: user.id)
 
-      % user_vote.each do |vote|
-        <li>{{ choice.title }}: {{ vote.rating }}</li>
+        % user_vote.each do |vote|
+          <li>{{ choice.title }}: {{ vote.rating }}</li>
+        % end
       % end
-    % end
-  </ul>
+    </ul>
+  % else
+    You havent voted in this ballot.
+  % end
 
   {{ this.partial("ballot/results", ballot: ballot) }}
 

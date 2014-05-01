@@ -1,17 +1,13 @@
 % user = this.current_user
-% ballots = user.ballots
+% ballots = user.ballots.find(status?: "active").union(status?: "voting_only")
+% closed_ballots = user.ballots.find(status?: "closed")
 
 <section>
-  <p>Current ballots: {{ ballots.size }}</p>
-
   <a href="/ballot/new">Create new ballot</a>
 
-  % if ballots.empty?
-    <p>
-      No current ballots.
-    </p>
-  % else
-    <h2>Ballots</h2>
+  <h2>Active ballots ({{ ballots.size }})</h2>
+
+  % if !ballots.empty?
     <ul>
     % ballots.each do |ballot|
       <li>
@@ -19,6 +15,14 @@
       </li>
     % end
     </ul>
+  % else
+    <p>
+      No current active ballots.
+    </p>
+  % end
+
+  % if !closed_ballots.empty?
+    <a href="/ballots/closed">See closed ballots</a>
   % end
 
   <h2>My voters groups</h2>

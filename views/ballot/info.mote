@@ -16,7 +16,6 @@
     % else
       <i>Add voters</i> | <i>Add choices</i> | <i>Edit</i>
     % end
-    | <a href="/ballot/{{ ballot.id }}/remove">Remove ballot</a>
   </p>
   <p>Description: {{ this.h(ballot.description) }}</p>
 

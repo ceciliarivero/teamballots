@@ -66,118 +66,80 @@ class Guests < Cuba
       end
     end
 
-    # on "forgot-password" do
-    #   on get do
-    #     render("forgot-password",
-    #       title: "Password recovery")
-    #   end
+    on "forgot-password" do
+      on post do
+        user = User.fetch(req[:email])
 
-    #   on post do
-    #     user = User.fetch(req[:email])
+        on user do
+          nobi = Nobi::TimestampSigner.new(NOBI_SECRET)
+          signature = nobi.sign(String(user.id))
 
-    #     on user do
-    #       nobi = Nobi::TimestampSigner.new(NOBI_SECRET)
-    #       signature = nobi.sign(String(user.id))
+          Malone.deliver(
+            from: "info@teamballots.com",
+            to: user.email,
+            subject: "[Team Ballots] Password recovery",
+            html: "To reset your password, please copy and paste this link into your browser's URL address bar: " +
+            RESET_URL + "/otp/%s" % signature)
 
-    #       Malone.deliver(
-    #         from: "info@teamballots.com",
-    #         to: user.email,
-    #         subject: "[Team Ballots] Password recovery",
-    #         html: "To reset your password, please copy and paste this link into your browser's URL address bar: " +
-    #         RESET_URL + "/otp/%s" % signature)
+          res.redirect "/login/?recovery=true", 303
+        end
 
-    #       res.redirect "/login/?recovery=true", 303
-    #     end
+        on default do
+          session[:error] = "Can't find a user with that e-mail."
+          res.redirect("/forgot-password", 303)
+        end
+      end
 
-    #     on default do
-    #       session[:error] = "Can't find a user with that e-mail."
-    #       res.redirect("/forgot-password", 303)
-    #     end
-    #   end
-    # end
+      on get, root do
+        render("forgot-password",
+          title: "Password recovery")
+      end
 
-    # on "otp/:signature" do |signature|
-    #   user = Otp.unsign(signature, 7200)
+      on default do
+        not_found!
+      end
+    end
 
-    #   on user do
-    #     on post, param("user") do |params|
-    #       reset = PasswordRecovery.new(params)
+    on "otp/:signature" do |signature|
+      user = Otp.unsign(signature, 7200)
 
-    #       on reset.valid? do
-    #         user.update(password: reset.password)
+      on user do
+        on post, param("user") do |params|
+          reset = PasswordRecovery.new(params)
 
-    #         authenticate(user)
+          on reset.valid? do
+            user.update(password: reset.password)
 
-    #         session[:success] = "You have successfully changed
-    #         your password and logged in!"
+            authenticate(user)
 
-    #         # Ost[:password_changed].push(user.id)
+            session[:success] = "You have successfully changed
+            your password and logged in!"
 
-    #         res.redirect "/", 303
-    #       end
+            # Ost[:password_recovered].push(user.id)
 
-    #       on default do
-    #         render("otp", title: "Password recovery",
-    #           user: user, signature: signature,
-    #           reset: reset)
-    #       end
-    #     end
+            res.redirect "/", 303
+          end
 
-    #     on default do
-    #       render("otp", title: "Password recovery",
-    #         user: user, signature: signature)
-    #     end
-    #   end
+          on default do
+            render("otp", title: "Password recovery",
+              user: user, signature: signature,
+              reset: reset)
+          end
+        end
 
-    #   on get, root do
-    #     session[:error] = "Invalid or expired URL. Please try again!"
-    #     res.redirect("/forgot-password")
-    #   end
+        on default do
+          render("otp", title: "Password recovery",
+            user: user, signature: signature)
+        end
+      end
 
-    #   on(default) { not_found! }
-    # end
+      on get, root do
+        session[:error] = "Invalid or expired URL. Please try again!"
+        res.redirect("/forgot-password")
+      end
 
-    # on "password/:signature" do |signature|
-    #   user = Otp.unsign(signature, 604800)
-
-    #   on user do
-    #     on post, param("user") do |params|
-    #       reset = PasswordRecovery.new(params)
-
-    #       on reset.valid? do
-    #         user.update(password: reset.password)
-
-    #         authenticate(user)
-
-    #         session[:success] = "You have successfully changed
-    #         your password and logged in!"
-
-    #         # Ost[:password_changed].push(user.id)
-
-    #         res.redirect "/", 303
-    #       end
-
-    #       on default do
-    #         render("first_time_login", title: "First time login",
-    #           user: user, signature: signature, reset: reset)
-    #       end
-    #     end
-
-    #     on default do
-    #       render("first_time_login", title: "First time login",
-    #         user: user, signature: signature)
-    #     end
-    #   end
-
-    #   on get, root do
-    #     session[:error] = "This URL has expired. Send a mail to info@teamballots.com and we'll send you a new one right away!"
-    #     res.redirect "/password"
-    #   end
-
-    #   on default do
-    #     not_found!
-    #   end
-    # end
+      on(default) { not_found! }
+    end
 
     on default do
       not_found!

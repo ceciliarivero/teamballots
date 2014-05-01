@@ -326,27 +326,8 @@ class Users < Cuba
               title: "Edit ballot", ballot: ballot)
           end
         else
-          session[:error] = "Ballot cannot be edited. We're in Voting Only period now."
+          session[:error] = "Ballot cannot be edited anymore"
           res.redirect "/ballot/#{id}"
-        end
-      end
-
-      on default do
-        not_found!
-      end
-    end
-
-    on "ballot/:id/remove" do |id|
-      ballot = user.ballots[id]
-
-      on ballot do
-        on get do
-          ballot.delete
-
-          # Ost[:removed_ballot].push(id)
-
-          session[:success] = "Ballot successfully removed"
-          res.redirect "/dashboard"
         end
       end
 
@@ -389,7 +370,7 @@ class Users < Cuba
               title: "Add choice", ballot: ballot, choice: NewChoice.new({}))
           end
         else
-          session[:error] = "Choices cannot be added anymore. We're in Voting Only period now."
+          session[:error] = "Ballot cannot be edited anymore"
           res.redirect "/ballot/#{id}"
         end
       end
@@ -426,8 +407,23 @@ class Users < Cuba
           end
 
         else
-          session[:error] = "Choices cannot be removed. We're in Voting Only period now."
+          session[:error] = "Ballot cannot be edited anymore"
           res.redirect "/ballot/#{ballot_id}"
+        end
+      end
+
+      on default do
+        not_found!
+      end
+    end
+
+    on "ballots/closed" do
+      closed_ballots = user.ballots.find(status?: "closed")
+
+      on closed_ballots do
+        on get, root do
+          render("ballot/closed_ballots",
+            title: "Closed ballots", closed_ballots: closed_ballots)
         end
       end
 
@@ -497,7 +493,7 @@ class Users < Cuba
       ballot = user.ballots[id]
 
       on ballot do
-        if ballot.status? == "active"
+        if ballot.status? != "closed"
           on post, param("voter") do |params|
             voter = NewVoter.new(params)
 
@@ -566,7 +562,7 @@ class Users < Cuba
               title: "Add voter", ballot: ballot, voter: NewVoter.new({}))
           end
         else
-          session[:error] = "Voters cannot be added. We're in Voting Only period now."
+          session[:error] = "Ballot cannot be edited anymore"
           res.redirect "/ballot/#{id}"
         end
       end
