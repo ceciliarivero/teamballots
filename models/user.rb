@@ -7,6 +7,7 @@ class User < Ohm::Model
   attribute :email
   attribute :crypted_password
   attribute :gravatar
+  attribute :status
 
   unique :username
   unique :email

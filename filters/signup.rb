@@ -1,5 +1,5 @@
 class Signup < Scrivener
-  attr_accessor :name, :username, :email, :gravatar, :password, :password_confirmation
+  attr_accessor :name, :username, :email, :gravatar, :password, :password_confirmation, :status
 
   def validate
     if assert_present(:username)

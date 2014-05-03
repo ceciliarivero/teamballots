@@ -10,15 +10,22 @@ class Guests < Cuba
         signup = Signup.new(params)
 
         on signup.valid? do
-          user = signup.create
+          params.delete("password_confirmation")
+          params["status"] = "tbc"
 
-          authenticate(user)
+          user = User.create(params)
 
-          session[:success] = "You have successfully signed up!"
+          signer = Nobi::Signer.new(NOBI_SECRET)
+          signed = signer.sign(user.id)
 
-          # Ost[:welcome].push(user.id)
+          Malone.deliver(
+            from: "info@teamballots.com",
+            to: user.email,
+            subject: "[Team Ballots] Account activation",
+            html: "To activate your account, please copy and paste this link into your browser's URL address bar: " +
+            RESET_URL + "/activate/%s" % signed)
 
-          res.redirect "/dashboard"
+          res.redirect "/signup/?activate=true", 303
         end
 
         on default do
@@ -27,10 +34,38 @@ class Guests < Cuba
         end
       end
 
+      on param("activate") do
+        session[:success] = "Check your e-mail and follow the instructions to activate your account."
+        res.redirect "/"
+      end
+
       on default do
         render("signup", title: "Sign up",
           user: {}, signup: Signup.new({}))
       end
+    end
+
+    on "activate/:signature" do |signature|
+      user = Activation.unsign(signature)
+
+      on user do
+        user.update(status: "confirmed")
+
+        authenticate(user)
+
+        session[:success] = "You have successfully activated your account and logged in!"
+
+        # Ost[:welcome].push(user.id)
+
+        res.redirect "/", 303
+      end
+
+      on get, root do
+        session[:error] = "Invalid or expired URL. Please try signin up again!"
+        res.redirect("/signup")
+      end
+
+      on(default) { not_found! }
     end
 
     on "login" do
@@ -44,8 +79,19 @@ class Guests < Cuba
             remember(3600)
           end
 
-          session[:success] = "You have successfully logged in!"
-          res.redirect "/dashboard"
+          user = User[session["User"]]
+
+          on user.status == "tbc" do
+            logout(User)
+
+            session[:error] = "You need to confirm your account first."
+            res.redirect "/"
+          end
+
+          on default do
+            session[:success] = "You have successfully logged in!"
+            res.redirect "/dashboard"
+          end
         else
           session[:error] = "Invalid email/password combination"
           render("login", title: "Login", user: user)
