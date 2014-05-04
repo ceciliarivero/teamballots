@@ -2,11 +2,25 @@
 % groups = user.groups
 
 % if !groups.empty?
-  <ul>
-    % groups.each do |group|
-      <li>{{ group.name }} | <a href="/group/{{ group.id }}">Edit</a> | <a href="/group/{{ group.id }}/remove">Remove group</a></li>
-    % end
-  </ul>
+  <div class="ballots_table">
+    <table>
+      <thead>
+        <tr>
+          <th>Group name</th><th>Voters</th><th>Edit</th><th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        % groups.each do |group|
+          <tr>
+            <td>{{ group.name }}</td>
+            <td><a href="/group/{{ group.id }}">{{ group.voters.size }}</a></td>
+            <td><a href="/group/{{ group.id }}"><i class="fa fa-pencil-square-o"></i></a></td>
+            <td><a href="/group/{{ group.id }}/remove"><i class="fa fa-trash-o"></i></a></td>
+          </tr>
+        % end
+      </tbody>
+    </table>
+  </div><br>
 % else
     No groups created yet.<br><br>
 % end

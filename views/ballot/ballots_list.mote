@@ -1,0 +1,26 @@
+% user = this.current_user
+
+<div class="ballots_table">
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th><th>Voters</th><th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      % ballots.each do |ballot|
+        <tr>
+          <td><a href="/ballot/{{ ballot.id }}">{{ ballot.title }}</a></td>
+          <td><a href="/ballot/{{ ballot.id }}/voters">{{ ballot.voters.size }}</a></td>
+          <td>
+            % if ballot.status? == "active"
+              Active
+            % else
+              Voting only
+            % end
+          </td>
+        </tr>
+      % end
+    </tbody>
+  </table>
+</div>

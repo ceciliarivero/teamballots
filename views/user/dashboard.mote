@@ -3,18 +3,12 @@
 % closed_ballots = user.ballots.find(status?: "closed")
 
 <section>
-  <a href="/ballot/new">Create new ballot</a>
+  <a class="btn" href="/ballot/new">Create new ballot</a>
 
   <h2>Active ballots ({{ ballots.size }})</h2>
 
   % if !ballots.empty?
-    <ul>
-    % ballots.each do |ballot|
-      <li>
-        {{ this.partial("ballot/ballot_summary", ballot: ballot) }}
-      </li>
-    % end
-    </ul>
+    {{ this.partial("ballot/ballots_list", ballots: ballots) }}
   % else
     <p>
       No current active ballots.
@@ -25,7 +19,7 @@
     <a href="/ballots/closed">See closed ballots</a>
   % end
 
-  <h2>My voters groups</h2>
+  <h2>My voters groups ({{ user.groups.size }})</h2>
 
    {{ this.partial("group/groups_list") }}
 

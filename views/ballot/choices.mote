@@ -7,7 +7,7 @@
 
   % if ballot.status? == "active"
     <br><br>
-    <a href="/ballot/{{ ballot.id }}/choices/add">Add choice</a><br>
+    <a class="btn" href="/ballot/{{ ballot.id }}/choices/add">Add choice</a><br>
   % end
 
   <br>

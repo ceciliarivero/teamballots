@@ -57,7 +57,7 @@ class Guests < Cuba
 
         # Ost[:welcome].push(user.id)
 
-        res.redirect "/", 303
+        res.redirect "/dashboard", 303
       end
 
       on get, root do

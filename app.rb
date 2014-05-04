@@ -50,7 +50,13 @@ Cuba.define do
   persist_session!
 
   on root do
-    render("home", title: "Home")
+    on authenticated(User) do
+      res.redirect "/dashboard"
+    end
+
+    on default do
+      render("home", title: "Home")
+    end
   end
 
   on authenticated(User) do

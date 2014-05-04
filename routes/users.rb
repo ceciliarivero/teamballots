@@ -82,7 +82,6 @@ class Users < Cuba
     end
 
     on "delete" do
-
       UserRemovedLog.create(user)
 
       user.delete
@@ -180,6 +179,24 @@ class Users < Cuba
       end
     end
 
+    on "group/:group_id/voters/:voter_id/remove" do |group_id, voter_id|
+      group = user.groups[group_id]
+
+      on group do
+        voter = User[voter_id]
+        on get do
+          group.voters.delete(voter)
+
+          session[:success] = "Voter successfully removed"
+          res.redirect "/group/#{group_id}"
+        end
+      end
+
+      on default do
+        not_found!
+      end
+    end
+
     on "group/:id/remove" do |id|
       group = user.groups[id]
 
@@ -215,7 +232,6 @@ class Users < Cuba
 
     on "ballot/new" do
       on post, param("ballot") do |params|
-
         params["start_date"] = Time.new.to_i
 
         if params["end_choices_date"] != ""
@@ -538,23 +554,31 @@ class Users < Cuba
           end
 
           on post, param("voters") do |params|
-            group = Group[params["group"]]
+            #FIX THIS. WHEN INSIDE A BALLOT, WITHOUT CHOOSING THE GROUP I CLICK ON ADD VOTERS, IT GOES TO THE PAGE NOT FOUND.
+            res.write params.inspect
+            # on !params["group"] != "Select group" do
+            #   group = Group[params["group"]]
 
-            voters = group.voters
+            #   voters = group.voters
 
-            voters.each do |voter|
-              if !ballot.voters.include?(voter)
-                VoterAddedLog.create(user, ballot, voter)
-              end
+            #   voters.each do |voter|
+            #     if !ballot.voters.include?(voter)
+            #       VoterAddedLog.create(user, ballot, voter)
+            #     end
 
-              ballot.voters.add(voter)
-              voter.ballots.add(ballot)
+            #     ballot.voters.add(voter)
+            #     voter.ballots.add(ballot)
 
-              # Ost[:added_voter].push(voter.id)
-            end
+            #     # Ost[:added_voter].push(voter.id)
+            #   end
 
-            session[:success] = "Voters group successfully added!"
-            res.redirect "/ballot/#{id}/voters"
+            #   session[:success] = "Voters group successfully added!"
+            #   res.redirect "/ballot/#{id}/voters"
+            # end
+
+            # on default do
+            #   not_found!
+            # end
           end
 
           on get, root do
@@ -714,6 +738,10 @@ class Users < Cuba
       on default do
         not_found!
       end
+    end
+
+    on "/" do
+      res.write "hola"
     end
 
     on default do

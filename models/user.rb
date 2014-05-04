@@ -9,6 +9,8 @@ class User < Ohm::Model
   attribute :gravatar
   attribute :status
 
+  index :status
+
   unique :username
   unique :email
 

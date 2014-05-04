@@ -2,6 +2,6 @@
 
 <ul>
   % voters.each do |voter|
-    <li><img id="gravatar-img" src="{{ voter.gravatar }}"> Name: {{ voter.name }} | Username: {{ voter.username }} | <a href="/ballot/{{ ballot.id }}/voters/{{ voter.id }}/remove">Remove</a></li>
+    <li><img id="gravatar-img" class="gravatar" src="{{ voter.gravatar }}"> Name: {{ voter.name }} | Username: {{ voter.username }} | <a href="/ballot/{{ ballot.id }}/voters/{{ voter.id }}/remove">Remove</a></li>
   % end
 </ul>

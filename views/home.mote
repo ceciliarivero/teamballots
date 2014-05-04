@@ -1,1 +1,11 @@
-WELCOME TO TEAM BALLOTS
+% user = this.current_user
+
+<div class="login-signup">
+
+  <div class="login">{{ this.partial("login", user: "") }}<br></div>
+
+  <div class="signup">{{ this.partial("signup", user: "") }}</div>
+
+</div>
+
+<div style="clear: both;"></div>

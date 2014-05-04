@@ -16,23 +16,25 @@
   <h2>Create a new ballot</h2>
 
   <form action="/ballot/new" method="POST">
-    <input type="text" name="ballot[title]" value="{{ this.h(ballot.title) }}" placeholder="Title"><br>
+    <div class="form_left">
+      <input type="text" name="ballot[title]" value="{{ this.h(ballot.title) }}" placeholder="Title"><br>
 
-    <textarea name="ballot[description]" placeholder="Description">{{ this.h(ballot.description) }}</textarea><br>
+      <textarea name="ballot[description]" placeholder="Description">{{ this.h(ballot.description) }}</textarea><br><br>
+    </div>
 
-    <label for="end_choices_date">Deadline for modifying the ballot:</label>
-    <input type="Text" name="ballot[end_choices_date]" id="end_choices_date" maxlength="25" size="25"/>
-    <img src="/img/cal/cal.gif" onclick="javascript:NewCssCal ('end_choices_date','yyyyMMdd','arrow',true,'24','','future')" style="cursor:pointer"/><br>
+    <div class="form_right">
+      <label for="end_choices_date">Deadline for modifying the ballot:</label><br>
+      <input type="text" name="ballot[end_choices_date]" id="end_choices_date" maxlength="16" size="16" placeholder="YYYY-MM-DD HH:MM"/><i class="fa fa-calendar" onclick="javascript:NewCssCal ('end_choices_date','yyyyMMdd','arrow',true,'24','','future')"></i><br><br>
 
-    <label for="end_date">Ballot closing date:</label>
-    <input type="Text" name="ballot[end_date]" id="end_date" maxlength="25" size="25"/>
-    <img src="/img/cal/cal.gif" onclick="javascript:NewCssCal ('end_date','yyyyMMdd','arrow',true,'24','','future')" style="cursor:pointer"/><br>
+      <label for="end_date">Ballot closing date:</label><br>
+      <input type="text" name="ballot[end_date]" id="end_date" maxlength="16" size="16" placeholder="YYYY-MM-DD HH:MM"/><i class="fa fa-calendar" onclick="javascript:NewCssCal ('end_date','yyyyMMdd','arrow',true,'24','','future')"></i><br><br>
 
-    <span>
-      <a href="/dashboard">cancel</a>&nbsp;&nbsp;
+      <span>
+        <a class="btn cancel" href="/dashboard">Cancel</a>&nbsp;&nbsp;
 
-      <button type="submit">Create Ballot</button>
-    </span>
+        <button type="submit">Create Ballot</button>
+      </span>
+    </div>
   </form>
 </section>
 

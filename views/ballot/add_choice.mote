@@ -19,7 +19,7 @@
     <input type="text" name="choice[title]" value="{{ this.h(choice.title) }}" placeholder="Title"><br>
 
     <span>
-      <a href="/ballot/{{ ballot.id }}">cancel</a>&nbsp;&nbsp;
+      <a class="btn cancel" href="/ballot/{{ ballot.id }}">Cancel</a>&nbsp;&nbsp;
 
       <button type="submit">Add choice</button>
     </span>

@@ -16,7 +16,7 @@
   <p>
     Voters ({{ group.voters.size }})
     |
-    <a href="/group/{{ group.id }}/edit">Edit</a>
+    <a href="/group/{{ group.id }}">Edit</a>
     |
     <a href="/group/{{ group.id }}/remove">Remove group</a>
   </p>
@@ -24,11 +24,28 @@
   % voters = group.voters
 
   % if !voters.empty?
+    <div class="ballots_table">
+      <table>
+        <thead>
+          <tr>
+            <th><i class="fa fa-user"></i></th>
+            <th><i class="fa fa-envelope"></i></th>
+            <th><i class="fa fa-trash-o"></i></th>
+          </tr>
+        </thead>
 
-    % voters.each do |voter|
-      <img id="gravatar-img" src="{{ voter.gravatar }}"> Name: {{ voter.name }} | Username: {{ voter.username }} | Email: {{ voter.email }}<br>
-    % end
-
+        <tbody>
+          % voters.each do |voter|
+            <tr>
+              <td>
+                <img id="gravatar-img" class="gravatar" src="{{ voter.gravatar }}"> {{ voter.name }} / {{ voter.username }}</td>
+              <td>{{ voter.email }}</td>
+              <td><a href="/group/{{ group.id}}/voters/{{ voter.id }}/remove"><i class="fa fa-trash-o"></i></a></td>
+            </tr>
+          % end
+        </tbody>
+      </table>
+    </div>
   % else
     Not voters added to this group yet.
   % end
@@ -40,7 +57,7 @@
     <input type="text" name="voter[email]" value="{{ this.h(new_voter.email) }}" placeholder="Voter email"><br><br>
 
     <span>
-      <a href="/dashboard">cancel</a>&nbsp;&nbsp;
+      <a class="btn cancel" href="/dashboard">Cancel</a>&nbsp;&nbsp;
 
       <button type="submit">Add voter</button>
     </span>
