@@ -41,17 +41,17 @@
 
       <tr>
         <td>Posted at</td>
-        <td>{{ ballot.posted_at }}</td>
+        <td>{{ this.posted_at(ballot.start_date) }}</td>
       </tr>
 
       <tr>
         <td>Deadline to edit ballot</td>
-        <td>{{ ballot.end_choices_at }}</td>
+        <td>{{ this.end_choices_at(ballot.end_choices_date) }}</td>
       </tr>
 
       <tr>
         <td>Closing date</td>
-        <td>{{ ballot.closes_at }}</td>
+        <td>{{ this.closes_at(ballot.end_date) }}</td>
       </tr>
     </tbody>
   </table>
