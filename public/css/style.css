@@ -332,15 +332,20 @@ footer {
 }
 
 #vote_choice {
+  font-size: 1.3em;
   border-bottom: 1px solid #3BD5F1;
 }
 
 #vote_value {
+  font-size: 0.8em;
   border-left: none;
   float: right;
+  text-align: center;
+  font-weight: bold;
 }
 
 #results {
+  font-size: 1.3em;
   table-layout: fixed;
   border: 1px solid #3BD5F1;
   background-color: #F0F9FD;
@@ -354,6 +359,11 @@ footer {
 
 #results th {
   border-right: 1px solid #3BD5F1;
+}
+
+#results td:last-child {
+  font-weight: bold;
+  text-align: center;
 }
 
 @media only screen and (min-width: 320px)  {
@@ -393,6 +403,18 @@ footer {
   .ballots_table textarea {
     min-width: 97%;
     max-width: 97%;
+  }
+
+  #vote_choice {
+    font-size: 1em;
+  }
+
+  #vote_value {
+    font-size: 1em;
+  }
+
+  #results {
+    font-size: 1em;
   }
 
   /* NOTICES */
