@@ -298,7 +298,7 @@ class Users < Cuba
       ballot = user.ballots[id]
 
       on ballot do
-        if ballot.status == "Active"
+        if ballot.status == "Active" && ballot.user_id == user.id
           on post do
             on req.post?, param("ballot") do |params|
 
@@ -353,6 +353,9 @@ class Users < Cuba
             render("ballot/edit",
               title: "Edit ballot", ballot: ballot)
           end
+        elsif ballot.status == "Active" && ballot.user_id != user.id
+          session[:error] = "Ballot can be edited only by #{ballot.created_by}"
+          res.redirect "/ballot/#{id}"
         else
           session[:error] = "Ballot cannot be edited anymore"
           res.redirect "/ballot/#{id}"
