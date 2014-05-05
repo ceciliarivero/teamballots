@@ -1,16 +1,34 @@
 % choices = ballot.choices
 
-<p>Choices:</p>
-
 % if !choices.empty?
-  <ul>
-    % choices.each do |choice|
-    <li>{{ choice.title }} | Added by: {{ choice.added_by }} | Added at: {{ choice.added_at }}
+  <thead>
+    <tr>
+      <th>Title</th><th>Added by</th><th>Date</th>
       % if ballot.status? == "active"
-        | <a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove">Remove choice</a></li>
+        <th>Remove</th>
       % end
-    % end
-  </ul>
+    </tr>
+  </thead>
+
+  % choices.each do |choice|
+    <tr>
+      <td>
+        {{ choice.title }}
+      </td>
+      <td>
+        {{ choice.added_by }}
+      </td>
+      <td>
+        {{ choice.added_at }}
+      </td>
+      % if ballot.status? == "active"
+        <td><a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove"><i class="fa fa-trash-o"></i></a>
+        </td>
+      % end
+    </tr>
+  % end
 % else
-    No choices added yet.
+    <tr>
+      <td>No choices added.</td>
+    </tr>
 % end

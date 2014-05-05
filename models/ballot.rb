@@ -13,10 +13,12 @@ class Ballot < Ohm::Model
   index :status?
 
   def status?
-    if Time.new.to_i < end_choices_date.to_i && Time.new.to_i < end_date.to_i
+    time = Time.new.to_i
+
+    if time < end_choices_date.to_i && time < end_date.to_i
       # self.status = "active"
       return "active"
-    elsif Time.new.to_i > end_choices_date.to_i && Time.new.to_i < end_date.to_i
+    elsif time > end_choices_date.to_i && time < end_date.to_i
       # self.status = "voting_only"
       return "voting_only"
     else

@@ -1,7 +1,6 @@
 module ChoiceAddedLog
   def self.create(user, ballot, choice)
-    message = "Choice was added:<br><br>
-    New choice title: " + choice.title
+    message = "Choice was added: " + choice.title
 
     log_comment = {}
 

@@ -5,7 +5,7 @@
 
   % if voter
     % if voter.errors[:email].include?(:not_present)
-      <p class="alert error">Email is required</p>
+      <span class="alert error">Email is required</span>
     % end
   % end
 

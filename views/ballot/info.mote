@@ -2,57 +2,162 @@
 
 % comment = params.fetch(:comment, false)
 
-<section>
+<div class="ballots_table">
+  <table>
+    <thead>
+      <tr>
+        <th colspan="2">{{ this.h(ballot.title) }} | Status:
+        % if ballot.status? == "active"
+            Active
+          % elsif ballot.status? == "voting_only"
+            Voting only
+          % else
+            Closed
+          % end
+        </th>
+      </tr>
+    </thead>
 
-  {{ this.partial("ballot/ballot_summary", ballot: ballot) }}
+    <tbody>
+      <tr>
+        <td colspan="2"><a href="/ballot/{{ ballot.id }}/voters">Voters ({{ ballot.voters.size }})</a>&nbsp;&nbsp;
+          % if ballot.status? == "active"
+            <a href="/ballot/{{ ballot.id}}/voters/add">Add voters</a>&nbsp;&nbsp;
+            <a href="/ballot/{{ ballot.id }}/edit">Edit</a>
+          % else
+            <i>Add voters</i>&nbsp;&nbsp;
+            <i>Edit</i>
+          % end
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">{{ this.h(ballot.description) }}</td>
+      </tr>
 
-  <p>
-    <a href="/ballot/{{ ballot.id }}/voters">Voters ({{ ballot.voters.size }})</a>
-    |
-    % if ballot.status? == "active"
-      <a href="/ballot/{{ ballot.id}}/voters/add">Add voters</a> | <a href="/ballot/{{ ballot.id}}/choices/add">Add choices</a>
-      |
-      <a href="/ballot/{{ ballot.id }}/edit">Edit</a>
-    % else
-      <i>Add voters</i> | <i>Add choices</i> | <i>Edit</i>
-    % end
-  </p>
-  <p>Description: {{ this.h(ballot.description) }}</p>
+      <tr>
+        <td>Created by</td>
+        <td>{{ ballot.created_by }}</td>
+      </tr>
 
-  {{ this.partial("ballot/choices_list", ballot: ballot) }}
+      <tr>
+        <td>Posted at</td>
+        <td>{{ ballot.posted_at }}</td>
+      </tr>
 
-  % choices = ballot.choices
+      <tr>
+        <td>Deadline to edit ballot</td>
+        <td>{{ ballot.end_choices_at }}</td>
+      </tr>
 
-  % choices_voted = []
+      <tr>
+        <td>Closing date</td>
+        <td>{{ ballot.closes_at }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-  % choices_not_voted = []
+<br>
 
-  % if !choices.empty?
+<div class="ballots_table">
+  <table>
+    <thead>
+      <tr>
+        % if ballot.status? == "active"
+          <th colspan="4">
+        % else
+          <th colspan="3">
+        % end
+        Choices</th>
+      </tr>
+    </thead>
 
-    % ballot.choices.each do |choice|
-      % user_vote = choice.votes.find(user_id: user.id)
+    <tbody>
+      <tr>
+        % if ballot.status? == "active"
+          <td colspan="4">
+        % else
+          <td colspan="3">
+        % end
+          % if ballot.status? == "active"
+            <a href="/ballot/{{ ballot.id}}/choices/add">Add choices</a>
+          % else
+            <i>Add choices</i>
+          % end
+        </td>
+      </tr>
+    </tbody>
 
-      % if !user_vote.empty?
-        % choices_voted << choice
-      % else
-        % choices_not_voted << choice
-      % end
-    % end
+    {{ this.partial("ballot/choices_list", ballot: ballot) }}
 
-    <p>My votes:</p>
+  </table>
+</div>
 
-    {{ this.partial("ballot/update_vote", ballot: ballot, choices_not_voted: choices_not_voted, choices_voted: choices_voted, user: user) }}
+<br>
 
-  % end
+<div class="ballots_table">
+  <table>
+    <thead>
+      <tr>
+        <th>My vote</th>
+      </tr>
+    </thead>
 
-  <br>
+    <tbody>
+        <tr>
+          <td>
+            % choices = ballot.choices
 
-  % if comment
-    % if comment.errors[:message].include?(:not_present)
-      <p class="alert error">Message is required</p>
-    % end
-  % end
+            % choices_voted = []
 
-  {{ this.partial("ballot/comments", ballot: ballot) }}
+            % choices_not_voted = []
 
-</section>
+            % if !choices.empty?
+
+              % ballot.choices.each do |choice|
+                % user_vote = choice.votes.find(user_id: user.id)
+
+                % if !user_vote.empty?
+                  % choices_voted << choice
+                % else
+                  % choices_not_voted << choice
+                % end
+              % end
+
+              {{ this.partial("ballot/update_vote", ballot: ballot, choices_not_voted: choices_not_voted, choices_voted: choices_voted, user: user) }}
+
+            % else
+              No choices available to vote.
+            % end
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<div class="ballots_table">
+  <table>
+    <thead>
+      <tr>
+        <th>Comments and log</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+          <td>
+            % if comment
+              % if comment.errors[:message].include?(:not_present)
+                <span class="alert error">Message is required</span>
+              % end
+            % end
+
+            {{ this.partial("ballot/comments", ballot: ballot) }}
+
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>

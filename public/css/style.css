@@ -22,7 +22,7 @@ body {
 #content {
   padding-bottom: 120px;
   clear: both;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 .logo {
@@ -35,6 +35,10 @@ a, a:visited {
 
 a:hover, a:active {
   text-decoration: none;
+}
+
+ul {
+  padding: 0;
 }
 
 ul li {
@@ -81,36 +85,22 @@ i {
   width: 80%;
   margin: 0 10%;
   padding: 0;
+  text-align: center;
 }
 
 .menu-toggle ul li {
   display: block;
-  cursor: pointer;
   margin: 10px 0;
-  text-align: center;
-  background-color: #8ADDEC;
-  width: 100%;
-  padding: 6px 0;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-}
-
-.menu-toggle ul li:hover {
-  background-color: #5EE1F8;
 }
 
 .menu-toggle ul li a {
   display: block;
-  text-decoration: none;
-  font-weight: bold;
-  color: white;
 }
 
 /* BUTTONS */
 
-button, a.cancel, a.btn,
-a.cancel:visited, a.btn:visited {
+button, a.cancel, a.cancel:visited,
+a.btn, a.btn:visited {
   color: white;
   font-weight: bold;
   font-size: 1em;
@@ -140,16 +130,19 @@ a.cancel:hover {
 
 form {
   text-align: left;
-  min-width: 200px;
-  width: 300px;
+  min-width: 240px;
+  max-width: 240px;
+  margin: 0 auto;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="url"],
 input[type="password"],
-textarea {
-  width: 278px;
+textarea,
+select {
+  min-width: 220px;
+  max-width: 220px;
   padding: 8px 10px;
   font-family: sans-serif;
   font-weight: normal;
@@ -167,7 +160,8 @@ input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="url"]:focus,
 input[type="password"]:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   color: #414848;
   box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: inset 0 1px 4px rgba(0,0,0,0.25);
@@ -183,17 +177,20 @@ textarea:hover {
   color: #414848;
 }
 
-input[type="checkbox"] {
-
+select {
+  background-color: #F1F1F1;
 }
 
 input[type="text"]#end_choices_date, input[type="text"]#end_date {
-  min-width: 170px;
-  width: 240px;
+  min-width: 180px;
 }
 
 textarea {
-  min-height: 150px;
+  min-height: 120px;
+}
+
+.ballots_table form table tbody td {
+  font-size: 1em;
 }
 
 /* HOME (LOGIN AND SIGNUP) */
@@ -215,16 +212,30 @@ textarea {
 
 /* NOTICES */
 
-.notices {
+.alert {
+  color: white;
+  font-size: 0.9em;
+  font-weight: bold;
+  padding: 8px 15px;
   text-align: center;
+  font-weight: bold;
+  margin: 10px auto;
+  display: block;
+  width: 100%;
 }
 
 .success {
-  color: green;
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5ACA83), color-stop(1, #3CC05B) );
+  background:-moz-linear-gradient( center top, #5ACA83 5%, #3CC05B 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5ACA83', endColorstr='#3CC05B');
+  background-color: #3CC05B;
 }
 
 .error {
-  color: red;
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #F36C6C), color-stop(1, #C03131) );
+  background:-moz-linear-gradient( center top, #F36C6C 5%, #C03131 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#F36C6C', endColorstr='#C03131');
+  background-color: #C03131;
 }
 
 /* FOOTER */
@@ -248,7 +259,7 @@ footer {
 /* TABLES */
 
 .ballots_table {
-  min-width: 200px;
+  min-width: 240px;
   font: sans-serif;
   background: #fff;
   overflow: hidden;
@@ -262,11 +273,13 @@ footer {
   border-collapse: collapse;
   text-align: left;
   width: 100%;
-  min-width: 200px;
+  min-width: 240px;
+  table-layout: fixed;
 }
 
 .ballots_table table td, .ballots_table table th {
-  padding: 8px 8px;
+  padding: 15px;
+  word-wrap: break-word;
 }
 
 .ballots_table table thead th {
@@ -308,55 +321,111 @@ footer {
   font-size: 1em;
 }
 
+.ballots_table select {
+  min-width: 60px;
+  max-width: 60px;
+}
+
+.ballots_table textarea {
+  min-width: 75%;
+  max-width: 75%;
+}
+
+#vote_choice {
+  border-bottom: 1px solid #3BD5F1;
+}
+
+#vote_value {
+  border-left: none;
+  float: right;
+}
+
+#results {
+  table-layout: fixed;
+  border: 1px solid #3BD5F1;
+  background-color: #F0F9FD;
+}
+
+#results td, #results th {
+  padding: 15px;
+  word-wrap: break-word;
+  border-bottom: 1px solid #3BD5F1;
+}
+
+#results th {
+  border-right: 1px solid #3BD5F1;
+}
+
+@media only screen and (min-width: 320px)  {
+  /* FORMS */
+
+  form {
+    min-width: 300px;
+    max-width: 300px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="url"],
+  input[type="password"],
+  textarea {
+    min-width: 280px;
+    max-width: 280px;
+  }
+
+  input[type="text"]#end_choices_date, input[type="text"]#end_date {
+    min-width: 240px;
+  }
+}
+
 @media only screen and (min-width: 480px)  {
-  /* MENU TOGGLE */
-    .menu-toggle {
-      display: inline-block;
-      width: 85%;
-    }
+  /* GENERAL */
 
-    .menu-toggle label i {
-      display: none;
-    }
-
-    #menu {
-      display: block;
-      width: auto;
-    }
-
-    .menu-toggle ul {
-      float: right;
-      display: inline;
-      width: auto;
-      margin: 0;
-    }
-
-    .menu-toggle ul li {
-      display: inline-block;
-      width: auto;
-      float: left;
-      margin: 0 0 0 10px;
-      padding: 6px 10px;
-    }
+  #content {
+    margin-top: 30px;
+  }
 
   /* TABLES */
   .ballots_table table tbody td {
     font-size: 1em;
   }
 
+  .ballots_table textarea {
+    min-width: 97%;
+    max-width: 97%;
+  }
+
+  /* NOTICES */
+
+  .alert {
+    width: 60%;
+  }
 }
 
 @media only screen and (min-width: 670px)  {
+  /* GENERAL */
   form {
     width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  input[type="text"]#end_choices_date, input[type="text"]#end_date {
+    min-width: 80%;
+  }
+
+  textarea {
+    min-height: 135px;
   }
 
   .form_left {
+    width: 50%;
     float: left;
-    margin: 0 30px 40px 0;
+    margin: 0 10% 40px 0;
   }
 
   .form_right {
+    width: 40%;
     float: left;
   }
 
@@ -367,5 +436,51 @@ footer {
   .form_buttons {
     clear: both;
     text-align: left;
+  }
+
+  .form_left input[type="text"],
+  .form_left input[type="email"],
+  .form_left input[type="url"],
+  .form_left input[type="password"],
+  .form_left textarea {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  /* MENU TOGGLE */
+  .menu-toggle {
+    display: inline;
+    width: 85%;
+  }
+
+  .menu-toggle label i {
+    display: none;
+  }
+
+  #menu {
+    display: inline-block;
+    width: auto;
+    margin-top: 20px;
+  }
+
+  .menu-toggle ul {
+    float: right;
+    display: inline;
+    width: auto;
+    margin: 0;
+  }
+
+  .menu-toggle ul li {
+    display: inline-block;
+    width: auto;
+    float: left;
+    margin: 0 0 0 20px;
+  }
+
+  /* NOTICES */
+
+  .alert {
+    width: 50%;
+    margin-bottom: 20px;
   }
 }

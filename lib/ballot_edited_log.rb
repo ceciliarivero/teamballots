@@ -8,7 +8,7 @@ module BallotEditedLog
     end
 
     if ballot.description != params["description"]
-      message += "<br><br>Previous Ballot description: " + ballot.description + "<br>
+      message += "<br><br>Previous Ballot description: " + ballot.description + "<br><br>
       Current Ballot description: " + params["description"]
     end
 

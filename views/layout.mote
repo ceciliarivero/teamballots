@@ -19,18 +19,17 @@
             <label for="toggle"><i class="fa fa-bars"></i></label>
             <input type="checkbox" id="toggle"/>
             <ul id="menu">
-              <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/edit">My account</a></li>
-              <li><a href="/logout">Logout</a></li>
+              <li><a class="btn" href="/dashboard">Dashboard</a></li>
+              <li><a class="btn" href="/edit">My account</a></li>
+              <li><a class="btn" href="/logout">Logout</a></li>
             </ul>
           </div>
         % end
       </header>
 
       <section id="content">
-        <p class="notices">
-          {{ this.partial("notices", session: this.session) }}
-        </p>
+
+        {{ this.partial("notices", session: this.session) }}
 
         {{ content }}
 

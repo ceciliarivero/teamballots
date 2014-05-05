@@ -1,40 +1,40 @@
 % edit = params.fetch(:edit, false)
 
 % if edit
-  % if edit.errors[:name] == [:not_present]
-    <p class="error">Team name is required</p>
+  % if edit.errors[:name].include?(:not_present)
+    <span class="alert error">Name is required</span>
   % end
-  % if edit.errors[:email] == [:not_present]
-    <p class="error">E-mail is required</p>
+  % if edit.errors[:email].include?(:not_present)
+    <span class="alert error">E-mail is required</span>
   % end
   % if edit.errors[:email] == [:not_email]
-    <p class="error">E-mail not valid</p>
+    <span class="alert error">E-mail not valid</span>
   % end
   % if edit.errors[:email] == [:not_unique]
-    <p class="error">This e-mail is already registered</p>
+    <span class="alert error">This e-mail is already registered</span>
   % end
-  % if edit.errors[:username] == [:not_present]
-    <p class="error">Username is required</p>
+  % if edit.errors[:username].include?(:not_present)
+    <span class="alert error">Username is required</span>
   % end
   % if edit.errors[:username] == [:format]
-    <p class="error">Username can contain only letters (capitalized or not), "_", "." and "-" with no spaces</p>
+    <span class="alert error">Username can contain only [a-z] "_" "." "-" with no spaces</span>
   % end
   % if edit.errors[:username] == [:not_unique]
-    <p class="error">This username is already taken</p>
+    <span class="alert error">This username is already taken</span>
   % end
   % if edit.errors[:password] == [:too_small]
-    <p class="error">The password length must be at least 6 characters</p>
+    <span class="alert error">The password length must be at least 6 characters</span>
   % end
   % if edit.errors[:password] == [:not_confirmed] || edit.errors[:password] == [:too_small, :not_confirmed]
-    <p class="error">Passwords don't match</p>
+    <span class="alert error">Passwords don't match</span>
   % end
 % end
 
 <h2>Edit profile</h2>
 
-<img id="gravatar-img" class="gravatar" src="{{ user.gravatar }}"><br><br>
-
 <form action="/edit" method="POST">
+  <img id="gravatar-img" class="gravatar" src="{{ user.gravatar }}"><br><br>
+
   <div class="form_left">
     <input id="gravatar-url" type="hidden" name="user[gravatar]" value="{{ user.gravatar }}">
 
@@ -55,9 +55,9 @@
 
   <div class="form_buttons">
     <span>
-      <a class="btn cancel" href="/dashboard">Cancel</a>&nbsp;&nbsp;
+      <button type="submit">Save</button>&nbsp;&nbsp;
 
-      <button type="submit">Save</button>
+      <a class="btn cancel" href="/dashboard">Cancel</a>
     </span>
   </div>
 </form>

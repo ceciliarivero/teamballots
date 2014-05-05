@@ -3,19 +3,19 @@
 
   % if edit
     % if edit.errors[:title].include?(:not_present)
-      <p class="alert error">Title is required</p>
+      <span class="alert error">Title is required</span>
     % end
     % if edit.errors[:description].include?(:not_present)
-      <p class="alert error">Description is required</p>
+      <span class="alert error">Description is required</span>
     % end
     % if edit.errors[:end_choices_date].include?(:not_present) || edit.errors[:end_date].include?(:not_present)
-      <p class="alert error">Both dates are required</p>
+      <span class="alert error">Both dates are required</span>
     % end
     % if edit.errors[:end_choices_date] == [:not_valid]
-      <p class="alert error">The deadline for modifying the ballot must be later than the current time</p>
+      <span class="alert error">The deadline for modifying the ballot must be later than the current time</span>
     % end
     % if edit.errors[:end_date] == [:not_valid]
-      <p class="alert error">The ballot closing date and time must be later than the deadline for modifying the ballot</p>
+      <span class="alert error">The ballot closing date and time must be later than the deadline for modifying the ballot</span>
     % end
   % end
 
@@ -38,9 +38,9 @@
       <img src="/img/cal/cal.gif" onclick="javascript:NewCssCal ('end_date','yyyyMMdd','arrow',true,'24','','future')" style="cursor:pointer"/><br><br>
 
       <span>
-        <a class="btn cancel" href="/ballot/{{ ballot.id }}">Cancel</a>&nbsp;&nbsp;
+        <button type="submit">Save</button>&nbsp;&nbsp;
 
-        <button type="submit">Save</button>
+        <a class="btn cancel" href="/ballot/{{ ballot.id }}">Cancel</a>
       </span>
     </div>
   </form>

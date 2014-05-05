@@ -23,7 +23,7 @@
 
 <h3>FINAL RESULTS</h3>
 
-<table border="1">
+<table id="results">
   <th>Choice</th>
   <th>Score</th>
 

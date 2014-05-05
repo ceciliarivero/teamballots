@@ -3,19 +3,19 @@
 
   % if ballot
     % if ballot.errors[:title].include?(:not_present)
-      <p class="alert error">Title is required</p>
+      <span class="alert error">Title is required</span>
     % end
     % if ballot.errors[:description].include?(:not_present)
-      <p class="alert error">Description is required</p>
+      <span class="alert error">Description is required</span>
     % end
     % if ballot.errors[:end_choices_date].include?(:not_present) || ballot.errors[:end_date].include?(:not_present)
-      <p class="alert error">Both dates are required</p>
+      <span class="alert error">Both dates are required</span>
     % end
     % if ballot.errors[:end_choices_date] == [:not_valid]
-      <p class="alert error">The deadline for modifying the ballot must be later than the current time</p>
+      <span class="alert error">The deadline for modifying the ballot must be later than the current time</span>
     % end
     % if ballot.errors[:end_date] == [:not_valid]
-      <p class="alert error">The ballot closing date and time must be later than the deadline for modifying the ballot</p>
+      <span class="alert error">The ballot closing date and time must be later than the deadline for modifying the ballot</span>
     % end
   % end
 
@@ -36,9 +36,9 @@
       <input type="text" name="ballot[end_date]" id="end_date" maxlength="16" size="16" placeholder="YYYY-MM-DD HH:MM" value="{{ ballot.end_date }}"/><i class="fa fa-calendar" onclick="javascript:NewCssCal ('end_date','yyyyMMdd','arrow',true,'24','','future')"></i><br><br>
 
       <span>
-        <a class="btn cancel" href="/dashboard">Cancel</a>&nbsp;&nbsp;
+        <button type="submit">Create Ballot</button>&nbsp;&nbsp;
 
-        <button type="submit">Create Ballot</button>
+        <a class="btn cancel" href="/dashboard">Cancel</a>
       </span>
     </div>
   </form>

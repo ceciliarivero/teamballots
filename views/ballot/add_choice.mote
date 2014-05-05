@@ -3,7 +3,7 @@
 
   % if choice
     % if choice.errors[:title].include?(:not_present)
-      <p class="alert error">Title is required</p>
+      <span class="alert error">Title is required</span>
     % end
   % end
 
@@ -11,17 +11,23 @@
 
   <h2>Choices</h2>
 
-  {{ this.partial("ballot/choices_list", ballot: ballot) }}
+  <div class="ballots_table">
+    <table>
+
+      {{ this.partial("ballot/choices_list", ballot: ballot) }}
+
+    </table>
+  </div>
 
   <h2>Add choice</h2>
 
   <form action="/ballot/{{ ballot.id }}/choices/add" method="POST">
-    <input type="text" name="choice[title]" value="{{ this.h(choice.title) }}" placeholder="Title"><br>
+    <input type="text" name="choice[title]" value="{{ this.h(choice.title) }}" placeholder="Title"><br><br>
 
     <span>
-      <a class="btn cancel" href="/ballot/{{ ballot.id }}">Cancel</a>&nbsp;&nbsp;
+      <button type="submit">Add choice</button>&nbsp;&nbsp;
 
-      <button type="submit">Add choice</button>
+      <a class="btn cancel" href="/ballot/{{ ballot.id }}">Cancel</a>
     </span>
   </form>
 

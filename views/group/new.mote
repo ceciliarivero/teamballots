@@ -3,7 +3,7 @@
 
   % if group
     % if group.errors[:name].include?(:not_present)
-      <p class="alert error">Group name is required</p>
+      <span class="alert error">Group name is required</span>
     % end
   % end
 
@@ -13,9 +13,9 @@
     <input type="text" name="group[name]" placeholder="Group name"><br><br>
 
     <span>
-      <a class="btn cancel" href="/dashboard">Cancel</a>&nbsp;&nbsp;
+      <button type="submit">Create Group</button>&nbsp;&nbsp;
 
-      <button type="submit">Create Group</button>
+      <a class="btn cancel" href="/dashboard">Cancel</a>
     </span>
   </form>
 </section>

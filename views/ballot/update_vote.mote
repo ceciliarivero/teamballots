@@ -2,54 +2,71 @@
 
 % if ballot.status? != "closed"
   <form action="/ballot/{{ ballot.id}}/vote" method="POST">
-    <ul>
+    <table>
       % choices_voted.each do |choice|
         % user_vote = choice.votes.find(user_id: user.id)
 
         % user_vote.each do |vote|
-          <li>
-            {{ choice.title }}
-            <select name="vote[{{ choice.id }}]">
-              % rates.each do |rating|
-                % if rating == vote.rating.to_i
-                  <option value="{{ rating }}" selected>{{ vote.rating }}</option>
-                % else
-                  <option value="{{ rating }}">{{ rating }}</option>
+          <tr id="vote_choice">
+            <td>
+              {{ choice.title }}
+            </td>
+            <td id="vote_value">
+              <select name="vote[{{ choice.id }}]">
+                % rates.each do |rating|
+                  % if rating == vote.rating.to_i
+                    <option value="{{ rating }}" selected>{{ vote.rating }}</option>
+                  % else
+                    <option value="{{ rating }}">{{ rating }}</option>
+                  % end
                 % end
-              % end
-            </select>
-          </li>
+              </select>
+            </td>
+          </tr>
         % end
 
       % end
 
       % choices_not_voted.each do |choice|
-        <li>
-          {{ choice.title }}
-          <select name="vote[{{ choice.id }}]">
-            <option value="--" selected>--</option>
+        <tr>
+          <td>
+            {{ choice.title }}
+          </td>
+          <td>
+            <select name="vote[{{ choice.id }}]">
+              <option value="--" selected>--</option>
 
-            % rates.each do |rating|
-              <option value="{{ rating }}">{{ rating }}</option>
-            % end
-          </select>
-        </li>
+              % rates.each do |rating|
+                <option value="{{ rating }}">{{ rating }}</option>
+              % end
+            </select>
+          </td>
+        </tr>
       % end
 
-    </ul>
+    </table><br>
       <button type="submit">Save</button>
   </form>
 % else
   % if !choices_voted.empty?
-    <ul>
+    <table>
       % choices_voted.each do |choice|
+
         % user_vote = choice.votes.find(user_id: user.id)
 
         % user_vote.each do |vote|
-          <li>{{ choice.title }}: {{ vote.rating }}</li>
+          <tr id="vote_choice">
+            <td>
+              {{ choice.title }}
+            </td>
+            <td id="vote_value">
+              {{ vote.rating }}
+            </td>
+          </tr>
         % end
+
       % end
-    </ul>
+    </table>
   % else
     You havent voted in this ballot.
   % end
