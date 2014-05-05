@@ -16,7 +16,7 @@
   % end
 
   % if !closed_ballots.empty?
-    <a href="/ballots/closed">See closed ballots</a>
+    <br><a href="/ballots/closed">See closed ballots</a>
   % end
 
   <h2>My voters groups ({{ user.groups.size }})</h2>

@@ -1,13 +1,23 @@
 % user = this.current_user
 
-<section>
-  <h2>Closed ballots {{ closed_ballots.size }}</h2>
+<h2>Closed ballots ({{ closed_ballots.size }})</h2>
 
-  <ul>
-    % closed_ballots.each do |closed_ballot|
-      <li>
-        {{ this.partial("ballot/ballot_summary", ballot: closed_ballot) }}
-      </li>
-    % end
-  </ul>
-</section>
+<div class="ballots_table">
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th><th>Voters</th><th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      % closed_ballots.each do |closed_ballot|
+        <tr>
+          <td><a href="/ballot/{{ closed_ballot.id }}">{{ closed_ballot.title }}</a></td>
+          <td><a href="/ballot/{{ closed_ballot.id }}/voters">{{ closed_ballot.voters.size }}</a></td>
+          <td>Closed
+          </td>
+        </tr>
+      % end
+    </tbody>
+  </table>
+</div>

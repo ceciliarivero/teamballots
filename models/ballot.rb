@@ -14,10 +14,13 @@ class Ballot < Ohm::Model
 
   def status?
     if Time.new.to_i < end_choices_date.to_i && Time.new.to_i < end_date.to_i
+      # self.status = "active"
       return "active"
     elsif Time.new.to_i > end_choices_date.to_i && Time.new.to_i < end_date.to_i
+      # self.status = "voting_only"
       return "voting_only"
     else
+      # self.status = "closed"
       return "closed"
     end
   end

@@ -11,6 +11,12 @@
     % if ballot.errors[:end_choices_date].include?(:not_present) || ballot.errors[:end_date].include?(:not_present)
       <p class="alert error">Both dates are required</p>
     % end
+    % if ballot.errors[:end_choices_date] == [:not_valid]
+      <p class="alert error">The deadline for modifying the ballot must be later than the current time</p>
+    % end
+    % if ballot.errors[:end_date] == [:not_valid]
+      <p class="alert error">The ballot closing date and time must be later than the deadline for modifying the ballot</p>
+    % end
   % end
 
   <h2>Create a new ballot</h2>
@@ -24,10 +30,10 @@
 
     <div class="form_right">
       <label for="end_choices_date">Deadline for modifying the ballot:</label><br>
-      <input type="text" name="ballot[end_choices_date]" id="end_choices_date" maxlength="16" size="16" placeholder="YYYY-MM-DD HH:MM"/><i class="fa fa-calendar" onclick="javascript:NewCssCal ('end_choices_date','yyyyMMdd','arrow',true,'24','','future')"></i><br><br>
+      <input type="text" name="ballot[end_choices_date]" id="end_choices_date" maxlength="16" size="16" placeholder="YYYY-MM-DD HH:MM" value="{{ ballot.end_choices_date }}"/><i class="fa fa-calendar" onclick="javascript:NewCssCal ('end_choices_date','yyyyMMdd','arrow',true,'24','','future')"></i><br><br>
 
       <label for="end_date">Ballot closing date:</label><br>
-      <input type="text" name="ballot[end_date]" id="end_date" maxlength="16" size="16" placeholder="YYYY-MM-DD HH:MM"/><i class="fa fa-calendar" onclick="javascript:NewCssCal ('end_date','yyyyMMdd','arrow',true,'24','','future')"></i><br><br>
+      <input type="text" name="ballot[end_date]" id="end_date" maxlength="16" size="16" placeholder="YYYY-MM-DD HH:MM" value="{{ ballot.end_date }}"/><i class="fa fa-calendar" onclick="javascript:NewCssCal ('end_date','yyyyMMdd','arrow',true,'24','','future')"></i><br><br>
 
       <span>
         <a class="btn cancel" href="/dashboard">Cancel</a>&nbsp;&nbsp;

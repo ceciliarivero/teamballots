@@ -266,6 +266,18 @@ class Users < Cuba
         end
 
         on default do
+          if new_ballot.end_choices_date != nil
+            new_ballot.end_choices_date = Time.at(new_ballot.end_choices_date.to_i).strftime("%Y-%m-%d %H:%M")
+          else
+            new_ballot.end_choices_date = ""
+          end
+
+          if new_ballot.end_date != nil
+            new_ballot.end_date = Time.at(new_ballot.end_date.to_i).strftime("%Y-%m-%d %H:%M")
+          else
+            new_ballot.end_date = ""
+          end
+
           render("ballot/new",
             title: "Create new ballot", ballot: new_ballot)
         end
@@ -305,6 +317,8 @@ class Users < Cuba
               end
 
               edit = NewBallot.new(params)
+
+              edit.start_date = Time.new.to_i
 
               on edit.valid? do
 
@@ -494,7 +508,7 @@ class Users < Cuba
 
             # Ost[:removed_voter].push(id)
 
-            session[:success] = "You have removed yourseld and deleted the ballot (as you were the only one voter)."
+            session[:success] = "You have removed yourself from the ballot."
             res.redirect "/dashboard"
           end
         end
@@ -554,31 +568,34 @@ class Users < Cuba
           end
 
           on post, param("voters") do |params|
-            #FIX THIS. WHEN INSIDE A BALLOT, WITHOUT CHOOSING THE GROUP I CLICK ON ADD VOTERS, IT GOES TO THE PAGE NOT FOUND.
-            res.write params.inspect
-            # on !params["group"] != "Select group" do
-            #   group = Group[params["group"]]
+            if params["group"] != ""
+              group = user.groups.include?(Group[params["group"]])
+            end
 
-            #   voters = group.voters
+            on group do
+              group = Group[params["group"]]
 
-            #   voters.each do |voter|
-            #     if !ballot.voters.include?(voter)
-            #       VoterAddedLog.create(user, ballot, voter)
-            #     end
+              voters = group.voters
 
-            #     ballot.voters.add(voter)
-            #     voter.ballots.add(ballot)
+              voters.each do |voter|
+                if !ballot.voters.include?(voter)
+                  VoterAddedLog.create(user, ballot, voter)
+                end
 
-            #     # Ost[:added_voter].push(voter.id)
-            #   end
+                ballot.voters.add(voter)
+                voter.ballots.add(ballot)
 
-            #   session[:success] = "Voters group successfully added!"
-            #   res.redirect "/ballot/#{id}/voters"
-            # end
+                # Ost[:added_voter].push(voter.id)
+              end
 
-            # on default do
-            #   not_found!
-            # end
+              session[:success] = "Voters group successfully added!"
+              res.redirect "/ballot/#{id}/voters"
+            end
+
+            on default do
+              session[:error] = "The voters group selected was not valid"
+              res.redirect "/ballot/#{id}/voters/add"
+            end
           end
 
           on get, root do

@@ -30,7 +30,7 @@
     <form action="/ballot/{{ ballot.id }}/voters/add" method="POST">
 
       <select name="voters[group]">
-        <option>Select group</option>
+        <option value="">Select group</option>
 
         % user.groups.each do |group|
           <option value="{{ group.id }}">{{ group.name }}</option>

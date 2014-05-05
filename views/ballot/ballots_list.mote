@@ -15,8 +15,10 @@
           <td>
             % if ballot.status? == "active"
               Active
-            % else
+            % elsif ballot.status? == "voting_only"
               Voting only
+            % else
+              Closed
             % end
           </td>
         </tr>
