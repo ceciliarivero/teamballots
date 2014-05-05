@@ -1,6 +1,19 @@
 % user = this.current_user
-% ballots = user.ballots.find(status?: "active").union(status?: "voting_only")
-% closed_ballots = user.ballots.find(status?: "closed")
+
+% ballots = []
+% closed_ballots = []
+
+% user.ballots.ids.each do |ballot_id|
+  % ballot = Ballot[ballot_id]
+
+  % ballot_status = Status.new(ballot).status
+
+  % if ballot_status == "Active" || ballot_status == "Voting only"
+    % ballots << ballot
+  % else
+    % closed_ballots << ballot
+  % end
+% end
 
 <section>
   <a class="btn" href="/ballot/new">Create new ballot</a>

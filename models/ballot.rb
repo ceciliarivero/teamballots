@@ -7,25 +7,15 @@ class Ballot < Ohm::Model
   attribute :title
   attribute :description
   attribute :created_by
-  attribute :status
 
   index :created_by
-  index :status?
 
-  def status?
-    time = Time.new.to_i
+  reference :user, :User
 
-    if time < end_choices_date.to_i && time < end_date.to_i
-      # self.status = "active"
-      return "active"
-    elsif time > end_choices_date.to_i && time < end_date.to_i
-      # self.status = "voting_only"
-      return "voting_only"
-    else
-      # self.status = "closed"
-      return "closed"
-    end
-  end
+  collection :choices, :Choice
+  collection :comments, :Comment
+
+  set :voters, :User
 
   def before_delete
     choices.each(&:delete)
@@ -37,11 +27,4 @@ class Ballot < Ohm::Model
 
     super
   end
-
-  reference :user, :User
-
-  collection :choices, :Choice
-  collection :comments, :Comment
-
-  set :voters, :User
 end

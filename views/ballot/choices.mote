@@ -5,7 +5,9 @@
 
   {{ this.partial("ballot/choices_list", ballot: ballot) }}
 
-  % if ballot.status? == "active"
+  % ballot_status = Status.new(ballot).status
+
+  % if ballot_status == "Active"
     <br><br>
     <a class="btn" href="/ballot/{{ ballot.id }}/choices/add">Add choice</a><br>
   % end

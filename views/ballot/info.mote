@@ -1,19 +1,12 @@
 % user = this.current_user
-
 % comment = params.fetch(:comment, false)
+% ballot_status = Status.new(ballot).status
 
 <div class="ballots_table">
   <table>
     <thead>
       <tr>
-        <th colspan="2">{{ this.h(ballot.title) }} | Status:
-        % if ballot.status? == "active"
-            Active
-          % elsif ballot.status? == "voting_only"
-            Voting only
-          % else
-            Closed
-          % end
+        <th colspan="2">{{ this.h(ballot.title) }} | Status: {{ ballot_status }}
         </th>
       </tr>
     </thead>
@@ -21,7 +14,7 @@
     <tbody>
       <tr>
         <td colspan="2"><a href="/ballot/{{ ballot.id }}/voters">Voters ({{ ballot.voters.size }})</a>&nbsp;&nbsp;
-          % if ballot.status? == "active"
+          % if ballot_status == "Active"
             <a href="/ballot/{{ ballot.id}}/voters/add">Add voters</a>&nbsp;&nbsp;
             <a href="/ballot/{{ ballot.id }}/edit">Edit</a>
           % else
@@ -63,7 +56,7 @@
   <table>
     <thead>
       <tr>
-        % if ballot.status? == "active"
+        % if ballot_status == "Active"
           <th colspan="4">
         % else
           <th colspan="3">
@@ -74,12 +67,12 @@
 
     <tbody>
       <tr>
-        % if ballot.status? == "active"
+        % if ballot_status == "Active"
           <td colspan="4">
         % else
           <td colspan="3">
         % end
-          % if ballot.status? == "active"
+          % if ballot_status == "Active"
             <a href="/ballot/{{ ballot.id}}/choices/add">Add choices</a>
           % else
             <i>Add choices</i>

@@ -246,8 +246,6 @@ class Users < Cuba
           params["end_date"] = nil
         end
 
-        params["status"] = "active"
-
         new_ballot = NewBallot.new(params)
 
         on new_ballot.valid? do
@@ -300,7 +298,9 @@ class Users < Cuba
       ballot = user.ballots[id]
 
       on ballot do
-        if ballot.status? == "active"
+        ballot_status = Status.new(ballot).status
+
+        if ballot_status == "Active"
           on post do
             on req.post?, param("ballot") do |params|
 
@@ -370,7 +370,9 @@ class Users < Cuba
       ballot = user.ballots[id]
 
       on ballot do
-        if ballot.status? == "active"
+        ballot_status = Status.new(ballot).status
+
+        if ballot_status == "Active"
           on post, param("choice") do |params|
             params["date"] = Time.new.to_i
 
@@ -414,7 +416,9 @@ class Users < Cuba
       ballot = user.ballots[ballot_id]
 
       on ballot do
-        if ballot.status? == "active"
+        ballot_status = Status.new(ballot).status
+
+        if ballot_status == "Active"
           choice = ballot.choices[choice_id]
 
           on get do
@@ -448,9 +452,17 @@ class Users < Cuba
     end
 
     on "ballots/closed" do
-      closed_ballots = user.ballots.find(status?: "closed")
+      closed_ballots = []
 
-      on closed_ballots do
+      user.ballots.each do |ballot|
+        ballot_status = Status.new(ballot).status
+
+        if ballot_status == "Closed"
+          closed_ballots << ballot
+        end
+      end
+
+      on !closed_ballots.empty? do
         on get, root do
           render("ballot/closed_ballots",
             title: "Closed ballots", closed_ballots: closed_ballots)
@@ -523,7 +535,9 @@ class Users < Cuba
       ballot = user.ballots[id]
 
       on ballot do
-        if ballot.status? != "closed"
+        ballot_status = Status.new(ballot).status
+
+        if ballot_status != "Closed"
           on post, param("voter") do |params|
             voter = NewVoter.new(params)
 
@@ -632,7 +646,9 @@ class Users < Cuba
       ballot = user.ballots[id]
 
       on ballot do
-        if ballot.status? != "closed"
+        ballot_status = Status.new(ballot).status
+
+        if ballot_status != "Closed"
           on post, param("comment") do |params|
             params["date"] = Time.new.to_i
 
@@ -669,6 +685,8 @@ class Users < Cuba
       ballot = user.ballots[id]
 
       on ballot do
+        ballot_status = Status.new(ballot).status
+
         choices_voted = []
 
         ballot.choices.each do |choice|
@@ -680,7 +698,7 @@ class Users < Cuba
         end
 
 
-        if ballot.status? != "closed"
+        if ballot_status != "Closed"
           on post, param("vote") do |votes|
 
             valid_votes = []

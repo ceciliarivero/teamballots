@@ -1,6 +1,6 @@
 class NewBallot < Scrivener
   attr_accessor :start_date, :end_choices_date, :end_date,
-  :title, :description, :created_by, :status
+  :title, :description, :created_by
 
   def validate
     assert_present :title
