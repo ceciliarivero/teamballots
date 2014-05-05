@@ -6,9 +6,7 @@
 % user.ballots.ids.each do |ballot_id|
   % ballot = Ballot[ballot_id]
 
-  % ballot_status = Status.new(ballot).status
-
-  % if ballot_status == "Active" || ballot_status == "Voting only"
+  % if ballot.status == "Active" || ballot.status == "Voting only"
     % ballots << ballot
   % else
     % closed_ballots << ballot

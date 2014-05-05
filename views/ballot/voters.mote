@@ -5,9 +5,7 @@
 
   {{ this.partial("ballot/voters_list", ballot: ballot) }}
 
-  % ballot_status = Status.new(ballot).status
-
-  % if ballot_status == "Active"
+  % if ballot.status == "Active"
     <a href="/ballot/{{ ballot.id }}/voters/add">Add voter</a><br>
   % end
 

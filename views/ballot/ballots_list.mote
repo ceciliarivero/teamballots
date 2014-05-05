@@ -13,11 +13,9 @@
           <td><a href="/ballot/{{ ballot.id }}">{{ ballot.title }}</a></td>
           <td><a href="/ballot/{{ ballot.id }}/voters">{{ ballot.voters.size }}</a></td>
           <td>
-            % ballot_status = Status.new(ballot).status
-
-            % if ballot_status == "Active"
+            % if ballot.status == "Active"
               Active
-            % elsif ballot_status == "Voting only"
+            % elsif ballot.status == "Voting only"
               Voting only
             % else
               Closed

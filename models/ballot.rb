@@ -17,6 +17,18 @@ class Ballot < Ohm::Model
 
   set :voters, :User
 
+  def status
+    time = Time.new.to_i
+
+    if time < end_choices_date.to_i && time < end_date.to_i
+      return "Active"
+    elsif time > end_choices_date.to_i && time < end_date.to_i
+      return "Voting only"
+    else
+      return "Closed"
+    end
+  end
+
   def before_delete
     choices.each(&:delete)
     comments.each(&:delete)

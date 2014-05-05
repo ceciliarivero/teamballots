@@ -1,7 +1,6 @@
 % rates = 10.step(-10, -1)
-% ballot_status = Status.new(ballot).status
 
-% if ballot_status != "Closed"
+% if ballot.status != "Closed"
   <form action="/ballot/{{ ballot.id}}/vote" method="POST">
     <table>
       % choices_voted.each do |choice|

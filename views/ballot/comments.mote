@@ -1,6 +1,4 @@
-% ballot_status = Status.new(ballot).status
-
-% if ballot_status != "Closed"
+% if ballot.status != "Closed"
   {{ this.partial("ballot/add_comment", ballot: ballot, comment: NewComment.new({})) }}
 % end
 

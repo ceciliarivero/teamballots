@@ -1,11 +1,10 @@
 % choices = ballot.choices
-% ballot_status = Status.new(ballot).status
 
 % if !choices.empty?
   <thead>
     <tr>
       <th>Title</th><th>Added by</th><th>Date</th>
-      % if ballot_status == "Active"
+      % if ballot.status == "Active"
         <th>Remove</th>
       % end
     </tr>
@@ -22,7 +21,7 @@
       <td>
         {{ choice.added_at }}
       </td>
-      % if ballot_status == "Active"
+      % if ballot.status == "Active"
         <td><a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove"><i class="fa fa-trash-o"></i></a>
         </td>
       % end
