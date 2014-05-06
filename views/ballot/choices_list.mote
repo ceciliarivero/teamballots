@@ -10,23 +10,25 @@
     </tr>
   </thead>
 
-  % choices.each do |choice|
-    <tr>
-      <td>
-        {{ choice.title }}
-      </td>
-      <td>
-        {{ choice.added_by }}
-      </td>
-      <td>
-        {{ choice.added_at }}
-      </td>
-      % if ballot.status == "Active"
-        <td><a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove"><i class="fa fa-trash-o"></i></a>
+  <tbody>
+    % choices.each do |choice|
+      <tr>
+        <td>
+          {{ choice.title }}
         </td>
-      % end
-    </tr>
-  % end
+        <td>
+          {{ choice.added_by }}
+        </td>
+        <td>
+          {{ choice.added_at }}
+        </td>
+        % if ballot.status == "Active"
+          <td><a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove"><i class="fa fa-trash-o"></i></a>
+          </td>
+        % end
+      </tr>
+    % end
+  </tbody>
 % else
     <tr>
       <td>No choices added.</td>

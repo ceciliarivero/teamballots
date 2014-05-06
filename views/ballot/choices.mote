@@ -3,7 +3,11 @@
 
   <h2>Choices</h2>
 
-  {{ this.partial("ballot/choices_list", ballot: ballot) }}
+  <div class="ballots_table">
+    <table>
+      {{ this.partial("ballot/choices_list", ballot: ballot) }}
+    </table>
+  </div>
 
   % if ballot.status == "Active"
     <br><br>

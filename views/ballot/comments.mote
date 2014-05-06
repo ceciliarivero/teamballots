@@ -16,5 +16,5 @@
 
   </ul>
 % else
-    No comments yet.
+    <br>No comments yet.
 % end
