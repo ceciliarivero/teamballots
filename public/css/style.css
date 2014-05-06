@@ -182,7 +182,8 @@ select {
 }
 
 input[type="text"]#end_choices_date, input[type="text"]#end_date {
-  min-width: 180px;
+  min-width: 170px;
+  width: 170px;
 }
 
 textarea {
@@ -441,13 +442,13 @@ footer {
   }
 
   .form_left {
-    width: 50%;
+    width: 40%;
     float: left;
     margin: 0 10% 40px 0;
   }
 
   .form_right {
-    width: 40%;
+    width: 50%;
     float: left;
   }
 

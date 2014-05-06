@@ -33,17 +33,17 @@
 
       <tr>
         <td>Posted at</td>
-        <td>{{ this.posted_at(ballot.start_date) }}</td>
+        <td>{{ this.unix_to_cal(ballot.start_date) }}</td>
       </tr>
 
       <tr>
         <td>Deadline to edit ballot</td>
-        <td>{{ this.end_choices_at(ballot.end_choices_date) }}</td>
+        <td>{{ this.unix_to_cal(ballot.end_choices_date) }}</td>
       </tr>
 
       <tr>
         <td>Closing date</td>
-        <td>{{ this.closes_at(ballot.end_date) }}</td>
+        <td>{{ this.unix_to_cal(ballot.end_date) }}</td>
       </tr>
     </tbody>
   </table>

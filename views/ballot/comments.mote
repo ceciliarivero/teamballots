@@ -9,7 +9,7 @@
 
     % comments.each do |comment|
     <hr>
-    <li>By: {{ comment.added_by }} | Date: {{ comment.commented_at }}<br><br>
+    <li>Date: {{ comment.commented_at }} | by {{ comment.added_by }}<br><br>
       {{ comment.message }}</li><br>
 
     % end
