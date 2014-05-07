@@ -16,9 +16,11 @@
           <td width="40%">
             <img id="gravatar-img" class="gravatar" src="{{ voter.gravatar }}"> {{ voter.name }} / {{ voter.username }}</td>
           <td width="40%">{{ voter.email }}</td>
-          <td align="center"><a href="/ballot/{{ ballot.id }}/voters/{{ voter.id }}/remove"><i class="fa fa-trash-o"></i></a></td>
+          <td align="center"><a href="/ballot/{{ ballot.id }}/voters/{{ voter.id }}/remove" id="remove_voter"><i class="fa fa-trash-o"></i></a></td>
         </tr>
       % end
     </tbody>
   </table>
 </div><br>
+
+<script src="/js/alert.js"></script>

@@ -23,7 +23,7 @@
           {{ choice.added_at }}
         </td>
         % if ballot.status == "Active"
-          <td><a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove"><i class="fa fa-trash-o"></i></a>
+          <td><a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove" id="remove_choice"><i class="fa fa-trash-o"></i></a>
           </td>
         % end
       </tr>
@@ -34,3 +34,5 @@
       <td>No choices added.</td>
     </tr>
 % end
+
+<script src="/js/alert.js"></script>
