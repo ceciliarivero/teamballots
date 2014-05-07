@@ -18,7 +18,7 @@
     |
     <a href="/group/{{ group.id }}">Edit</a>
     |
-    <a href="/group/{{ group.id }}/remove" id="remove_group">Remove group</a>
+    <a href="/group/{{ group.id }}/remove" id="group_{{ group.id }}" onclick="return remove_group({{ group.id }})">Remove group</a>
   </p>
 
   % voters = group.voters
@@ -40,7 +40,7 @@
               <td width="40%">
                 <img id="gravatar-img" class="gravatar" src="{{ voter.gravatar }}"> {{ voter.name }} / {{ voter.username }}</td>
               <td width="40%">{{ voter.email }}</td>
-              <td align="center"><a href="/group/{{ group.id}}/voters/{{ voter.id }}/remove" id="delete_group_voter"><i class="fa fa-trash-o"></i></a></td>
+              <td align="center"><a href="/group/{{ group.id}}/voters/{{ voter.id }}/remove" id="voter_{{ voter.id }}" onclick="return remove_group_voter({{ voter.id }})"><i class="fa fa-trash-o"></i></a></td>
             </tr>
           % end
         </tbody>

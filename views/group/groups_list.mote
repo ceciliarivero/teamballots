@@ -14,7 +14,7 @@
           <tr>
             <td>{{ group.name }}</td>
             <td><a href="/group/{{ group.id }}"><i class="fa fa-pencil-square-o"></i></a></td>
-            <td><a href="/group/{{ group.id }}/remove"><i class="fa fa-trash-o"></i></a></td>
+            <td><a href="/group/{{ group.id }}/remove" id="group_{{ group.id }}" onclick="return remove_group({{ group.id }})"><i class="fa fa-trash-o"></i></a></td>
           </tr>
         % end
       </tbody>
@@ -25,3 +25,5 @@
 % end
 
 <a href="/group/new">Create new group</a>
+
+<script src="/js/alert.js"></script>

@@ -1,7 +1,6 @@
 module ChoiceRemovedLog
   def self.create(user, ballot, choice)
-    message = "Choice was removed:<br><br>
-    Choice title: " + choice.title
+    message = "Choice was removed: " + choice.title
 
     log_comment = {}
 

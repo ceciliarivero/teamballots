@@ -15,7 +15,7 @@
   <form action="/otp/{{ signature }}" method="POST">
     <input type="password" name="user[password]" placeholder="New password"><br>
 
-    <input type="password" name="user[password_confirmation]" placeholder="New password confirmation"><br>
+    <input type="password" name="user[password_confirmation]" placeholder="New password confirmation"><br><br>
 
     <button type="submit">Create new password</button>
   </form>
