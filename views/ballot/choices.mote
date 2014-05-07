@@ -1,11 +1,18 @@
+% choices = ballot.choices
+
 <section>
   <h2>Ballot: {{ ballot.title }}</h2>
 
   <h2>Choices</h2>
 
-  <div class="ballots_table">
-    <table>
-      {{ this.partial("ballot/choices_list", ballot: ballot) }}
+  % if !choices.empty?
+    <div class="ballots_table">
+      <table>
+  % else
+    <div>
+      <table style="border-spacing: 0;">
+  % end
+      {{ this.partial("ballot/choices_list", ballot: ballot, choices: choices) }}
     </table>
   </div>
 

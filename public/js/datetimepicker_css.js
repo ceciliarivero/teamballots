@@ -600,10 +600,10 @@ function RenderCssCal(bNewCal)
 	{
 		if (UseImageFiles)
 		{
-			vCalHeader += "<td style='background:none;padding-right:10px;'><img onmousedown='javascript:Cal.DecYear();RenderCssCal();' src='"+imageFilesPath+"cal_fastreverse.png'></td>\n";//Year scroller (decrease 1 year)
+			vCalHeader += "<td style='background:none;padding-right:20px;'><img onmousedown='javascript:Cal.DecYear();RenderCssCal();' src='"+imageFilesPath+"cal_fastreverse.png'></td>\n";//Year scroller (decrease 1 year)
 			vCalHeader += "<td style='background:none;'><img onmousedown='javascript:Cal.DecMonth();RenderCssCal();' src='" + imageFilesPath + "cal_reverse.png'></td>\n"; //Month scroller (decrease 1 month)
 			vCalHeader += "<td width='70%' class='calR' style='color:"+YrSelColor+"'>"+ Cal.GetMonthName(ShowLongMonth) + " " + Cal.Year + "</td>"; //Month and Year
-			vCalHeader += "<td style='background:none;padding-right:10px;'><img onmousedown='javascript:Cal.IncMonth();RenderCssCal();' src='" + imageFilesPath + "cal_forward.png'></td>\n"; //Month scroller (increase 1 month)
+			vCalHeader += "<td style='background:none;padding-right:20px;'><img onmousedown='javascript:Cal.IncMonth();RenderCssCal();' src='" + imageFilesPath + "cal_forward.png'></td>\n"; //Month scroller (increase 1 month)
 			vCalHeader += "<td style='background:none;'><img onmousedown='javascript:Cal.IncYear();RenderCssCal();' src='" + imageFilesPath + "cal_fastforward.png'></td>\n"; //Year scroller (increase 1 year)
 			calHeight += 22;
 		}

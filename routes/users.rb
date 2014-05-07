@@ -302,38 +302,43 @@ class Users < Cuba
           on post do
             on req.post?, param("ballot") do |params|
 
-              if params["end_choices_date"] != ""
-                params["end_choices_date"] = cal_to_unix(params["end_choices_date"])
+              if valid_date?(params["end_choices_date"]) && valid_date?(params["end_date"])
+                if params["end_choices_date"] != ""
+                  params["end_choices_date"] = cal_to_unix(params["end_choices_date"])
+                else
+                  params["end_choices_date"] = unix_to_cal(ballot.end_choices_date)
+                end
+
+                if params["end_date"] != ""
+                  params["end_date"] = cal_to_unix(params["end_date"])
+                else
+                  params["end_date"] = unix_to_cal(ballot.end_date)
+                end
+
+                edit = NewBallot.new(params)
+
+                edit.start_date = Time.new.to_i
+
+                on edit.valid? do
+
+                  BallotEditedLog.create(user, ballot, params)
+
+                  ballot.update(params)
+
+                  session[:success] = "Ballot successfully edited!"
+                  res.redirect "/ballot/#{id}"
+                end
+
+                on default do
+                  ballot.end_choices_date = unix_to_cal(ballot.end_choices_date)
+                  ballot.end_date = unix_to_cal(ballot.end_date)
+
+                  render("ballot/edit",
+                    title: "Edit ballot", ballot: ballot, edit: edit)
+                end
               else
-                params["end_choices_date"] = nil
-              end
-
-              if params["end_date"] != ""
-                params["end_date"] = cal_to_unix(params["end_date"])
-              else
-                params["end_date"] = nil
-              end
-
-              edit = NewBallot.new(params)
-
-              edit.start_date = Time.new.to_i
-
-              on edit.valid? do
-
-                BallotEditedLog.create(user, ballot, params)
-
-                ballot.update(params)
-
-                session[:success] = "Ballot successfully edited!"
-                res.redirect "/ballot/#{id}"
-              end
-
-              on default do
-                ballot.end_choices_date = unix_to_cal(ballot.end_choices_date)
-                ballot.end_date = unix_to_cal(ballot.end_date)
-
-                render("ballot/edit",
-                  title: "Edit ballot", ballot: ballot, edit: edit)
+                session[:error] = "Date was invalid"
+                res.redirect "/ballot/#{id}/edit"
               end
             end
 

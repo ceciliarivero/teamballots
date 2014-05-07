@@ -1,3 +1,5 @@
+% choices = ballot.choices
+
 <section>
   % choice = params.fetch(:choice, false)
 
@@ -11,8 +13,13 @@
 
   <h2>Choices</h2>
 
-  <div class="ballots_table">
-    <table>
+  % if !choices.empty?
+    <div class="ballots_table">
+      <table>
+  % else
+    <div>
+      <table style="border-spacing: 0;">
+  % end
 
       {{ this.partial("ballot/choices_list", ballot: ballot) }}
 

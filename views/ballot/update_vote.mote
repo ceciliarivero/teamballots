@@ -28,11 +28,11 @@
       % end
 
       % choices_not_voted.each do |choice|
-        <tr>
+        <tr id="vote_choice">
           <td>
             {{ choice.title }}
           </td>
-          <td>
+          <td id="vote_value">
             <select name="vote[{{ choice.id }}]">
               <option value="--" selected>--</option>
 
