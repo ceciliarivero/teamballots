@@ -34,7 +34,7 @@ Dir["./lib/**/*.rb"].each     { |rb| require rb }
 Dir["./services/**/*.rb"].each     { |rb| require rb }
 
 Cuba.plugin UserHelpers
-Cuba.plugin BallotHelpers
+Cuba.plugin DateHelpers
 
 Cuba.use Rack::Session::Cookie,
   key: "team_ballots",

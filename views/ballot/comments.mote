@@ -3,14 +3,21 @@
 % end
 
 % if ballot.comments.size > 0
-  <ul>
+  <ul class="comments">
 
     % comments = ballot.comments.sort_by(:date, order: "ALPHA DESC")
 
     % comments.each do |comment|
-    <hr>
-    <li>Date: {{ comment.commented_at }} | by {{ comment.added_by }}<br><br>
-      {{ comment.message }}</li><br>
+
+    <li>
+      <div class="comment_header">
+        <span>{{ comment.added_by }}</span>
+        <span class="comment_date">Date: {{ this.cal_utc(comment.date) }}</span>
+      </div>
+      <div class="comment_body">
+        {{ comment.message }}
+      </div>
+    </li>
 
     % end
 

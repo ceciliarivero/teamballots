@@ -3,27 +3,27 @@ module BallotEditedLog
     message = "Ballot was edited:"
 
     if ballot.title != params["title"]
-      message += "<br><br>Previous Ballot title: " + ballot.title + "<br>
+      message += "<br><br><br>Previous Ballot title: " + ballot.title + "<br><br>
       Current Ballot title: " + params["title"]
     end
 
     if ballot.description != params["description"]
-      message += "<br><br>Previous Ballot description: " + ballot.description + "<br><br>
+      message += "<br><br><br>Previous Ballot description:<br>" + ballot.description + "<br><br>
       Current Ballot description: " + params["description"]
     end
 
     if ballot.end_choices_date.to_i != params["end_choices_date"]
-      message += "<br><br>Previous Deadline for modifying ballot: " +
-      Time.at(ballot.end_choices_date.to_i).strftime("%e/%m/%Y - %l:%M %p") + "<br>
+      message += "<br><br><br>Previous Deadline for modifying ballot: " +
+      Time.at(ballot.end_choices_date.to_i).utc.strftime("%d-%m-%Y %H:%M %Z") + "<br><br>
       Current Deadline for modifying ballot: " +
-      Time.at(params["end_choices_date"].to_i).strftime("%e/%m/%Y - %l:%M %p")
+      Time.at(params["end_choices_date"].to_i).utc.strftime("%d-%m-%Y %H:%M %Z")
     end
 
     if ballot.end_date.to_i != params["end_date"]
-      message += "<br><br>Previous Ballot closing date: " +
-      Time.at(ballot.end_date.to_i).strftime("%e/%m/%Y - %l:%M %p") + "<br>
+      message += "<br><br><br>Previous Ballot closing date: " +
+      Time.at(ballot.end_date.to_i).utc.strftime("%d-%m-%Y %H:%M %Z") + "<br><br>
       Current Ballot closing date: " +
-      Time.at(params["end_date"].to_i).strftime("%e/%m/%Y - %l:%M %p")
+      Time.at(params["end_date"].to_i).utc.strftime("%d-%m-%Y %H:%M %Z")
     end
 
     log_comment = {}

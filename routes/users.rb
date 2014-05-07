@@ -321,7 +321,12 @@ class Users < Cuba
 
                 on edit.valid? do
 
-                  BallotEditedLog.create(user, ballot, params)
+                  if ballot.title != params["title"] ||
+                    ballot.description != params["description"] ||
+                    ballot.end_choices_date.to_i != params["end_choices_date"] ||
+                    ballot.end_date.to_i != params["end_date"]
+                      BallotEditedLog.create(user, ballot, params)
+                  end
 
                   ballot.update(params)
 
@@ -337,7 +342,7 @@ class Users < Cuba
                     title: "Edit ballot", ballot: ballot, edit: edit)
                 end
               else
-                session[:error] = "Date was invalid"
+                session[:error] = "Invalid date format"
                 res.redirect "/ballot/#{id}/edit"
               end
             end

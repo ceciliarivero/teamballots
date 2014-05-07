@@ -279,13 +279,14 @@ footer {
 }
 
 .ballots_table table td, .ballots_table table th {
-  padding: 15px;
+  padding: 8px 15px;
   word-wrap: break-word;
 }
 
 .ballots_table table thead th {
   background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3BD5F1), color-stop(1, #35C0D9) );
-  background:-moz-linear-gradient( center top, #3BD5F1 5%, #35C0D9 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3BD5F1', endColorstr='#35C0D9');
+  background:-moz-linear-gradient( center top, #3BD5F1 5%, #35C0D9 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3BD5F1', endColorstr='#35C0D9');
   background-color:#3BD5F1;
   color:#FFFFFF;
   font-size: 1em;
@@ -337,6 +338,10 @@ footer {
   border-bottom: 1px solid #3BD5F1;
 }
 
+#vote_choice td {
+  padding: 5px 0;
+}
+
 #vote_value {
   font-size: 0.8em;
   border-left: none;
@@ -365,6 +370,41 @@ footer {
 #results td:last-child {
   font-weight: bold;
   text-align: center;
+}
+
+/* COMMENTS */
+
+.comments {
+  /*background-color: #eee;*/
+}
+
+.comments li {
+  margin-bottom: 20px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #3BD5F1;
+}
+
+.comment_header {
+  background: #DBF1F5;
+  padding: 10px;
+  /*border: 1px solid #3BD5F1;*/
+  border-bottom: none;
+  border-collapse: collapse;
+}
+
+.comment_date {
+  display: block;
+  margin-top: 10px;
+}
+
+.comment_body {
+  clear: both;
+  padding: 10px;
+  /*border: 1px solid #3BD5F1;*/
+  border-top: none;
+  border-collapse:
 }
 
 @media only screen and (min-width: 320px)  {
@@ -422,6 +462,14 @@ footer {
 
   .alert {
     width: 60%;
+  }
+
+  /* COMMENTS */
+
+  .comment_date {
+    display: inline;
+    margin-top: 0;
+    float: right;
   }
 }
 
