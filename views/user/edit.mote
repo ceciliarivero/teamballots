@@ -64,6 +64,7 @@
 
 <br><br>
 
-<a href="/delete">Close account</a>
+<a href="/delete" id="close_account">Close account</a>
 
 <script src="/js/gravatar.js"></script>
+<script src="/js/alert.js"></script>
