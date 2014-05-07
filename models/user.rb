@@ -25,7 +25,11 @@ class User < Ohm::Model
     end
 
     ballots.each do |ballot|
-      ballot.voters.delete(self)
+      if ballot.voters.size == 1
+        ballot.delete
+      else
+        ballot.voters.delete(self)
+      end
     end
 
     groups.each(&:delete)
