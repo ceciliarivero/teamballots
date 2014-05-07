@@ -18,12 +18,14 @@ class Guests < Cuba
           signer = Nobi::Signer.new(NOBI_SECRET)
           signed = signer.sign(user.id)
 
+          link = RESET_URL + "/activate/%s" % signed
+          text = Mailer.render("activate", { user: user, link: link })
+
           Malone.deliver(
             from: "info@teamballots.com",
             to: user.email,
             subject: "[Team Ballots] Account activation",
-            html: "To activate your account, please copy and paste this link into your browser's URL address bar: " +
-            RESET_URL + "/activate/%s" % signed)
+            text: text)
 
           res.redirect "/signup/?activate=true", 303
         end
@@ -55,7 +57,7 @@ class Guests < Cuba
 
         session[:success] = "You have successfully activated your account and logged in!"
 
-        # Ost[:welcome].push(user.id)
+        Ost[:welcome].push(user.id)
 
         res.redirect "/dashboard", 303
       end
@@ -120,12 +122,14 @@ class Guests < Cuba
           nobi = Nobi::TimestampSigner.new(NOBI_SECRET)
           signature = nobi.sign(String(user.id))
 
+          link = RESET_URL + "/otp/%s" % signature
+          text = Mailer.render("password_reset", { user: user, link: link })
+
           Malone.deliver(
             from: "info@teamballots.com",
             to: user.email,
             subject: "[Team Ballots] Password recovery",
-            html: "To reset your password, please copy and paste this link into your browser's URL address bar: " +
-            RESET_URL + "/otp/%s" % signature)
+            text: text)
 
           res.redirect "/login/?recovery=true", 303
         end
@@ -161,7 +165,7 @@ class Guests < Cuba
             session[:success] = "You have successfully changed
             your password and logged in!"
 
-            # Ost[:password_recovered].push(user.id)
+            Ost[:password_changed].push(user.id)
 
             res.redirect "/", 303
           end

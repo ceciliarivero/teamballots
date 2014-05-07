@@ -52,9 +52,9 @@ class Users < Cuba
 
             user.update(params)
 
-            # if !params["password"].nil?
-            #   Ost[:password_changed].push(user.id)
-            # end
+            if !params["password"].nil?
+              Ost[:password_changed].push(user.id)
+            end
 
             session[:success] = "Your account was successfully updated!"
             res.redirect "/dashboard"
@@ -84,12 +84,10 @@ class Users < Cuba
     on "delete" do
       UserRemovedLog.create(user)
 
-      user.delete
-
       logout(User)
       session[:success] = "You have successfully deleted your account"
 
-      # Ost[:deleted_user].push(user.id)
+      Ost[:user_deleted].push(user.id)
 
       res.redirect "/"
     end
@@ -256,8 +254,6 @@ class Users < Cuba
 
           user.ballots.add(ballot)
           ballot.voters.add(user)
-
-          # Ost[:new_ballot].push(ballot.id)
 
           session[:success] = "You have successfully posted a new ballot!"
           res.redirect "/dashboard"
@@ -440,8 +436,6 @@ class Users < Cuba
 
               choice.delete
 
-              # Ost[:removed_choice].push(id)
-
               session[:success] = "Choice successfully removed"
               res.redirect "/ballot/#{ballot_id}/choices"
             end
@@ -510,8 +504,6 @@ class Users < Cuba
 
             ballot.delete
 
-            # Ost[:removed_ballot].push(id)
-
             session[:success] = "You have removed yourself and deleted the ballot (as you were the only one voter)."
             res.redirect "/dashboard"
           end
@@ -522,8 +514,6 @@ class Users < Cuba
 
             ballot.voters.delete(voter)
             voter.ballots.delete(ballot)
-
-            # Ost[:removed_voter].push(id)
 
             session[:success] = "You have removed yourself from the ballot."
             res.redirect "/dashboard"
@@ -565,7 +555,14 @@ class Users < Cuba
 
                 VoterAddedLog.create(user, ballot, new_voter)
 
-                # Ost[:added_voter].push(new_voter.id)
+                json = JSON.dump(
+                  email: new_voter.email,
+                  name: new_voter.name,
+                  ballot_title: ballot.title,
+                  ballot_description: ballot.description,
+                  end_date: cal_utc(ballot.end_date))
+
+                Ost[:voter_added].push(json)
 
                 session[:success] = "Voter successfully added!"
                 res.redirect "/ballot/#{id}/voters"
@@ -602,7 +599,14 @@ class Users < Cuba
                 ballot.voters.add(voter)
                 voter.ballots.add(ballot)
 
-                # Ost[:added_voter].push(voter.id)
+                json = JSON.dump(
+                  email: voter.email,
+                  name: voter.name,
+                  ballot_title: ballot.title,
+                  ballot_description: ballot.description,
+                  end_date: cal_utc(ballot.end_date))
+
+                Ost[:voter_added].push(json)
               end
 
               session[:success] = "Voters group successfully added!"
@@ -728,7 +732,7 @@ class Users < Cuba
                   valid_votes << new_vote
                 end
               else
-                session[:error] = "Vote wasn't valid. Please try again."
+                session[:error] = "The vote wasn't valid. Please try again."
                 res.redirect "/ballot/#{id}"
               end
             end
