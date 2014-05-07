@@ -248,6 +248,7 @@ footer {
   left:0;
   right: 0;
   margin-top: 120px;
+  font-size: 0.8em;
 }
 
 /* VOTERS */
@@ -411,7 +412,7 @@ footer {
   /* FORMS */
 
   form {
-    min-width: 300px;
+    min-width: 200px;
     max-width: 300px;
   }
 
@@ -427,6 +428,21 @@ footer {
   input[type="text"]#end_choices_date, input[type="text"]#end_date {
     min-width: 240px;
   }
+
+  .ballots_table textarea {
+    min-width: 90%;
+    max-width: 90%;
+  }
+
+  #vote_choice {
+    font-size: 1em;
+  }
+
+  /* FOOTER */
+
+  footer {
+    font-size: 0.9em;
+  }
 }
 
 @media only screen and (min-width: 480px)  {
@@ -436,14 +452,21 @@ footer {
     margin-top: 30px;
   }
 
+  /* FORMS */
+
+  form {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
   /* TABLES */
   .ballots_table table tbody td {
     font-size: 1em;
   }
 
   .ballots_table textarea {
-    min-width: 97%;
-    max-width: 97%;
+    min-width: 94%;
+    max-width: 94%;
   }
 
   #vote_choice {
@@ -471,6 +494,12 @@ footer {
     margin-top: 0;
     float: right;
   }
+
+  /* FOOTER */
+
+  footer {
+    font-size: 1em;
+  }
 }
 
 @media only screen and (min-width: 670px)  {
@@ -485,8 +514,10 @@ footer {
     min-width: 80%;
   }
 
-  textarea {
+  .ballots_table textarea {
     min-height: 135px;
+    min-width: 96%;
+    max-width: 96%;
   }
 
   .form_left {
