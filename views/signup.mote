@@ -44,7 +44,7 @@
 
   <input type="text" name="user[username]" placeholder="Username" value="{{ this.h(user['username']) }}"><br>
 
-  <input id="email" type="email" name="user[email]" placeholder="E-email" value="{{ this.h(user['email']) }}"><br>
+  <input id="email" type="email" name="user[email]" placeholder="E-mail" value="{{ this.h(user['email']) }}"><br>
 
   <input type="password" name="user[password]" placeholder="Password"><br>
 
