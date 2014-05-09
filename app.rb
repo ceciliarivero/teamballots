@@ -18,6 +18,8 @@ OPENREDIS_URL = ENV.fetch("OPENREDIS_URL")
 RESET_URL = ENV.fetch("RESET_URL")
 NOBI_SECRET = ENV.fetch("NOBI_SECRET")
 
+ROOT = File.expand_path("../", __FILE__)
+
 Cuba.plugin Cuba::Mote
 Cuba.plugin Cuba::TextHelpers
 Cuba.plugin Shield::Helpers
