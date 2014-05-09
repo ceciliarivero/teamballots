@@ -194,6 +194,10 @@ textarea {
   font-size: 1em;
 }
 
+.ballots_table .choices_date {
+  font-size: 0.96em;
+}
+
 /* HOME (LOGIN AND SIGNUP) */
 
 .login-signup {
