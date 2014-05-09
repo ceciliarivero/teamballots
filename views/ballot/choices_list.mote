@@ -22,9 +22,10 @@
         <td class="choices_date">
           {{ this.cal_utc(choice.date) }}
         </td>
-        % if ballot.status == "Active"
-          <td><a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove" id="choice_{{ choice.id }}" onclick="return remove_choice({{ choice.id }})"><i class="fa fa-trash-o"></i></a>
-          </td>
+        % if ballot.status == "Active" && choice.user_id == this.current_user.id
+          <td align="center"><a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove" id="choice_{{ choice.id }}" onclick="return remove_choice({{ choice.id }})"><i class="fa fa-trash-o"></i></a></td>
+        % else
+          <td align="center"><i class="fa fa-trash-o"></i></td>
         % end
       </tr>
     % end
