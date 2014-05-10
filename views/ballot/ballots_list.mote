@@ -8,6 +8,8 @@
       </tr>
     </thead>
     <tbody>
+      % ballots = ballots.sort! { |a,b| a.end_date.to_i <=> b.end_date.to_i }
+
       % ballots.each do |ballot|
         <tr>
           <td><a href="/ballot/{{ ballot.id }}">{{ ballot.title }}</a></td>

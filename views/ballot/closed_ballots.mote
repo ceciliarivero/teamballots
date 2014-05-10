@@ -6,14 +6,16 @@
   <table>
     <thead>
       <tr>
-        <th>Title</th><th>Voters</th><th>Status</th>
+        <th>Title</th><th>Closing Date</th><th>Status</th>
       </tr>
     </thead>
     <tbody>
+      % closed_ballots = closed_ballots.sort! { |a,b| b.end_date.to_i <=> a.end_date.to_i }
+
       % closed_ballots.each do |closed_ballot|
         <tr>
           <td><a href="/ballot/{{ closed_ballot.id }}">{{ closed_ballot.title }}</a></td>
-          <td><a href="/ballot/{{ closed_ballot.id }}/voters">{{ closed_ballot.voters.size }}</a></td>
+          <td>{{ this.cal_utc(closed_ballot.end_date) }}</a></td>
           <td>Closed
           </td>
         </tr>
