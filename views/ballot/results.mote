@@ -27,11 +27,25 @@
   <th>Choice</th>
   <th>Score</th>
 
+  % if choices.size == 1
+    <th>Yes / No</th>
+  % end
+
   % results = results.sort_by { |k, v| -v }
 
   % results.each do |choice, score|
   <tr>
-    <td>{{ choice }}</td><td>{{ score }}</td>
+    <td>{{ choice }}</td><td id="score">{{ score }}</td>
+
+    % if choices.size == 1
+      <td id="score">
+        % if score >= 5
+          Yes
+        % else
+          No
+        % end
+      </td>
+    % end
   </tr>
   % end
 </table>

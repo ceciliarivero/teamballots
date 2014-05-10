@@ -360,6 +360,13 @@ footer {
   font-weight: bold;
 }
 
+#one_choice td {
+  font-size: 0.9em;
+  font-style: italic;
+  line-height: 1.5em;
+  padding: 10px 0;
+}
+
 #results {
   font-size: 1.3em;
   table-layout: fixed;
@@ -377,7 +384,7 @@ footer {
   border-right: 1px solid #3BD5F1;
 }
 
-#results td:last-child {
+#results td#score {
   font-weight: bold;
   text-align: center;
 }
