@@ -29,11 +29,11 @@
     </div>
 
     <div class="form_right">
-      <label for="end_choices_date">Deadline for modifying the ballot:</label><br>
+      <label for="end_choices_date">Deadline for modifying the ballot (UTC):</label><br>
       <i class="fa fa-calendar" onclick="javascript:NewCssCal ('end_choices_date','ddMMyyyy','arrow',true,'24','','future')"></i>
       <input type="text" name="ballot[end_choices_date]" id="end_choices_date" maxlength="16" size="16" placeholder="DD-MM-YYYY HH:MM" value="{{ ballot.end_choices_date }}"/><br><br>
 
-      <label for="end_date">Ballot closing date:</label><br>
+      <label for="end_date">Ballot closing date (UTC):</label><br>
       <i class="fa fa-calendar" onclick="javascript:NewCssCal ('end_date','ddMMyyyy','arrow',true,'24','','future')"></i>
       <input type="text" name="ballot[end_date]" id="end_date" maxlength="16" size="16" placeholder="DD-MM-YYYY HH:MM" value="{{ ballot.end_date }}"/><br><br>
 
