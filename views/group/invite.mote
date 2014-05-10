@@ -21,7 +21,11 @@
 
     <textarea class="invite" name="message[body]" placeholder="Type your message here">Hi there!&#10;&#10;Please signup in https://www.teamballots.com so I can add you as a voter in my ballot.&#10;&#10;Thanks!&#10;&#10;{{ user.name }}</textarea><br><br>
 
-    <button type="submit">Send</button>
+    <span>
+      <button type="submit">Send</button>&nbsp;&nbsp;
+
+      <a class="btn cancel" href="/dashboard">Cancel</a>
+    </span>
   </form><br><br>
 
   <br>
