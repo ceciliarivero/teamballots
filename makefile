@@ -23,6 +23,7 @@ db:
 
 workers-start:
 	env $$(cat env.sh) ost -d welcome
+	env $$(cat env.sh) ost -d new_user
 	env $$(cat env.sh) ost -d password_changed
 	env $$(cat env.sh) ost -d user_deleted
 	env $$(cat env.sh) ost -d voter_added
@@ -30,6 +31,7 @@ workers-start:
 
 workers-stop:
 	kill $$(cat workers/welcome.pid)
+	kill $$(cat workers/new_user.pid)
 	kill $$(cat workers/password_changed.pid)
 	kill $$(cat workers/user_deleted.pid)
 	kill $$(cat workers/voter_added.pid)

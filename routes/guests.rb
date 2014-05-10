@@ -58,6 +58,7 @@ class Guests < Cuba
         session[:success] = "You have successfully activated your account and logged in!"
 
         Ost[:welcome].push(user.id)
+        Ost[:new_user].push(user.id)
 
         res.redirect "/dashboard", 303
       end
