@@ -182,9 +182,9 @@ class Users < Cuba
 
     on "group/:group_id/voters/:voter_id/remove" do |group_id, voter_id|
       group = user.groups[group_id]
+      voter = User[voter_id]
 
-      on group do
-        voter = User[voter_id]
+      on group && voter do
         on get do
           group.voters.delete(voter)
 
@@ -455,8 +455,9 @@ class Users < Cuba
 
     on "ballot/:ballot_id/choices/:choice_id/remove" do |ballot_id, choice_id|
       ballot = user.ballots[ballot_id]
+      choice = ballot.choices.ids.include?(choice_id)
 
-      on ballot do
+      on ballot && choice do
         if ballot.status == "Active"
           choice = ballot.choices[choice_id]
 
@@ -526,10 +527,9 @@ class Users < Cuba
 
     on "ballot/:ballot_id/voters/:voter_id/remove" do |ballot_id, voter_id|
       ballot = user.ballots[ballot_id]
+      voter = User[voter_id]
 
-      on ballot do
-        voter = User[voter_id]
-
+      on ballot && voter do
         on get do
           on voter != user do
             session[:error] = "You can't remove other users, just yourself."
