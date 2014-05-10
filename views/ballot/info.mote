@@ -1,6 +1,12 @@
 % user = this.current_user
 % comment = params.fetch(:comment, false)
 
+% if comment
+  % if comment.errors[:message].include?(:not_present)
+    <span class="alert error">Comment is required</span>
+  % end
+% end
+
 <div class="ballots_table">
   <table>
     <thead>
@@ -140,11 +146,6 @@
     <tbody>
         <tr>
           <td>
-            % if comment
-              % if comment.errors[:message].include?(:not_present)
-                <span class="alert error">Message is required</span>
-              % end
-            % end
 
             {{ this.partial("ballot/comments", ballot: ballot) }}
 

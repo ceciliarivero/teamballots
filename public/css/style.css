@@ -191,6 +191,10 @@ textarea {
   min-height: 120px;
 }
 
+textarea.invite {
+  min-height: 180px;
+}
+
 .ballots_table form table tbody td {
   font-size: 1em;
 }

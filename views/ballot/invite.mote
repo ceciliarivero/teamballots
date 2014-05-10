@@ -1,0 +1,29 @@
+% user = this.current_user
+
+<section>
+  % message = params.fetch(:message, false)
+
+  % if message
+    % if message.errors[:email].include?(:not_present)
+      <span class="alert error">Email is required</span>
+    % end
+
+    % if message.errors[:body].include?(:not_present)
+      <span class="alert error">Message is required</span>
+    % end
+  % end
+
+  <h2>Would you like to send an invitation message?</h2>
+
+  <form action="/ballot/{{ ballot.id }}/invite" method="POST">
+
+    <input type="text" name="message[email]" value="{{ message.email }}" placeholder="Voter email"><br><br>
+
+    <textarea class="invite" name="message[body]" placeholder="Type your message here">Hi there!&#10;&#10;Please signup in https://www.teamballots.com so I can add you as a voter in my ballot.&#10;&#10;Thanks!&#10;&#10;{{ user.name }}</textarea><br><br>
+
+    <button type="submit">Send</button>
+  </form><br><br>
+
+  <br>
+  <a href="/ballot/{{ ballot.id }}">Back to ballot</a>
+</section>

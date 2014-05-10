@@ -154,9 +154,12 @@ class Users < Cuba
             end
 
             on default do
-              session[:error] = "User registered with that e-mail not found"
-              render("group/info",
-                title: "Group", group: group, new_voter: voter)
+              session[:error] = "The email you entered is not registered in Team Ballots"
+
+              message = NewMessage.new(email: voter.email)
+
+              render("group/invite",
+                title: "Invite", group: group, message: message)
             end
           end
 
@@ -205,6 +208,39 @@ class Users < Cuba
 
           session[:success] = "Group successfully removed"
           res.redirect "/dashboard"
+        end
+      end
+
+      on default do
+        not_found!
+      end
+    end
+
+    on "group/:id/invite" do |id|
+      group = user.groups[id]
+
+      on group do
+        on post, param("message") do |params|
+
+          message = NewMessage.new(params)
+
+          on message.valid? do
+
+            json = JSON.dump(
+              from_user: user.name,
+              email: message.email,
+              body: message.body)
+
+            Ost[:send_invitation].push(json)
+
+            session[:success] = "You have successfully send an invitation!"
+            res.redirect "/group/#{id}"
+          end
+
+          on default do
+            render("group/invite",
+              title: "Invite", group: group, message: message)
+          end
         end
       end
 
@@ -569,9 +605,12 @@ class Users < Cuba
               end
 
               on default do
-                session[:error] = "User registered with that e-mail not found"
-                render("ballot/add_voter",
-                  title: "Add voter", ballot: ballot, voter: voter)
+                session[:error] = "The email you entered is not registered in Team Ballots"
+
+                message = NewMessage.new(email: voter.email)
+
+                render("ballot/invite",
+                  title: "Invite", ballot: ballot, message: message)
               end
             end
 
@@ -751,6 +790,44 @@ class Users < Cuba
           on get, root do
             render("ballot/update_vote",
               title: "Vote", ballot: ballot, voter: NewVote.new({}))
+          end
+        else
+          session[:error] = "Ballot is closed."
+          res.redirect "/ballot/#{id}"
+        end
+      end
+
+      on default do
+        not_found!
+      end
+    end
+
+    on "ballot/:id/invite" do |id|
+      ballot = user.ballots[id]
+
+      on ballot do
+        if ballot.status != "Closed"
+          on post, param("message") do |params|
+
+            message = NewMessage.new(params)
+
+            on message.valid? do
+
+              json = JSON.dump(
+                from_user: user.name,
+                email: message.email,
+                body: message.body)
+
+              Ost[:send_invitation].push(json)
+
+              session[:success] = "You have successfully send an invitation!"
+              res.redirect "/ballot/#{id}/voters/add"
+            end
+
+            on default do
+              render("ballot/invite",
+                title: "Invite", ballot: ballot, message: message)
+            end
           end
         else
           session[:error] = "Ballot is closed."
