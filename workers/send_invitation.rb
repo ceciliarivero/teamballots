@@ -12,6 +12,6 @@ Ost[:send_invitation].each do |json|
   Malone.deliver(
     from: "info@teamballots.com",
     to: email,
-    subject: "[Team Ballots] #{from_user} wants you to join as a voter",
+    subject: "[Team Ballots] #{from_user} invites you to join as a voter",
     text: text)
 end
