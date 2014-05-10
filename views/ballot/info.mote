@@ -19,12 +19,9 @@
     <tbody>
       <tr>
         <td colspan="2"><a href="/ballot/{{ ballot.id }}/voters">Voters ({{ ballot.voters.size }})</a>&nbsp;&nbsp;
-          % if ballot.status == "Active"
+          % if ballot.status == "Active" && ballot.user_id == user.id
             <a href="/ballot/{{ ballot.id}}/voters/add">Add voters</a>&nbsp;&nbsp;
             <a href="/ballot/{{ ballot.id }}/edit">Edit</a>
-          % else
-            <i>Add voters</i>&nbsp;&nbsp;
-            <i>Edit</i>
           % end
         </td>
       </tr>

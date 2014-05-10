@@ -1,3 +1,5 @@
+% user = this.current_user
+
 <section>
   <h2>Ballot: {{ ballot.title }}</h2>
 
@@ -5,7 +7,7 @@
 
   {{ this.partial("ballot/voters_list", ballot: ballot) }}
 
-  % if ballot.status == "Active"
+  % if ballot.status == "Active" && ballot.user_id == user.id
     <a href="/ballot/{{ ballot.id }}/voters/add">Add voter</a><br>
   % end
 

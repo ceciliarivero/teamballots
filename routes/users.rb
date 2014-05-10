@@ -396,7 +396,7 @@ class Users < Cuba
               title: "Edit ballot", ballot: ballot)
           end
         elsif ballot.status == "Active" && ballot.user_id != user.id
-          session[:error] = "Ballot can be edited only by #{ballot.created_by}"
+          session[:error] = "Ballot can be edited only by the creator of the ballot only (#{ballot.created_by})"
           res.redirect "/ballot/#{id}"
         else
           session[:error] = "Ballot cannot be edited anymore"
@@ -564,6 +564,11 @@ class Users < Cuba
 
     on "ballot/:id/voters/add" do |id|
       ballot = user.ballots[id]
+
+      on ballot && ballot.user_id != user.id do
+        session[:error] = "Voters can be added by the creator of the ballot only (#{ballot.created_by})"
+        res.redirect "/ballot/#{id}"
+      end
 
       on ballot do
         if ballot.status != "Closed"
