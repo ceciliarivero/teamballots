@@ -62,6 +62,10 @@ Cuba.define do
     end
   end
 
+  on "contact" do
+    run Contacts
+  end
+
   on authenticated(User) do
     run Users
   end

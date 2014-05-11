@@ -1,0 +1,15 @@
+<h2>Contact us</h2>
+
+<form action="/contact" method="POST">
+  <input type="email" name="contact[email]" value="{{ contact['email'] }}" placeholder="Your E-mail"><br>
+
+  <textarea name="contact[body]" placeholder="Type your message here">{{ contact['body'] }}</textarea><br><br>
+
+  <span>
+    <button type="submit">Send</button>&nbsp;&nbsp;
+
+    <a class="btn cancel" href="/">Cancel</a>
+  </span>
+</form><br><br>
+
+<a href="mailto:info@teamballots.com">info@teamballots.com</a>
