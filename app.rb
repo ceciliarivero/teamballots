@@ -62,6 +62,10 @@ Cuba.define do
     end
   end
 
+  on "about" do
+    render("about", title: "About Team Ballots")
+  end
+
   on "contact" do
     run Contacts
   end

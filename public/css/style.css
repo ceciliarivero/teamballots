@@ -54,6 +54,10 @@ i {
   margin: 0 5px;
 }
 
+.about {
+  line-height: 1.5em;
+}
+
 /* MENU TOGGLE */
 
 .menu-toggle {
