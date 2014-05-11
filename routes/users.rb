@@ -860,10 +860,6 @@ class Users < Cuba
       end
     end
 
-    on "/" do
-      res.write "hola"
-    end
-
     on default do
       not_found!
     end
