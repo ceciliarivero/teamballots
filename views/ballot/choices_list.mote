@@ -2,7 +2,7 @@
 
 % if !choices.empty?
   <thead>
-    <tr>
+    <tr id="choices_thead">
       <th>Title</th><th>Added by</th><th>Date</th>
       % if ballot.status == "Active"
         <th>Remove</th>
@@ -32,7 +32,7 @@
   </tbody>
 % else
     <tr>
-      <td>No choices added.</td>
+      <td id="no_choices">No choices added.</td>
     </tr>
 % end
 

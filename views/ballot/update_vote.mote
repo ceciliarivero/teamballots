@@ -46,7 +46,7 @@
 
       % if ballot.choices.size == 1
         <tr id="one_choice">
-          <td colspan="2">Note: When there's only one choice -as in this case-, a score of 5 points or more will be considered as a "Yes", and a score of 4 points or less it will considered as a "No".</td>
+          <td colspan="2">Note: When there's only one choice &ndash;as in this case&ndash;, a score of 5 points or more will be considered as a "Yes", and a score of 4 points or less it will considered as a "No".</td>
         </tr>
       % end
 
@@ -76,7 +76,4 @@
   % else
     You havent voted in this ballot.
   % end
-
-  {{ this.partial("ballot/results", ballot: ballot) }}
-
 % end

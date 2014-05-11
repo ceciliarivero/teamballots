@@ -21,31 +21,48 @@
   % end
 % end
 
-<h3>FINAL RESULTS</h3>
+<div class="ballots_table">
+  <table>
+    <thead>
+      <tr>
+        <th>FINAL RESULTS</th>
+      </tr>
+    </thead>
 
-<table id="results">
-  <th>Choice</th>
-  <th>Score</th>
+    <tbody>
+      <tr>
+        % if !results.empty?
+          <td>
+            % results = results.sort_by { |k, v| -v }
 
-  % if choices.size == 1
-    <th>Yes / No</th>
-  % end
+            % if choices.size > 1
+              <h4>Winner: {{ results[0][0] }}</h4>
+            % elsif choices.size == 1
+              <h4>{{ results[0][0] }}:&nbsp;
+                % if results[0][1] >= 5
+                  Yes
+                % else
+                  No
+                % end
+              </h4>
+              <p id="one_choice">Note: As this was an only-one-choice ballot ("Yes" or "No"), scores of 5 points or more were considered as "Yes" and scores of 4 points or less were considered as "No".</p>
+            % end
 
-  % results = results.sort_by { |k, v| -v }
+            <table id="results">
+              <th>Choice</th>
+              <th id="score">Score</th>
 
-  % results.each do |choice, score|
-  <tr>
-    <td>{{ choice }}</td><td id="score">{{ score }}</td>
-
-    % if choices.size == 1
-      <td id="score">
-        % if score >= 5
-          Yes
+              % results.each do |choice, score|
+              <tr>
+                <td>{{ choice }}</td><td id="score">{{ score }}</td>
+              </tr>
+              % end
+            </table>
+          </td>
         % else
-          No
+          <td>No voters voted in this ballots, therefore there aren't results.</td>
         % end
-      </td>
-    % end
-  </tr>
-  % end
-</table>
+      </tr>
+    </tbody>
+  </table>
+</div>

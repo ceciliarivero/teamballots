@@ -7,6 +7,14 @@
   % end
 % end
 
+% if ballot.status == "Closed"
+
+  {{ this.partial("ballot/results", ballot: ballot) }}
+
+% end
+
+<br>
+
 <div class="ballots_table">
   <table>
     <thead>
@@ -63,25 +71,20 @@
         % else
           <th colspan="3">
         % end
-        Choices</th>
+            Choices
+        </th>
       </tr>
     </thead>
 
-    <tbody>
-      <tr>
-        % if ballot.status == "Active"
+    % if ballot.status == "Active"
+      <tbody>
+        <tr>
           <td colspan="4">
-        % else
-          <td colspan="3">
-        % end
-          % if ballot.status == "Active"
             <a href="/ballot/{{ ballot.id}}/choices/add">Add choices</a>
-          % else
-            <i>Add choices</i>
-          % end
-        </td>
-      </tr>
-    </tbody>
+          </td>
+        </tr>
+      </tbody>
+    % end
 
     {{ this.partial("ballot/choices_list", ballot: ballot) }}
 

@@ -203,10 +203,6 @@ textarea.invite {
   font-size: 1em;
 }
 
-.ballots_table .choices_date {
-  font-size: 0.96em;
-}
-
 /* HOME (LOGIN AND SIGNUP) */
 
 .login-signup {
@@ -329,7 +325,8 @@ footer {
   border-left: none;
 }
 
-.ballots_table table tbody tr:last-child td {
+.ballots_table table tbody tr:last-child td,
+#no_choices, #vote_choice:last-child {
   border-bottom: none;
 }
 
@@ -364,11 +361,15 @@ footer {
   font-weight: bold;
 }
 
-#one_choice td {
+#one_choice td, #one_choice {
   font-size: 0.9em;
   font-style: italic;
   line-height: 1.5em;
   padding: 10px 0;
+}
+
+#one_choice {
+  padding: 0;
 }
 
 #results {
@@ -376,6 +377,7 @@ footer {
   table-layout: fixed;
   border: 1px solid #3BD5F1;
   background-color: #F0F9FD;
+  margin-bottom: 6px;
 }
 
 #results td, #results th {
@@ -386,11 +388,24 @@ footer {
 
 #results th {
   border-right: 1px solid #3BD5F1;
+  font-size: 0.9em;
 }
 
-#results td#score {
+#results #score {
   font-weight: bold;
   text-align: center;
+}
+
+#choices_thead th {
+  background: none;
+  background-color: #FAFAFA;
+  color: #000;
+  font-weight: normal;
+  border-left: 1px solid #3BD5F1;
+}
+
+#choices_thead th:first-child {
+  border-left: none;
 }
 
 /* COMMENTS */
@@ -454,10 +469,6 @@ footer {
     max-width: 90%;
   }
 
-  #vote_choice {
-    font-size: 1em;
-  }
-
   /* FOOTER */
 
   footer {
@@ -498,6 +509,10 @@ footer {
   }
 
   #results {
+    font-size: 1em;
+  }
+
+  #results th {
     font-size: 1em;
   }
 
