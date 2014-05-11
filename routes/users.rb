@@ -146,10 +146,15 @@ class Users < Cuba
                 title: "Group", group: group, new_voter: voter)
             end
 
-            on new_voter do
+            on new_voter && new_voter.status == "confirmed" do
               group.voters.add(new_voter)
 
               session[:success] = "Voter successfully added!"
+              res.redirect "/group/#{id}"
+            end
+
+            on new_voter && new_voter.status == "tbc" do
+              session[:error] = "This user didn't activate the account yet"
               res.redirect "/group/#{id}"
             end
 
@@ -590,7 +595,7 @@ class Users < Cuba
                   title: "Add voter", ballot: ballot, voter: voter)
               end
 
-              on new_voter do
+              on new_voter && new_voter.status == "confirmed" do
                 ballot.voters.add(new_voter)
                 new_voter.ballots.add(ballot)
 
@@ -607,6 +612,11 @@ class Users < Cuba
 
                 session[:success] = "Voter successfully added!"
                 res.redirect "/ballot/#{id}/voters"
+              end
+
+              on new_voter && new_voter.status == "tbc" do
+                session[:error] = "This user didn't activate the account yet"
+                res.redirect "/ballot/#{id}"
               end
 
               on default do
