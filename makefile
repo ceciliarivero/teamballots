@@ -23,6 +23,7 @@ db:
 
 workers-start:
 	env $$(cat env.sh) ost -d contact
+	env $$(cat env.sh) ost -d comment_made
 	env $$(cat env.sh) ost -d new_user
 	env $$(cat env.sh) ost -d password_changed
 	env $$(cat env.sh) ost -d send_invitation
@@ -32,6 +33,7 @@ workers-start:
 
 workers-stop:
 	kill $$(cat workers/contact.pid)
+	kill $$(cat workers/comment_made.pid)
 	kill $$(cat workers/new_user.pid)
 	kill $$(cat workers/password_changed.pid)
 	kill $$(cat workers/send_invitation.pid)

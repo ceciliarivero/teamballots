@@ -720,6 +720,18 @@ class Users < Cuba
 
               Comment.create(params)
 
+              ballot.voters.each do |voter|
+                if voter.id != user.id
+                  json = JSON.dump(
+                    email: voter.email,
+                    name: voter.name,
+                    comment_by: user.name,
+                    ballot_title: ballot.title)
+
+                  Ost[:comment_made].push(json)
+                end
+              end
+
               session[:success] = "You have successfully added a comment!"
               res.redirect "/ballot/#{id}"
             end
