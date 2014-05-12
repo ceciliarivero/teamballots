@@ -401,7 +401,6 @@ footer {
   background-color: #FAFAFA;
   color: #000;
   font-weight: normal;
-  border-left: 1px solid #3BD5F1;
 }
 
 #choices_thead th:first-child {
@@ -411,6 +410,22 @@ footer {
 #scoring_guide td {
   font-size: 0.8em;
   line-height: 0.9em;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.blue {
+  color: #3bd5f1;
+}
+
+.green {
+  color: #34D834;
+}
+
+.gray {
+  color: #ccc;
 }
 
 /* COMMENTS */

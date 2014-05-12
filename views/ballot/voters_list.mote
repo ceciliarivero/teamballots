@@ -5,8 +5,9 @@
     <thead>
       <tr>
         <th width="40%"><i class="fa fa-user"></i></th>
-        <th width="40%"><i class="fa fa-envelope"></i></th>
+        <th width="25%"><i class="fa fa-envelope"></i></th>
         <th align="center"><i class="fa fa-trash-o"></i></th>
+        <th align="center">Voted?</th>
       </tr>
     </thead>
 
@@ -22,6 +23,23 @@
           % else
             <td align="center"><i class="fa fa-trash-o"></i></td>
           % end
+
+          % votes = []
+
+          % ballot.choices.each do |choice|
+            % choice.votes.each do |vote|
+              % if vote.user_id == voter.id
+                % votes << vote
+              % end
+            % end
+          % end
+
+          % if ballot.choices.size != 0 && ballot.choices.size == votes.size
+            <td align="center"><i class="fa fa-check green"></i></td>
+          % else
+            <td align="center"><i class="fa fa-times gray"></i></td>
+          % end
+
         </tr>
       % end
     </tbody>
