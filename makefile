@@ -28,6 +28,7 @@ workers-start:
 	env $$(cat env.sh) ost -d password_changed
 	env $$(cat env.sh) ost -d send_invitation
 	env $$(cat env.sh) ost -d user_deleted
+	env $$(cat env.sh) ost -d user_voted
 	env $$(cat env.sh) ost -d voter_added
 	env $$(cat env.sh) ost -d welcome
 
@@ -38,5 +39,6 @@ workers-stop:
 	kill $$(cat workers/password_changed.pid)
 	kill $$(cat workers/send_invitation.pid)
 	kill $$(cat workers/user_deleted.pid)
+	kill $$(cat workers/user_voted.pid)
 	kill $$(cat workers/voter_added.pid)
 	kill $$(cat workers/welcome.pid)
