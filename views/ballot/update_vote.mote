@@ -51,7 +51,7 @@
       % end
 
     </table><br>
-      <button type="submit">Save</button>
+      <button type="submit">Save</button>&nbsp;&nbsp;&nbsp;<span><em>(Remember that you can change your vote until the closing date)</em></span>
   </form>
 % else
   % if !choices_voted.empty?
