@@ -93,6 +93,10 @@
 
 <br>
 
+% if !ballot.choices.empty?
+  {{ this.partial("ballot/scoring_guide") }}
+% end
+
 <div class="ballots_table">
   <table>
     <thead>

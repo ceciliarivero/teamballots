@@ -362,7 +362,7 @@ footer {
 }
 
 #one_choice td, #one_choice {
-  font-size: 0.9em;
+  font-size: 0.97em;
   font-style: italic;
   line-height: 1.5em;
   padding: 10px 0;
@@ -406,6 +406,11 @@ footer {
 
 #choices_thead th:first-child {
   border-left: none;
+}
+
+#scoring_guide td {
+  font-size: 0.8em;
+  line-height: 0.9em;
 }
 
 /* COMMENTS */
@@ -514,6 +519,10 @@ footer {
 
   #results th {
     font-size: 1em;
+  }
+
+  #one_choice td, #one_choice {
+    font-size: 0.9em;
   }
 
   /* NOTICES */

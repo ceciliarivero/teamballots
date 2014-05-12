@@ -1,0 +1,42 @@
+<div class="ballots_table" id="scoring_guide">
+  <table>
+    <thead>
+      <tr>
+        <th colspan="2">Scoring guide</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+          <td>10. I would give my life for it</td>
+
+          <td>5. It's the same to me</td>
+        </tr>
+        <tr>
+          <td>9. I love it</td>
+
+          <td>4. I don't think I like it</td>
+        </tr>
+        <tr>
+          <td>8. I really like it</td>
+
+          <td>3. I don't like it</td>
+        </tr>
+        <tr>
+          <td>7. I like it</td>
+
+          <td>2. I really don't like it</td>
+        </tr>
+        <tr>
+          <td>6. It's fine</td>
+
+          <td>1. I hate this option</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>0. Not in a million years</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+<br>
