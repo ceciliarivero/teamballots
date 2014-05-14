@@ -805,18 +805,6 @@ class Users < Cuba
 
             on valid_votes.size == votes.size do
 
-              ballot.voters.each do |voter|
-                if voter.id != user.id
-                  json = JSON.dump(
-                    email: voter.email,
-                    name: voter.name,
-                    vote_by: user.name,
-                    ballot_title: ballot.title)
-
-                  Ost[:user_voted].push(json)
-                end
-              end
-
               UserVotedLog.create(user, ballot)
 
               session[:success] = "You have successfully voted!"
