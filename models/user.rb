@@ -14,6 +14,9 @@ class User < Ohm::Model
   unique :username
   unique :email
 
+  set :groups, :Group
+  set :ballots, :Ballot
+
   def self.fetch(identifier)
     with(:email, identifier) || with(:username, identifier)
   end
@@ -36,7 +39,4 @@ class User < Ohm::Model
 
     super
   end
-
-  set :groups, :Group
-  set :ballots, :Ballot
 end

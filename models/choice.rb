@@ -7,14 +7,14 @@ class Choice < Ohm::Model
 
   index :added_by
 
+  reference :user, :User
+  reference :ballot, :Ballot
+
+  collection :votes, :Vote
+
   def before_delete
     votes.each(&:delete)
 
     super
   end
-
-  reference :user, :User
-  reference :ballot, :Ballot
-
-  collection :votes, :Vote
 end
