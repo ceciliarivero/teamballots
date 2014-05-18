@@ -36,7 +36,7 @@
       </section>
 
       <footer>
-        <p>2014 | Team Ballots | <a href="/about">About</a> | <a href="/contact">Contact us</a></p>
+        <p>2014 &nbsp;&nbsp; Team Ballots &nbsp;&nbsp; <a href="/about">About</a> &nbsp;&nbsp; <a href="/contact">Contact us</a> &nbsp;&nbsp; <a href="https://github.com/ceciliarivero/teamballots"><i id="github" class="fa fa-github"></i></a></p>
       </footer>
     </div>
     <script>

@@ -54,6 +54,11 @@ i {
   margin: 0 5px;
 }
 
+i#github {
+  font-size: 1.4em;
+  vertical-align: middle;
+}
+
 .about {
   line-height: 1.5em;
 }
