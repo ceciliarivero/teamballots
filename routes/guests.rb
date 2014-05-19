@@ -15,7 +15,7 @@ class Guests < Cuba
 
           user = User.create(params)
 
-          signer = Nobi::Signer.new(NOBI_SECRET)
+          signer = Nobi::TimestampSigner.new(NOBI_SECRET)
           signed = signer.sign(String(user.id))
 
           link = RESET_URL + "/activate/%s" % signed
@@ -48,7 +48,7 @@ class Guests < Cuba
     end
 
     on "activate/:signature" do |signature|
-      user = Activation.unsign(signature)
+      user = Otp.unsign(signature, 7200)
 
       on user do
         on user.status != "confirmed" do
@@ -71,8 +71,8 @@ class Guests < Cuba
       end
 
       on get, root do
-        session[:error] = "Invalid or expired URL. Please try signin up again!"
-        res.redirect("/signup")
+        session[:error] = "Invalid or expired URL. Please contact us so we can send you a new activation link"
+        res.redirect("/contact")
       end
 
       on(default) { not_found! }
