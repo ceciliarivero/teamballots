@@ -16,7 +16,7 @@ class Guests < Cuba
           user = User.create(params)
 
           signer = Nobi::Signer.new(NOBI_SECRET)
-          signed = signer.sign(user.id)
+          signed = signer.sign(String(user.id))
 
           link = RESET_URL + "/activate/%s" % signed
           text = Mailer.render("activate", { user: user, link: link })
@@ -51,16 +51,23 @@ class Guests < Cuba
       user = Activation.unsign(signature)
 
       on user do
-        user.update(status: "confirmed")
+        on user.status != "confirmed" do
+          user.update(status: "confirmed")
 
-        authenticate(user)
+          authenticate(user)
 
-        session[:success] = "You have successfully activated your account and logged in!"
+          session[:success] = "You have successfully activated your account and logged in!"
 
-        Ost[:welcome].push(user.id)
-        Ost[:new_user].push(user.id)
+          Ost[:welcome].push(user.id)
+          Ost[:new_user].push(user.id)
 
-        res.redirect "/dashboard", 303
+          res.redirect "/dashboard", 303
+        end
+
+        on default do
+          session[:error] = "You have already activated your account, you can login now"
+          res.redirect "/"
+        end
       end
 
       on get, root do
