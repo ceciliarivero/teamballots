@@ -5,9 +5,6 @@
     % if ballot.errors[:title].include?(:not_present)
       <span class="alert error">Title is required</span>
     % end
-    % if ballot.errors[:description].include?(:not_present)
-      <span class="alert error">Description is required</span>
-    % end
     % if ballot.errors[:end_choices_date].include?(:not_present) || ballot.errors[:end_date].include?(:not_present)
       <span class="alert error">Both dates are required</span>
     % end
@@ -25,7 +22,7 @@
     <div class="form_left">
       <input type="text" name="ballot[title]" value="{{ this.h(ballot.title) }}" placeholder="Title"><br>
 
-      <textarea name="ballot[description]" placeholder="Description">{{ this.h(ballot.description) }}</textarea><br><br>
+      <textarea name="ballot[description]" placeholder="Description (optional)">{{ this.h(ballot.description) }}</textarea><br><br>
     </div>
 
     <div class="form_right">

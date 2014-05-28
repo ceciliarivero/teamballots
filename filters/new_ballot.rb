@@ -4,7 +4,6 @@ class NewBallot < Scrivener
 
   def validate
     assert_present :title
-    assert_present :description
 
     if assert_present(:end_choices_date)
       assert(end_choices_date > Time.new.to_i, [:end_choices_date, :not_valid])
