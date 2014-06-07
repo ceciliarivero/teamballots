@@ -33,21 +33,7 @@ class Users < Cuba
 
           on default do
             if user.name != params["name"]
-              ballots = Ballot.find(created_by: user.name)
-              choices = Choice.find(added_by: user.name)
-              comments = Comment.find(added_by: user.name)
-
-              ballots.each do |ballot|
-                ballot.update(created_by: params["name"])
-              end
-
-              choices.each do |choice|
-                choice.update(added_by: params["name"])
-              end
-
-              comments.each do |comment|
-                comment.update(added_by: params["name"])
-              end
+              OwnershipRenamer.execute(user.name, params["name"])
             end
 
             user.update(params)
@@ -421,13 +407,13 @@ class Users < Cuba
         if ballot.status == "Active"
           on post, param("choice") do |params|
             params["date"] = Time.new.to_i
+            params["added_by"] = user.name
 
             choice = NewChoice.new(params)
 
             on choice.valid? do
               params["user_id"] = user.id
               params["ballot_id"] = ballot.id
-              params["added_by"] = user.name
 
               choice_added = Choice.create(params)
 
@@ -710,13 +696,13 @@ class Users < Cuba
         if ballot.status != "Closed"
           on post, param("comment") do |params|
             params["date"] = Time.new.to_i
+            params["added_by"] = user.name
 
             comment = NewComment.new(params)
 
             on comment.valid? do
               params["user_id"] = user.id
               params["ballot_id"] = ballot.id
-              params["added_by"] = user.name
 
               Comment.create(params)
 

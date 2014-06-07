@@ -16,7 +16,7 @@ console:
 	env $$(cat env.sh) irb -r ./app
 
 test:
-	env $$(cat env.sh) cutest test/**/*.rb
+	env $$(cat env.sh) cutest -r ./test/helper.rb test/**/*.rb
 
 db:
 	ruby seed.rb
