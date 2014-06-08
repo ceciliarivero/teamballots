@@ -49,6 +49,7 @@ Enjoy! :-)
 Tools used in Team Ballots
 --------------------------
 - [Cuba:] (http://cuba.is/) Microframework built in Ruby.
+- [Cutest] (https://github.com/djanowski/cutest) for testing.
 - [Malone:] (https://github.com/cyx/malone) for mailing.
 - [Mote:] (https://github.com/soveran/mote) Minimum Operational Template.
 - [Nobi:] (https://github.com/cyx/nobi) for creating a password reset link and account activations.
