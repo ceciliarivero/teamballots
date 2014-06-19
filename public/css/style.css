@@ -401,15 +401,31 @@ footer {
   text-align: center;
 }
 
-#choices_thead th {
-  background: none;
-  background-color: #FAFAFA;
-  color: #000;
-  font-weight: normal;
+#choice div {
+  padding: 10px;
+  border-top: 1px solid #3BD5F1;
 }
 
-#choices_thead th:first-child {
-  border-left: none;
+#choice div:first-child {
+  border-top: none;
+}
+
+#choice h4 {
+  margin: 0;
+}
+
+#choice p {
+  line-height: 1.5em;
+  font-size: 0.9em;
+}
+
+#choice span.choice_added_by {
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+#choice span.choice_remove {
+  float: right;
 }
 
 #scoring_guide td {

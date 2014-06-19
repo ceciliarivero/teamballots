@@ -29,7 +29,9 @@
   <h2>Add choice</h2>
 
   <form action="/ballot/{{ ballot.id }}/choices/add" method="POST">
-    <input type="text" name="choice[title]" value="{{ this.h(choice.title) }}" placeholder="Title"><br><br>
+    <input type="text" name="choice[title]" value="{{ this.h(choice.title) }}" placeholder="Title"><br>
+
+    <textarea name="choice[comment]" placeholder="Comment (optional)">{{ this.h(choice.comment) }}</textarea><br><br>
 
     <span>
       <button type="submit">Add choice</button>&nbsp;&nbsp;

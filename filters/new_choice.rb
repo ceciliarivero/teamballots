@@ -1,5 +1,5 @@
 class NewChoice < Scrivener
-  attr_accessor :date, :title, :added_by
+  attr_accessor :date, :title, :comment, :added_by
 
   def validate
     assert_present :title

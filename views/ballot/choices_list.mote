@@ -1,39 +1,24 @@
 % choices = ballot.choices
 
-% if !choices.empty?
-  <thead>
-    <tr id="choices_thead">
-      <th>Title</th><th>Added by</th><th>Date</th>
-      % if ballot.status == "Active"
-        <th>Remove</th>
+<tbody id="choice">
+  <tr>
+    <td>
+      % choices.each do |choice|
+        <div>
+          <h4>{{ choice.title }}</h4>
+          <p>{{ choice.comment }}</p>
+          <span class="choice_added_by">by {{ choice.added_by }}</span>
+          <span class="choice_remove">
+            % if ballot.status == "Active" && choice.user_id == this.current_user.id
+              <a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove" id="choice_{{ choice.id }}" onclick="return remove_choice({{ choice.id }})"><i class="fa fa-trash-o"></i></a>
+            % elsif ballot.status == "Active"
+              <i class="fa fa-trash-o"></i>
+            % end
+          </span>
+        </div>
       % end
-    </tr>
-  </thead>
-
-  <tbody>
-    % choices.each do |choice|
-      <tr>
-        <td>
-          {{ choice.title }}
-        </td>
-        <td>
-          {{ choice.added_by }}
-        </td>
-        <td class="choices_date">
-          {{ this.cal_utc(choice.date) }}
-        </td>
-        % if ballot.status == "Active" && choice.user_id == this.current_user.id
-          <td align="center"><a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove" id="choice_{{ choice.id }}" onclick="return remove_choice({{ choice.id }})"><i class="fa fa-trash-o"></i></a></td>
-        % elsif ballot.status == "Active"
-          <td align="center"><i class="fa fa-trash-o"></i></td>
-        % end
-      </tr>
-    % end
-  </tbody>
-% else
-    <tr>
-      <td id="no_choices">No choices added.</td>
-    </tr>
-% end
+    </td>
+  </tr>
+</tbody>
 
 <script src="/js/alert.js"></script>

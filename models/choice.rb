@@ -3,6 +3,7 @@ class Choice < Ohm::Model
 
   attribute :date
   attribute :title
+  attribute :comment
   attribute :added_by
 
   index :added_by
