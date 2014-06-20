@@ -7,7 +7,7 @@ module ChoiceEditedLog
       Current Choice title: " + params["title"]
     end
 
-    if choice.comment != params["comment"]
+    if !choice.comment.nil? && choice.comment != params["comment"]
       message += "<br><br><br>Previous Choice comment:<br>" + choice.comment + "<br><br>
       Current Choice comment: " + params["comment"]
     end
