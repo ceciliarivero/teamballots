@@ -1,0 +1,28 @@
+<section>
+  % edit = params.fetch(:edit, false)
+
+  % if edit
+    % if edit.errors[:title].include?(:not_present)
+      <span class="alert error">Title is required</span>
+    % end
+  % end
+
+  <h2>Ballot: {{ ballot.title }}</h2>
+
+  <h2>Edit choice</h2>
+
+  <form action="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/edit" method="POST">
+    <input type="text" name="choice[title]" value="{{ this.h(choice.title) }}" placeholder="Title"><br>
+
+    <textarea name="choice[comment]" placeholder="Comment (optional)">{{ this.h(choice.comment) }}</textarea><br><br>
+
+    <span>
+      <button type="submit">Save</button>&nbsp;&nbsp;
+
+      <a class="btn cancel" href="/ballot/{{ ballot.id }}">Cancel</a>
+    </span>
+  </form>
+
+  <br>
+  <a href="/ballot/{{ ballot.id }}">Back to ballot</a>
+</section>

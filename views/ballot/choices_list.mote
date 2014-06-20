@@ -10,8 +10,10 @@
           <span class="choice_added_by">by {{ choice.added_by }}</span>
           <span class="choice_remove">
             % if ballot.status == "Active" && choice.user_id == this.current_user.id
+              <a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/edit"><i class="fa fa-pencil"></i></a>
               <a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove" id="choice_{{ choice.id }}" onclick="return remove_choice({{ choice.id }})"><i class="fa fa-trash-o"></i></a>
             % elsif ballot.status == "Active"
+              <i class="fa fa-pencil"></i>
               <i class="fa fa-trash-o"></i>
             % end
           </span>

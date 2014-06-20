@@ -348,7 +348,8 @@ class Users < Cuba
                     ballot.description != params["description"] ||
                     ballot.end_choices_date.to_i != params["end_choices_date"] ||
                     ballot.end_date.to_i != params["end_date"]
-                      BallotEditedLog.create(user, ballot, params)
+                    
+                    BallotEditedLog.create(user, ballot, params)
                   end
 
                   ballot.update(params)
@@ -387,7 +388,7 @@ class Users < Cuba
               title: "Edit ballot", ballot: ballot)
           end
         elsif ballot.status == "Active" && ballot.user_id != user.id
-          session[:error] = "Ballot can be edited only by the creator of the ballot only (#{ballot.created_by})"
+          session[:error] = "Ballot can be edited only by #{ballot.created_by}"
           res.redirect "/ballot/#{id}"
         else
           session[:error] = "Ballot cannot be edited anymore"
@@ -436,6 +437,57 @@ class Users < Cuba
         else
           session[:error] = "Ballot cannot be edited anymore"
           res.redirect "/ballot/#{id}"
+        end
+      end
+
+      on default do
+        not_found!
+      end
+    end
+
+    on "ballot/:ballot_id/choices/:choice_id/edit" do |ballot_id, choice_id|
+      ballot = user.ballots[ballot_id]
+      choice = ballot.choices.ids.include?(choice_id)
+
+      on ballot && choice do
+        choice = Choice[choice_id]
+
+        if ballot.status == "Active" && choice.user_id == user.id
+          on post do
+            on req.post?, param("choice") do |params|
+              params["date"] = Time.new.to_i
+              params["added_by"] = user.name
+
+              edit = NewChoice.new(params)
+
+              on edit.valid? do
+                if choice.title != params["title"] || choice.comment != params["comment"]
+                  ChoiceEditedLog.create(user, ballot, choice, params)
+                end
+
+                choice.update(params)
+
+                session[:success] = "You have successfully edited a choice!"
+                res.redirect "/ballot/#{ballot_id}/choices"
+              end
+
+              on default do
+                render("ballot/edit_choice",
+                  title: "Edit choice", ballot: ballot, choice: choice, edit: edit)
+              end
+            end
+          end
+
+          on get, root do
+            render("ballot/edit_choice",
+              title: "Edit choice", ballot: ballot, choice: choice)
+          end
+        elsif ballot.status == "Active" && choice.user_id != user.id
+          session[:error] = "You can only edit choices added by you"
+          res.redirect "/ballot/#{ballot_id}"
+        else
+          session[:error] = "Ballot cannot be edited anymore"
+          res.redirect "/ballot/#{ballot_id}"
         end
       end
 
@@ -557,7 +609,7 @@ class Users < Cuba
       ballot = user.ballots[id]
 
       on ballot && ballot.user_id != user.id do
-        session[:error] = "Voters can be added by the creator of the ballot only (#{ballot.created_by})"
+        session[:error] = "Voters can be added only by #{ballot.created_by}"
         res.redirect "/ballot/#{id}"
       end
 
