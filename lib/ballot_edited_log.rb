@@ -13,9 +13,9 @@ module BallotEditedLog
     end
 
     if ballot.end_choices_date.to_i != params["end_choices_date"]
-      message += "<br><br><br>Previous Deadline for modifying ballot: " +
+      message += "<br><br><br>Previous start of voting term: " +
       Time.at(ballot.end_choices_date.to_i).utc.strftime("%d-%m-%Y %H:%M %Z") + "<br><br>
-      Current Deadline for modifying ballot: " +
+      Current start of voting term: " +
       Time.at(params["end_choices_date"].to_i).utc.strftime("%d-%m-%Y %H:%M %Z")
     end
 

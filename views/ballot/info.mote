@@ -51,7 +51,7 @@
       </tr>
 
       <tr>
-        <td>Deadline to edit ballot</td>
+        <td>Voting starts on</td>
         <td>{{ this.cal_utc(ballot.end_choices_date) }}</td>
       </tr>
 
@@ -100,45 +100,47 @@
 
 <br>
 
-<div class="ballots_table">
-  <table>
-    <thead>
-      <tr>
-        <th>My vote</th>
-      </tr>
-    </thead>
-
-    <tbody>
+% if ballot.status == "Voting only"
+  <div class="ballots_table">
+    <table>
+      <thead>
         <tr>
-          <td>
-            % choices = ballot.choices
-
-            % choices_voted = []
-
-            % choices_not_voted = []
-
-            % if !choices.empty?
-
-              % ballot.choices.each do |choice|
-                % user_vote = choice.votes.find(user_id: user.id)
-
-                % if !user_vote.empty?
-                  % choices_voted << choice
-                % else
-                  % choices_not_voted << choice
-                % end
-              % end
-
-              {{ this.partial("ballot/update_vote", ballot: ballot, choices_not_voted: choices_not_voted, choices_voted: choices_voted, user: user) }}
-
-            % else
-              No choices available to vote.
-            % end
-          </td>
+          <th>My vote</th>
         </tr>
-    </tbody>
-  </table>
-</div>
+      </thead>
+
+      <tbody>
+          <tr>
+            <td>
+              % choices = ballot.choices
+
+              % choices_voted = []
+
+              % choices_not_voted = []
+
+              % if !choices.empty?
+
+                % ballot.choices.each do |choice|
+                  % user_vote = choice.votes.find(user_id: user.id)
+
+                  % if !user_vote.empty?
+                    % choices_voted << choice
+                  % else
+                    % choices_not_voted << choice
+                  % end
+                % end
+
+                {{ this.partial("ballot/update_vote", ballot: ballot, choices_not_voted: choices_not_voted, choices_voted: choices_voted, user: user) }}
+
+              % else
+                No choices available to vote.
+              % end
+            </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+% end
 
 <br>
 
@@ -161,3 +163,5 @@
     </tbody>
   </table>
 </div>
+
+<script src="/js/alert.js"></script>

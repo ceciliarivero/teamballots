@@ -9,11 +9,10 @@
           <p>{{ choice.comment.gsub(/\r\n/, "<br>") }}</p>
           <span class="choice_added_by">by {{ choice.added_by }}</span>
           <span class="choice_remove">
-            <a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/edit"><i class="fa fa-pencil"></i></a>
-
             % if ballot.status == "Active" && choice.user_id == this.current_user.id
               <a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove" id="choice_{{ choice.id }}" onclick="return remove_choice({{ choice.id }})"><i class="fa fa-trash-o"></i></a>
             % elsif ballot.status == "Active"
+              <a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/edit"><i class="fa fa-pencil"></i></a>
               <i class="fa fa-trash-o"></i>
             % end
           </span>
@@ -22,5 +21,3 @@
     </td>
   </tr>
 </tbody>
-
-<script src="/js/alert.js"></script>

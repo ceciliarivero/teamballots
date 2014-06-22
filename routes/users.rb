@@ -802,7 +802,7 @@ class Users < Cuba
         end
 
 
-        if ballot.status != "Closed"
+        if ballot.status == "Voting only"
           on post, param("vote") do |votes|
 
             valid_votes = []
@@ -856,6 +856,9 @@ class Users < Cuba
             render("ballot/update_vote",
               title: "Vote", ballot: ballot, voter: NewVote.new({}))
           end
+        elsif ballot.status == "Active"
+          session[:error] = "Voting starts on #{cal_utc(ballot.end_choices_date)}"
+          res.redirect "/ballot/#{id}"
         else
           session[:error] = "Ballot is closed."
           res.redirect "/ballot/#{id}"

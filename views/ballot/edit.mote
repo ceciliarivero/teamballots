@@ -9,10 +9,10 @@
       <span class="alert error">Both dates are required</span>
     % end
     % if edit.errors[:end_choices_date] == [:not_valid]
-      <span class="alert error">The deadline for modifying the ballot must be later than the current time</span>
+      <span class="alert error">The voting term must start later than the current time</span>
     % end
     % if edit.errors[:end_date] == [:not_valid]
-      <span class="alert error">The ballot closing date and time must be later than the deadline for modifying the ballot</span>
+      <span class="alert error">The ballot closing date must be later than the start of the voting term</span>
     % end
   % end
 
@@ -26,11 +26,11 @@
     </div>
 
     <div class="form_right">
-      <label for="end_choices_date">Deadline for modifying the ballot (UTC):</label><br>
+      <label for="end_choices_date">Voting starts on (UTC):</label><br>
       <i class="fa fa-calendar blue cursor" onclick="javascript:NewCssCal ('end_choices_date','ddMMyyyy','arrow',true,'24','','future')"></i>
       <input type="Text" name="ballot[end_choices_date]" value="{{ ballot.end_choices_date }}" id="end_choices_date" maxlength="25" size="25"/><br><br>
 
-      <label for="end_date">Ballot closing date (UTC):</label><br>
+      <label for="end_date">Closing date (UTC):</label><br>
       <i class="fa fa-calendar blue cursor" onclick="javascript:NewCssCal ('end_date','ddMMyyyy','arrow',true,'24','','future')"></i>
       <input type="Text" name="ballot[end_date]" value="{{ ballot.end_date }}" id="end_date" maxlength="25" size="25"/><br><br>
 
