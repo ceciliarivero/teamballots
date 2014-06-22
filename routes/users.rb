@@ -452,7 +452,7 @@ class Users < Cuba
       on ballot && choice do
         choice = Choice[choice_id]
 
-        if ballot.status == "Active" && choice.user_id == user.id
+        if ballot.status == "Active"
           on post do
             on req.post?, param("choice") do |params|
               params["date"] = Time.new.to_i
@@ -482,9 +482,6 @@ class Users < Cuba
             render("ballot/edit_choice",
               title: "Edit choice", ballot: ballot, choice: choice)
           end
-        elsif ballot.status == "Active" && choice.user_id != user.id
-          session[:error] = "You can only edit choices added by you"
-          res.redirect "/ballot/#{ballot_id}"
         else
           session[:error] = "Ballot cannot be edited anymore"
           res.redirect "/ballot/#{ballot_id}"
