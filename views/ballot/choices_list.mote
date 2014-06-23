@@ -4,7 +4,9 @@
       % ballot.choices.each do |choice|
         <div>
           <h4>{{ choice.title }}</h4>
-          <p>{{ choice.comment.gsub(/\r\n/, "<br>") }}</p>
+          % if !choice.comment.empty?
+            <p>{{ choice.comment.gsub(/\r\n/, "<br>") }}</p>
+          % end
           <span class="choice_added_by">by {{ choice.added_by }}</span>
           <span class="choice_remove">
             % if ballot.status == "Active"
@@ -15,7 +17,7 @@
               % else
                 <i class="fa fa-trash-o"></i>
               % end
-              
+
             % end
           </span>
         </div>
