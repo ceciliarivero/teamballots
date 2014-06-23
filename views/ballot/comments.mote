@@ -14,11 +14,10 @@
         <span>{{ comment.added_by }}</span>
         <span class="comment_date">Date: {{ this.cal_utc(comment.date) }}</span>
       </div>
-      % if !comment.message.empty?
-        <div class="comment_body">
-          {{ comment.message.gsub(/\r\n/, "<br>") }}
-        </div>
-      % end
+      
+      <div class="comment_body">
+        {{ comment.message.gsub(/\r\n/, "<br>") }}
+      </div>
     </li>
 
     % end
