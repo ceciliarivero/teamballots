@@ -7,7 +7,7 @@
           % if choice.comment && !choice.comment.empty?
             <p>{{ choice.comment.gsub(/\r\n/, "<br>") }}</p>
           % end
-          <span class="choice_added_by">by {{ choice.added_by }}</span>
+          <span class="choice_added_by">Last change by {{ choice.added_by }}</span>
           <span class="choice_remove">
             % if ballot.status == "Active"
               <a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/edit"><i class="fa fa-pencil"></i></a>
