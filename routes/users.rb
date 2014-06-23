@@ -461,6 +461,8 @@ class Users < Cuba
               edit = NewChoice.new(params)
 
               on edit.valid? do
+                choice.comment = "" if choice.comment == nil
+                
                 if choice.title != params["title"] || choice.comment != params["comment"]
                   ChoiceEditedLog.create(user, ballot, choice, params)
                 end
