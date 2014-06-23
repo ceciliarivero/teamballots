@@ -4,3 +4,4 @@ env.sh
 dump.rdb
 seed.rb
 *.pid
+/db

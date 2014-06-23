@@ -8,7 +8,7 @@
         % user_vote.each do |vote|
           <div>
             <h4>{{ choice.title }}</h4>
-            % if !choice.comment.empty?
+            % if choice.comment && !choice.comment.empty?
               <p>{{ choice.comment.gsub(/\r\n/, "<br>") }}</p>
             % end
             <span class="choice_added_by">by {{ choice.added_by }}</span>
@@ -31,7 +31,7 @@
       % choices_not_voted.each do |choice|
         <div>
           <h4>{{ choice.title }}</h4>
-          % if !choice.comment.empty?
+          % if choice.comment && !choice.comment.empty?
             <p>{{ choice.comment.gsub(/\r\n/, "<br>") }}</p>
           % end
           <span class="choice_added_by">by {{ choice.added_by }}</span>
