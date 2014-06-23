@@ -1,19 +1,21 @@
-% choices = ballot.choices
-
 <tbody id="choice">
   <tr>
     <td>
-      % choices.each do |choice|
+      % ballot.choices.each do |choice|
         <div>
           <h4>{{ choice.title }}</h4>
           <p>{{ choice.comment.gsub(/\r\n/, "<br>") }}</p>
           <span class="choice_added_by">by {{ choice.added_by }}</span>
           <span class="choice_remove">
-            % if ballot.status == "Active" && choice.user_id == this.current_user.id
-              <a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove" id="choice_{{ choice.id }}" onclick="return remove_choice({{ choice.id }})"><i class="fa fa-trash-o"></i></a>
-            % elsif ballot.status == "Active"
+            % if ballot.status == "Active"
               <a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/edit"><i class="fa fa-pencil"></i></a>
-              <i class="fa fa-trash-o"></i>
+
+              % if choice.user_id == this.current_user.id
+                <a href="/ballot/{{ ballot.id }}/choices/{{ choice.id }}/remove" id="choice_{{ choice.id }}" onclick="return remove_choice({{ choice.id }})"><i class="fa fa-trash-o"></i></a>
+              % else
+                <i class="fa fa-trash-o"></i>
+              % end
+              
             % end
           </span>
         </div>

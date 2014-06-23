@@ -1,18 +1,18 @@
 module ChoiceEditedLog
   def self.create(user, ballot, choice, params = {})
-    message = "Choice '" + choice.title + "' was edited:"
+    message = "<b>Choice '" + choice.title + "' was edited:</b>"
 
     if choice.title != params["title"]
-      message += "<br><br><br>Previous Choice title: " + choice.title + "<br><br>
-      Current Choice title: " + params["title"]
+      message += "<br><br><b>Previous Choice title:</b> " + choice.title + "<br><br>
+      <b>Current Choice title:</b> " + params["title"]
     end
 
     if !choice.comment.empty? && choice.comment != params["comment"]
-      message += "<br><br>Previous Choice comment: " + choice.comment + "<br><br>
-      Current Choice comment: " + params["comment"]
+      message += "<br><br><b>Previous Choice comment:</b><br>" + choice.comment + "<br><br>
+      <b>Current Choice comment:</b><br>" + params["comment"]
     elsif choice.comment.empty? && !params["comment"].empty?
-      message += "<br><br>Previous Choice comment: <i>(none)</i><br><br>
-      Current Choice comment: " + params["comment"]
+      message += "<br><br><b>Previous Choice comment:</b> (none)<br><br>
+      <b>Current Choice comment:</b><br>" + params["comment"]
     end
 
     log_comment = {}

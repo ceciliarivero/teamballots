@@ -65,42 +65,43 @@
 
 <br>
 
-<div class="ballots_table">
-  <table>
-    <thead>
-      <tr>
-        <th>Choices</th>
-      </tr>
-    </thead>
+% if ballot.status == "Active"
+  <div class="ballots_table">
+    <table>
+      <thead>
+        <tr>
+          <th>Choices</th>
+        </tr>
+      </thead>
 
-    % if ballot.status == "Active"
-      <tbody>
+      
+        <tbody>
+          <tr>
+            <td>
+              <a href="/ballot/{{ ballot.id}}/choices/add">Add choices</a>
+            </td>
+          </tr>
+        </tbody>
+     
+
+      % if !ballot.choices.empty?
+
+        {{ this.partial("ballot/choices_list", ballot: ballot) }}
+              
+      % else
         <tr>
           <td>
-            <a href="/ballot/{{ ballot.id}}/choices/add">Add choices</a>
+            <div>No choices added.</div>
           </td>
         </tr>
-      </tbody>
-    % end
+      % end
 
-    % if !ballot.choices.empty?
-
-      {{ this.partial("ballot/choices_list", ballot: ballot) }}
-
-    % else
-      <tr>
-        <td>
-          <div>No choices added.</div>
-        </td>
-      </tr>
-    % end
-
-  </table>
-</div>
-
+    </table>
+  </div>
 <br>
+% end
 
-% if ballot.status == "Voting only"
+% if ballot.status != "Active"
   <div class="ballots_table">
     <table>
       <thead>
@@ -109,40 +110,72 @@
         </tr>
       </thead>
 
-      <tbody>
-          <tr>
-            <td>
-              % choices = ballot.choices
+      <tbody id="choice">
+        <tr>
+          <td>
+            % choices = ballot.choices
 
-              % choices_voted = []
+            % choices_voted = []
 
-              % choices_not_voted = []
+            % choices_not_voted = []
 
-              % if !choices.empty?
+            % if !choices.empty?
 
-                % ballot.choices.each do |choice|
-                  % user_vote = choice.votes.find(user_id: user.id)
+              % ballot.choices.each do |choice|
+                % user_vote = choice.votes.find(user_id: user.id)
 
-                  % if !user_vote.empty?
-                    % choices_voted << choice
-                  % else
-                    % choices_not_voted << choice
-                  % end
+                % if !user_vote.empty?
+                  % choices_voted << choice
+                % else
+                  % choices_not_voted << choice
                 % end
+              % end
+
+              % if ballot.status == "Voting only"
 
                 {{ this.partial("ballot/update_vote", ballot: ballot, choices_not_voted: choices_not_voted, choices_voted: choices_voted, user: user) }}
 
-              % else
-                No choices available to vote.
+              % end  
+
+              % if ballot.status == "Closed" && !choices_voted.empty?
+                <tbody id="choice">
+                  <tr>
+                    <td>
+                      % choices_voted.each do |choice|
+
+                        % user_vote = choice.votes.find(user_id: user.id)
+
+                        % user_vote.each do |vote|
+                          <div>
+                            <h4>{{ choice.title }}</h4>
+                            <p>{{ choice.comment.gsub(/\r\n/, "<br>") }}</p>
+                            <span class="choice_added_by">by {{ choice.added_by }}</span>
+                            <span class="choice_remove">
+                              {{ vote.rating }}
+                            </span>
+                          </div>
+                        % end
+
+                      % end
+                    </td>
+                  </tr>
+                </tbody>                
+              % elsif ballot.status == "Closed" && choices_voted.empty?
+                <p>You haven't voted in this ballot.</p>
               % end
-            </td>
-          </tr>
+
+            % else
+              No choices available to vote.
+            % end
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
+  <br>
 % end
 
-<br>
+
 
 <div class="ballots_table">
   <table>

@@ -1,78 +1,54 @@
 % rates = 10.step(0, -1)
 
-<form action="/ballot/{{ ballot.id}}/vote" method="POST">
-  <table>
-    % choices_voted.each do |choice|
-      % user_vote = choice.votes.find(user_id: user.id)
+  <form action="/ballot/{{ ballot.id}}/vote" method="POST">
+    <table>
+      % choices_voted.each do |choice|
+        % user_vote = choice.votes.find(user_id: user.id)
 
-      % user_vote.each do |vote|
-        <tr id="vote_choice">
-          <td>
-            {{ choice.title }}
-          </td>
-          <td id="vote_value">
-            <select name="vote[{{ choice.id }}]">
-              % rates.each do |rating|
-                % if rating == vote.rating.to_i
-                  <option value="{{ rating }}" selected>{{ vote.rating }}</option>
-                % else
-                  <option value="{{ rating }}">{{ rating }}</option>
+        % user_vote.each do |vote|
+          <div>
+            <h4>{{ choice.title }}</h4>
+            <p>{{ choice.comment.gsub(/\r\n/, "<br>") }}</p>
+            <span class="choice_added_by">by {{ choice.added_by }}</span>
+            <span class="choice_remove">
+              <select name="vote[{{ choice.id }}]">
+                % rates.each do |rating|
+                  % if rating == vote.rating.to_i
+                    <option value="{{ rating }}" selected>{{ vote.rating }}</option>
+                  % else
+                    <option value="{{ rating }}">{{ rating }}</option>
+                  % end
                 % end
+              </select>
+            </span>
+          </div>
+        % end
+
+      % end
+
+      % choices_not_voted.each do |choice|
+        <div>
+          <h4>{{ choice.title }}</h4>
+          <p>{{ choice.comment.gsub(/\r\n/, "<br>") }}</p>
+          <span class="choice_added_by">by {{ choice.added_by }}</span>
+          <span class="choice_remove">
+            <select name="vote[{{ choice.id }}]">
+              <option value="--" selected>--</option>
+
+              % rates.each do |rating|
+                <option value="{{ rating }}">{{ rating }}</option>
               % end
             </select>
-          </td>
+          </span>
+        </div>
+      % end
+
+      % if ballot.choices.size == 1
+        <tr id="one_choice">
+          <td colspan="2">Note: When there's only one choice &ndash;as in this case&ndash;, a score of 5 points or more will be considered as a "Yes", and a score of 4 points or less will be considered as a "No".</td>
         </tr>
       % end
 
-    % end
-
-    % choices_not_voted.each do |choice|
-      <tr id="vote_choice">
-        <td>
-          {{ choice.title }}
-        </td>
-        <td id="vote_value">
-          <select name="vote[{{ choice.id }}]">
-            <option value="--" selected>--</option>
-
-            % rates.each do |rating|
-              <option value="{{ rating }}">{{ rating }}</option>
-            % end
-          </select>
-        </td>
-      </tr>
-    % end
-
-    % if ballot.choices.size == 1
-      <tr id="one_choice">
-        <td colspan="2">Note: When there's only one choice &ndash;as in this case&ndash;, a score of 5 points or more will be considered as a "Yes", and a score of 4 points or less will be considered as a "No".</td>
-      </tr>
-    % end
-
-  </table><br>
-    <button type="submit">Save</button>&nbsp;&nbsp;&nbsp;<span><em>(Remember that you can change your vote until the closing date)</em></span>
-</form>
-
-% if ballot.status == "Closed" && !choices_voted.empty?
-  <br>
-  <table>
-    % choices_voted.each do |choice|
-
-      % user_vote = choice.votes.find(user_id: user.id)
-
-      % user_vote.each do |vote|
-        <tr id="vote_choice">
-          <td>
-            {{ choice.title }}
-          </td>
-          <td id="vote_value">
-            {{ vote.rating }}
-          </td>
-        </tr>
-      % end
-
-    % end
-  </table>
-% elsif ballot.status == "Closed" && choices_voted.empty?
-  <p>You haven't voted in this ballot.</p>
-% end
+    </table><br>
+      <button type="submit">Save</button>&nbsp;&nbsp;&nbsp;<span><em>(Remember that you can change your vote until the closing date)</em></span>
+  </form>

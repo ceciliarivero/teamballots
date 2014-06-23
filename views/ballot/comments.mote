@@ -15,7 +15,7 @@
         <span class="comment_date">Date: {{ this.cal_utc(comment.date) }}</span>
       </div>
       <div class="comment_body">
-        {{ comment.message }}
+        {{ comment.message.gsub(/\r\n/, "<br>") }}
       </div>
     </li>
 
