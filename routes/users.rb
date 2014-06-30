@@ -447,7 +447,7 @@ class Users < Cuba
 
     on "ballot/:ballot_id/choices/:choice_id/edit" do |ballot_id, choice_id|
       ballot = user.ballots[ballot_id]
-      choice = ballot.choices.ids.include?(choice_id)
+      choice = ballot.choices.ids.include?(choice_id) if ballot
 
       on ballot && choice do
         choice = Choice[choice_id]
