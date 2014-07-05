@@ -11,7 +11,7 @@
             % if choice.comment && !choice.comment.empty?
               <p>{{ choice.comment.gsub(/\r\n/, "<br>") }}</p>
             % end
-            <span class="choice_added_by">by {{ choice.added_by }}</span>
+            <span class="choice_added_by">Last change by {{ choice.added_by }}</span>
             <span class="choice_remove">
               <select name="vote[{{ choice.id }}]">
                 % rates.each do |rating|
