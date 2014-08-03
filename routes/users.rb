@@ -348,7 +348,7 @@ class Users < Cuba
                     ballot.description != params["description"] ||
                     ballot.end_choices_date.to_i != params["end_choices_date"] ||
                     ballot.end_date.to_i != params["end_date"]
-                    
+
                     BallotEditedLog.create(user, ballot, params)
                   end
 
@@ -462,7 +462,7 @@ class Users < Cuba
 
               on edit.valid? do
                 choice.comment = "" if choice.comment == nil
-                
+
                 if choice.title != params["title"] || choice.comment != params["comment"]
                   ChoiceEditedLog.create(user, ballot, choice, params)
                 end
@@ -750,6 +750,7 @@ class Users < Cuba
             params["added_by"] = user.name
 
             comment = NewComment.new(params)
+            puts comment.attributes
 
             on comment.valid? do
               params["user_id"] = user.id
@@ -763,7 +764,8 @@ class Users < Cuba
                     email: voter.email,
                     name: voter.name,
                     comment_by: user.name,
-                    ballot_title: ballot.title)
+                    ballot_title: ballot.title,
+                    ballot_id: ballot.id)
 
                   Ost[:comment_made].push(json)
                 end

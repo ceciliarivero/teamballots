@@ -4,6 +4,11 @@ class Guests < Cuba
       res.redirect "/"
     end
 
+    on "ballot/:id" do |id|
+      session[:after_login] = "/ballot/#{id}"
+      res.redirect "/login"
+    end
+
     on "signup" do
       on post, param("user") do |params|
 
@@ -84,6 +89,8 @@ class Guests < Cuba
         pass = params["password"]
         remember = params["remember"]
 
+        after_login = session[:after_login]
+
         if login(User, user, pass)
           if remember
             remember(3600)
@@ -100,7 +107,7 @@ class Guests < Cuba
 
           on default do
             session[:success] = "You have successfully logged in!"
-            res.redirect "/dashboard"
+            res.redirect after_login || "/dashboard"
           end
         else
           session[:error] = "Invalid email/password combination"

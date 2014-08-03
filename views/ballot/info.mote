@@ -74,7 +74,7 @@
         </tr>
       </thead>
 
-      
+
         <tbody>
           <tr>
             <td>
@@ -82,12 +82,12 @@
             </td>
           </tr>
         </tbody>
-     
+
 
       % if !ballot.choices.empty?
 
         {{ this.partial("ballot/choices_list", ballot: ballot) }}
-              
+
       % else
         <tr>
           <td>
@@ -135,7 +135,7 @@
 
                 {{ this.partial("ballot/update_vote", ballot: ballot, choices_not_voted: choices_not_voted, choices_voted: choices_voted, user: user) }}
 
-              % end  
+              % end
 
               % if ballot.status == "Closed" && !choices_voted.empty?
                 <tbody id="choice">
@@ -161,7 +161,7 @@
                       % end
                     </td>
                   </tr>
-                </tbody>                
+                </tbody>
               % elsif ballot.status == "Closed" && choices_voted.empty?
                 <p>You haven't voted in this ballot.</p>
               % end

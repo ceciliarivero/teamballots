@@ -4,7 +4,7 @@ Dear {{ name }},
 
 {{ ballot_title }}
 
-Log into https://www.teamballots.com to see the comment.
+Go to https://www.teamballots.com/ballot/{{ ballot_id }} to see the comment.
 
 Best regards,
 
