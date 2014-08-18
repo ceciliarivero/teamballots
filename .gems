@@ -8,7 +8,5 @@ ohm-contrib -v 2.0.0
 ost -v 0.1.5
 ost-bin -v 0.0.3
 rack-protection -v 1.5.0
-rack-test -v 0.6.2
 scrivener -v 0.2.0
 shield -v 2.1.0
-cutest -v 1.2.1
