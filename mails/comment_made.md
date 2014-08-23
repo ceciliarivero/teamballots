@@ -1,10 +1,8 @@
 Dear {{ name }},
 
-{{ comment_by }} made a comment on the following ballot:
+{{ comment_by }} made this comment on https://www.teamballots.com/ballot/{{ ballot_id }}:
 
-{{ ballot_title }}
-
-Go to https://www.teamballots.com/ballot/{{ ballot_id }} to see the comment.
+{{ message }}
 
 Best regards,
 

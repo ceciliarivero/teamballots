@@ -756,7 +756,7 @@ class Users < Cuba
               params["user_id"] = user.id
               params["ballot_id"] = ballot.id
 
-              Comment.create(params)
+              comment = Comment.create(params)
 
               ballot.voters.each do |voter|
                 if voter.id != user.id
@@ -765,7 +765,8 @@ class Users < Cuba
                     name: voter.name,
                     comment_by: user.name,
                     ballot_title: ballot.title,
-                    ballot_id: ballot.id)
+                    ballot_id: ballot.id,
+                    message: comment.message)
 
                   Ost[:comment_made].push(json)
                 end
