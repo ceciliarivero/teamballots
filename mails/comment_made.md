@@ -1,8 +1,10 @@
 Dear {{ name }},
 
-{{ comment_by }} made this comment on https://www.teamballots.com/ballot/{{ ballot_id }}:
+{{ comment_by }} made this comment on {{ ballot_title }}:
 
 {{ message }}
+
+Reply on https://www.teamballots.com/ballot/{{ ballot_id }}
 
 Best regards,
 
