@@ -15,9 +15,9 @@ require "shield"
 
 APP_SECRET = ENV.fetch("APP_SECRET")
 MALONE_URL = ENV.fetch("MALONE_URL")
+NOBI_SECRET = ENV.fetch("NOBI_SECRET")
 OPENREDIS_URL = ENV.fetch("OPENREDIS_URL")
 RESET_URL = ENV.fetch("RESET_URL")
-NOBI_SECRET = ENV.fetch("NOBI_SECRET")
 
 ROOT = File.expand_path("../", __FILE__)
 
