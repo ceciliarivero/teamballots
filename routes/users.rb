@@ -641,6 +641,7 @@ class Users < Cuba
                 json = JSON.dump(
                   email: new_voter.email,
                   name: new_voter.name,
+                  ballot_id: ballot.id,
                   ballot_title: ballot.title,
                   ballot_description: ballot.description,
                   end_date: cal_utc(ballot.end_date))
@@ -693,6 +694,7 @@ class Users < Cuba
                 json = JSON.dump(
                   email: voter.email,
                   name: voter.name,
+                  ballot_id: ballot.id,
                   ballot_title: ballot.title,
                   ballot_description: ballot.description,
                   end_date: cal_utc(ballot.end_date))

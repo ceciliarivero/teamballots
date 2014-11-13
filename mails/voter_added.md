@@ -11,7 +11,7 @@ Description:
 % end
 Ballot closing date: {{ end_date }}
 
-Log into https://www.teamballots.com to participate of the ballot.
+Go to https://www.teamballots.com/ballot/{{ ballot_id }} to participate of the ballot.
 
 Best regards,
 
