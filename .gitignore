@@ -5,3 +5,4 @@ dump.rdb
 seed.rb
 *.pid
 /db
+.env

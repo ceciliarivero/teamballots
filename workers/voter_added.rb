@@ -6,12 +6,14 @@ begin
 
     email = hash["email"]
     name = hash["name"]
+    ballot_id = hash["ballot_id"]
     ballot_title = hash["ballot_title"]
     ballot_description = hash["ballot_description"]
     end_date = hash["end_date"]
 
     text = Mailer.render("voter_added", {
       name: name,
+      ballot_id: ballot_id,
       ballot_title: ballot_title,
       ballot_description: ballot_description,
       end_date: end_date })
