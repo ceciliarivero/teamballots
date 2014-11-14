@@ -13,7 +13,7 @@ Team Ballots is here to help!
 
 With Team Ballots, users will be able to create ballots and include voters into ballots. Voters will be able to add choices, make comments, vote (and change their votes until the closing date) and, at the end, they all see the final results.
 
-Team Ballots uses a Cardinal voting system called Range or Score Voting. That means that all the choices of a ballot will need to be scored by the voters (from 0 to 10, being 10 the best score). The final results of every ballot will be a ranking including all the choices, the first one being the winner, with the highest score.
+Team Ballots uses a Cardinal voting system called [Range or Score Voting] (http://rangevoting.org/). That means that all the choices of a ballot will need to be scored by the voters (from 0 to 10, being 10 the best score). The final results of every ballot will be a ranking including all the choices, the first one being the winner, with the highest score.
 
 If the ballot has only one choice (i.e., "Do you want to have a meeting on Sunday afternoon? Yes or No."), then the result of the ballot would be a "Yes" if the final score was 5.00 or more, and "No" if it was 4.99 or less. Regardless of whether the result is a "Yes" or a "No", the final score will be shown as well.
 
