@@ -6,3 +6,4 @@ seed.rb
 *.pid
 /db
 .env
+/log
