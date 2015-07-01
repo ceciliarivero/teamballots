@@ -26,7 +26,7 @@ Cuba.plugin Cuba::TextHelpers
 Cuba.plugin Shield::Helpers
 
 Ohm.redis = Redic.new(OPENREDIS_URL)
-Ost.connect(url: OPENREDIS_URL)
+Ost.redis = Redic.new(OPENREDIS_URL)
 Malone.connect(url: MALONE_URL, tls: false, domain: "teamballots.com")
 
 Dir["./models/**/*.rb"].each  { |rb| require rb }
