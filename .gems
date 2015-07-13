@@ -7,7 +7,7 @@ nobi -v 0.0.1
 ohm -v 2.2.1
 ohm-contrib -v 2.2.0
 ost -v 1.0.0
-ost-bin -v 0.1.1
+ost-bin -v 0.0.3
 rack-protection -v 1.5.3
 scrivener -v 1.0.0
 shield -v 2.1.1
