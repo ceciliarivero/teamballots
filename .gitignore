@@ -8,3 +8,4 @@ seed.rb
 .env
 /log
 gemfile.rb
+.bundle
