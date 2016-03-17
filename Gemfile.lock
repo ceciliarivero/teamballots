@@ -85,6 +85,8 @@ GEM
       railties
       thor
     json (1.8.3, 1.8.1)
+    kuvert (0.0.2)
+      mime-types
     loofah (2.0.3)
       nokogiri
     mail (2.6.3)
