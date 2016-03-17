@@ -1,0 +1,228 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    actionmailer (4.2.5)
+      actionpack
+      actionview
+      activejob
+      mail
+      rails-dom-testing
+    actionpack (4.2.5)
+      actionview
+      activesupport
+      rack
+      rack-test
+      rails-dom-testing
+      rails-html-sanitizer
+    actionview (4.2.5)
+      activesupport
+      builder
+      erubis
+      rails-dom-testing
+      rails-html-sanitizer
+    activejob (4.2.5)
+      activesupport
+      globalid
+    activemodel (4.2.5)
+      activesupport
+      builder
+    activerecord (4.2.5)
+      activemodel
+      activesupport
+      arel
+    activesupport (4.2.5)
+      i18n
+      json
+      minitest
+      thread_safe
+      tzinfo
+    arel (6.0.3)
+    armor (0.0.3)
+    basica (0.0.1)
+    bcrypt (3.1.10)
+    bigdecimal (1.2.6)
+    binding_of_caller (0.7.2)
+      debug_inspector
+    builder (3.2.2)
+    bundler (1.11.2, 1.10.6)
+    byebug (8.2.1)
+    clap (1.0.0)
+    coffee-rails (4.1.0)
+      coffee-script
+      railties
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.10.0)
+    contract (0.1.0)
+    cuba (3.4.0)
+      rack
+    cutest (1.2.2)
+      clap
+    debug_inspector (0.0.2)
+    dep (1.1.0)
+    disque (0.0.5)
+      redic
+    erubis (2.7.0)
+    execjs (2.6.0)
+    finist (0.1.0)
+      redic
+    gemfile (0.0.2)
+    gemset (0.2.1)
+    globalid (0.3.6)
+      activesupport
+    hike (1.2.3)
+    hiredis (0.6.1)
+    i18n (0.7.0)
+    io-console (0.4.3)
+    jbuilder (2.3.2)
+      activesupport
+      multi_json
+    jquery-rails (4.0.5)
+      rails-dom-testing
+      railties
+      thor
+    json (1.8.3, 1.8.1)
+    loofah (2.0.3)
+      nokogiri
+    mail (2.6.3)
+      mime-types
+    mailfactory (1.4.0)
+      mime-types
+    malone (1.0.7)
+      mailfactory
+    mime-types (2.99, 2.6.1)
+    mini_portile2 (2.0.0)
+    minitest (5.8.3)
+    mote (1.1.3)
+    mote-render (1.1.0)
+    msgpack (0.5.12, 0.5.11)
+    multi_json (1.11.2)
+    nido (1.0.0)
+    nokogiri (1.6.7)
+      mini_portile2
+    ohm (2.3.0, 2.2.0)
+      msgpack
+      nido
+      redic
+      stal
+      msgpack
+      nido
+      redic
+      stal
+    ohm-contrib (2.2.0)
+      ohm
+    opal (0.8.1)
+      hike
+      sourcemap
+      sprockets
+      tilt
+    opal-jquery (0.4.1)
+      opal
+    pg (0.18.4)
+    postgres (0.8.1)
+      pg
+    power_assert (0.2.2)
+    psych (2.0.8)
+    rack (1.6.4)
+    rack-protection (1.5.3)
+      rack
+    rack-test (0.6.3)
+      rack
+    rack_csrf (2.5.0)
+      rack
+    rails (4.2.5)
+      actionmailer
+      actionpack
+      actionview
+      activejob
+      activemodel
+      activerecord
+      activesupport
+      bundler
+      railties
+      sprockets-rails
+    rails-deprecated_sanitizer (1.0.3)
+    rails-dom-testing (1.0.7)
+      nokogiri
+      rails-deprecated_sanitizer
+    rails-html-sanitizer (1.0.2)
+      loofah
+    railties (4.2.5)
+      actionpack
+      activesupport
+      rake
+      thor
+    rake (10.4.2)
+    rdoc (4.2.0)
+    redic (1.5.0)
+      hiredis
+    requests (1.0.0)
+    roda (2.8.0)
+      rack
+    sass (3.4.19)
+    sass-rails (5.0.4)
+      railties
+      sass
+      sprockets
+      sprockets-rails
+      tilt
+    sc (0.0.1)
+    scrivener (1.0.0)
+    sdoc (0.4.1)
+      json
+      rdoc
+    seg (0.0.1)
+    sequel (4.29.0)
+    shield (2.1.1)
+      armor
+    shotgun (0.9.1)
+      rack
+    sourcemap (0.1.1)
+    spring (1.5.0)
+    sprockets (3.4.1)
+      rack
+    sprockets-rails (2.3.3)
+      actionpack
+      activesupport
+      sprockets
+    sqlite3 (1.3.11)
+    stal (0.1.0)
+      redic
+    syro (2.1.0)
+      rack
+      seg
+    test-unit (3.0.8)
+      power_assert
+    thor (0.19.1)
+    thread_safe (0.3.5)
+    tilt (2.0.1)
+    turbolinks (2.5.3)
+      coffee-rails
+    tzinfo (1.2.2)
+      thread_safe
+    uglifier (2.7.2)
+      execjs
+      json
+    web-console (2.2.1)
+      activemodel
+      binding_of_caller
+      railties
+      sprockets-rails
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  cuba (= 3.4.0)
+  cuba-contrib (= 3.1.0)
+  malone (= 1.1.0)
+  mote (= 1.1.4)
+  newrelic_rpm (= 3.12.1.298)
+  nobi (= 0.0.1)
+  ohm (= 2.2.1)
+  ohm-contrib (= 2.2.0)
+  ost (= 1.0.0)
+  ost-bin (= 0.0.3)
+  rack-protection (= 1.5.3)
+  scrivener (= 1.0.0)
+  shield (= 2.1.1)
