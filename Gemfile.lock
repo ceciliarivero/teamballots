@@ -31,8 +31,8 @@ GEM
     ost-bin (0.0.3)
       clap
       ost
-    rack (1.6.4)
-    rack-protection (1.5.3)
+    rack (2.2.2)
+    rack-protection (1.5.5)
       rack
     redic (1.5.0)
       hiredis
@@ -56,7 +56,7 @@ DEPENDENCIES
   ohm-contrib (= 2.2.0)
   ost (= 1.0.0)
   ost-bin (= 0.0.3)
-  rack-protection (= 1.5.3)
+  rack-protection (= 1.5.5)
   scrivener (= 1.0.0)
   shield (= 2.1.1)
 
