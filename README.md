@@ -47,17 +47,16 @@ Now, you can go to localhost:9393 in your browser and see the app running.
 
 Enjoy! :-)
 
---------------------------
-- [Cuba:] (http://cuba.is/) Microframework built in Ruby.
-- [Cutest] (https://github.com/djanowski/cutest) for testing.
-- [Malone:] (https://github.com/cyx/malone) for mailing.
-- [Mote:] (https://github.com/soveran/mote) Minimum Operational Template.
-- [Nobi:] (https://github.com/cyx/nobi) for creating a password reset link and account activations.
-- [Ohm:] (http://soveran.github.io/ohm/) Library that allows to store objects in Redis.
-- [Ost:] (https://github.com/soveran/ost) for workers.
-- [Rack-protection:] (https://github.com/rkh/rack-protection) Protects against typical web attacks.
-- [Redis:] (http://www.redis.io) Open source database.
-- [Scrivener:] (https://github.com/soveran/scrivener) Validation frontend for models.
-- [Shield:] (https://github.com/soveran/shield) Authentication library.
 ## Tools used in Team Ballots
 
+- [Cuba:](http://cuba.is/) Microframework built in Ruby.
+- [Cutest](https://github.com/djanowski/cutest) for testing.
+- [Malone:](https://github.com/cyx/malone) for mailing.
+- [Mote:](https://github.com/soveran/mote) Minimum Operational Template.
+- [Nobi:](https://github.com/cyx/nobi) for creating a password reset link and account activations.
+- [Ohm:](http://soveran.github.io/ohm/) Library that allows to store objects in Redis.
+- [Ost:](https://github.com/soveran/ost) for workers.
+- [Rack-protection:](https://github.com/rkh/rack-protection) Protects against typical web attacks.
+- [Redis:](http://www.redis.io) Open source database.
+- [Scrivener:](https://github.com/soveran/scrivener) Validation frontend for models.
+- [Shield:](https://github.com/soveran/shield) Authentication library.
