@@ -31,7 +31,7 @@ GEM
     ost-bin (0.0.3)
       clap
       ost
-    rack (1.6.4)
+    rack (2.2.3)
     rack-protection (1.5.3)
       rack
     redic (1.5.0)
